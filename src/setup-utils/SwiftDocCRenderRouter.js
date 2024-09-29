@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import Router from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import {
   notFoundRouteName,
   serverErrorRouteName,
@@ -22,6 +22,8 @@ import routes from 'docc-render/routes';
 import { baseUrl } from 'docc-render/utils/theme-settings';
 import { addPrefixedRoutes } from 'docc-render/utils/route-utils';
 
+const { VITE_APP_TARGET } = import.meta.env;
+
 const defaultRoutes = [
   ...routes,
   ...addPrefixedRoutes(routes, [
@@ -30,32 +32,31 @@ const defaultRoutes = [
   ]),
 ];
 
-export default function createRouterInstance(routerConfig = {}) {
-  const router = new Router({
-    mode: 'history',
-    base: baseUrl,
+function createRouterInstance(routerConfig = {}) {
+  const router = createRouter({
+    history: createWebHistory(baseUrl),
     scrollBehavior,
     ...routerConfig,
     routes: routerConfig.routes || defaultRoutes,
   });
 
-  router.onReady(() => {
+  router.isReady().then(async () => {
     // Disable the browser's automatic scroll restoration mechanism so that it doesn't
     // interfere with vue-router's scrollBehavior.
     // https://github.com/vuejs/vue-router/pull/1814
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
-    restoreScrollOnReload();
+    await restoreScrollOnReload();
   });
 
-  if (process.env.VUE_APP_TARGET !== 'ide') {
+  if (VITE_APP_TARGET !== 'ide') {
     router.onError((error) => {
       const { route = { path: '/' } } = error;
       router.replace({
         name: 'server-error',
         params: [route.path],
-      });
+      }).then(() => {});
     });
   }
 
@@ -64,3 +65,7 @@ export default function createRouterInstance(routerConfig = {}) {
 
   return router;
 }
+
+const SwiftDocCRenderRouter = createRouterInstance();
+
+export default SwiftDocCRenderRouter;

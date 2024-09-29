@@ -33,9 +33,9 @@ export default {
 @import 'docc-render/styles/_core.scss';
 
 .container {
-  @include section-content;
   margin-top: 92px;
   margin-bottom: 140px;
+  @include section-content;
 }
 
 .error-content {

@@ -23,7 +23,7 @@
       </ReferenceUrlProvider>
     </template>
     <template #after-title>
-      <div class="separator"></div>
+      <div class="separator" />
     </template>
     <template #tray>
       <div class="mobile-dropdown-container">

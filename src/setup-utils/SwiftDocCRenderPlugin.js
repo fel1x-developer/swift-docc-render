@@ -10,31 +10,33 @@
 
 // eslint-disable-next-line import/no-named-default
 import { default as CommunicationBridge } from 'docc-render/plugins/CommunicationBridge';
-import CustomComponents from '../plugins/CustomComponents';
+import CustomComponents from 'docc-render/plugins/CustomComponents';
 import directives from '../directives';
+
+const { VITE_APP_TARGET } = import.meta.env;
 
 /**
  * This is the SwiftDocCRenderPlugin, which attaches things to the Vue instance
  * Attach all Swift-DocC-Render helpers into the Vue object.
  */
-export default function SwiftDocCRenderPlugin(Vue, {
-  performanceMetrics = false,
-} = {}) {
-  /* eslint-disable no-param-reassign */
-  Vue.config.productionTip = false;
+export default {
+  install: (app, {
+    performanceMetrics = false,
+  } = {}) => {
+    app.use(CustomComponents);
 
-  Vue.use(CustomComponents);
+    // Set up custom global directives
+    app.directive('hide', directives.hide);
 
-  // Set up custom global directives
-  Vue.directive('hide', directives.hide);
+    app.use(CommunicationBridge, {
+      appTarget: VITE_APP_TARGET,
+      performanceMetricsEnabled: performanceMetrics,
+    });
 
-  Vue.use(CommunicationBridge, {
-    appTarget: process.env.VUE_APP_TARGET,
-    performanceMetricsEnabled: performanceMetrics,
-  });
+    window.bridge = app.config.globalProperties.$bridge;
 
-  window.bridge = Vue.prototype.$bridge;
-
-  // Emit performance metrics.
-  Vue.config.performance = performanceMetrics;
-}
+    // Emit performance metrics.
+    // eslint-disable-next-line no-param-reassign
+    app.config.performance = performanceMetrics;
+  },
+};

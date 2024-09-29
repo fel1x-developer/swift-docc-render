@@ -37,8 +37,8 @@
 /// provided on /documentation pages
 ////
 @mixin section-content() {
-  @include breakpoint-content;
   outline-style: none;
+  @include breakpoint-content;
 }
 
 ////

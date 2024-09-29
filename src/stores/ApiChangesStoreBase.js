@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import Vue from 'vue';
+import { nextTick, reactive } from 'vue';
 import { ChangeTypes } from 'docc-render/constants/Changes';
 
 /**
@@ -22,7 +22,7 @@ export const apiChangesCountsFactory = () => ({
   [ChangeTypes.deprecated]: 0,
 });
 
-export default {
+const ApiChangesStoreBase = reactive({
   state: {
     apiChanges: null,
     apiChangesCounts: apiChangesCountsFactory(),
@@ -41,7 +41,7 @@ export default {
     this.state.apiChangesCounts = apiChangesCountsFactory();
   },
   async updateApiChangesCounts() {
-    await Vue.nextTick();
+    await nextTick();
     Object.keys(this.state.apiChangesCounts)
       .forEach((changeType) => {
         this.state.apiChangesCounts[changeType] = this.countChangeType(changeType);
@@ -54,4 +54,6 @@ export default {
     }
     return 0;
   },
-};
+});
+
+export default ApiChangesStoreBase;

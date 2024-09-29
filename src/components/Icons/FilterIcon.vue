@@ -17,9 +17,9 @@
     fill="currentColor"
     themeId="filter"
   >
-    <path d="m2 6.5h10v1h-10z"/>
-    <path d="m1 3h12v1h-12z"/>
-    <path d="m3 10h8v1h-8z"/>
+    <path d="m2 6.5h10v1h-10z" />
+    <path d="m1 3h12v1h-12z" />
+    <path d="m3 10h8v1h-8z" />
   </SVGIcon>
 </template>
 

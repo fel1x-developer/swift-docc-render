@@ -25,9 +25,9 @@
       <!-- Do not add newlines in <pre>, as they'll appear in the rendered HTML. -->
       <pre><CodeBlock><template
         v-for="(line, index) in syntaxHighlightedLines"
-      ><span
         :key="index"
-        :class="['code-line-container',{ highlighted: isHighlighted(index) }]"
+      ><span
+        :class="['code-line-container', { highlighted: isHighlighted(index) }]"
       ><span
         v-if="showLineNumbers"
         class="code-number"

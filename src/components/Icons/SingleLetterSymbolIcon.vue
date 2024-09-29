@@ -11,11 +11,13 @@
 <template>
   <SVGIcon
     class="single-letter-icon"
-    width="16px" height="16px" viewBox="0 0 16 16"
+    width="16px"
+    height="16px"
+    viewBox="0 0 16 16"
     themeId="single-letter"
   >
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <rect stroke="currentColor" x="1" y="1" width="14" height="14"></rect>
+      <rect stroke="currentColor" x="1" y="1" width="14" height="14" />
       <text font-size="11" font-weight="bold" fill="currentColor" x="49%" y="12" text-anchor="middle">
         <tspan>{{ symbol }}</tspan>
       </text>

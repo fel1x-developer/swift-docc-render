@@ -25,12 +25,12 @@
           :title="runtimePreviewTitle"
           @click="togglePreview"
         >
-        <span
-          class="runtime-preview-label"
-          :aria-label="textAriaLabel"
-        >{{ togglePreviewText }}</span>
+          <span
+            class="runtime-preview-label"
+            :aria-label="textAriaLabel"
+          >{{ togglePreviewText }}</span>
           <DiagonalArrowIcon
-            :class="[ shouldDisplayHideLabel ? 'preview-hide': 'preview-show' ]"
+            :class="[shouldDisplayHideLabel ? 'preview-hide' : 'preview-show']"
             class="icon-inline preview-icon"
           />
         </button>

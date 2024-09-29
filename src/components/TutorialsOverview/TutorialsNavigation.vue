@@ -23,15 +23,15 @@
           @select-menu="onSelectMenu"
           @deselect-menu="onDeselectMenu"
         >
-        <li v-for="(chapter) in section.chapters" :key="chapter.name">
-          <TutorialsNavigationLink>
-            {{ chapter.name }}
-          </TutorialsNavigationLink>
-        </li>
-      </component>
-      <TutorialsNavigationLink v-else-if="isResources(section)">
-        {{ $t('sections.resources') }}
-      </TutorialsNavigationLink>
+          <li v-for="(chapter) in section.chapters" :key="chapter.name">
+            <TutorialsNavigationLink>
+              {{ chapter.name }}
+            </TutorialsNavigationLink>
+          </li>
+        </component>
+        <TutorialsNavigationLink v-else-if="isResources(section)">
+          {{ $t('sections.resources') }}
+        </TutorialsNavigationLink>
       </li>
     </TutorialsNavigationList>
   </nav>

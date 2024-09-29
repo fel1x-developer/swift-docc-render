@@ -155,7 +155,7 @@ export default {
       this.onColorSchemePreferenceChange(matchMedia);
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     // make sure we unlock scrolling before navigating to a new page.
     if (this.isVisible) {
       scrollLock.unlockScroll(this.$refs.container);

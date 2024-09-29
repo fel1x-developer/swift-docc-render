@@ -10,7 +10,7 @@
 
 <template>
   <router-link v-if="url && isActive" :to="url"><slot /></router-link>
-  <span v-else><slot/></span>
+  <span v-else><slot /></span>
 </template>
 
 <script>

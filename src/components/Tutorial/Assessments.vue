@@ -22,7 +22,7 @@
           </HeaderColumn>
         </Row>
         <div v-if="!completed">
-          <Progress v-bind="progress" ref="progress"/>
+          <Progress v-bind="progress" ref="progress" />
           <Quiz
             :choices="activeAssessment.choices"
             :content="activeAssessment.content"

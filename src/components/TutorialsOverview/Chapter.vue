@@ -14,7 +14,7 @@
       <Asset :identifier="image" aria-hidden="true" />
       <div class="intro">
         <component
-          :is="volumeHasName ? 'h3': 'h2'"
+          :is="volumeHasName ? 'h3' : 'h2'"
           class="name"
           :aria-label="`${name} - ${$tc('tutorials.sections.chapter', { number })}`"
         >

@@ -13,7 +13,8 @@
     <LinkableHeading anchor="mentions">
       {{$t('mentioned-in')}}
     </LinkableHeading>
-    <Mention v-for="topic in topics"
+    <Mention
+      v-for="topic in topics"
       :key="topic.identifier"
       :url="topic.url"
       :title="topic.title"

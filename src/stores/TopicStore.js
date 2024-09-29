@@ -9,10 +9,11 @@
 */
 
 import BreakpointEmitter from 'docc-render/components/BreakpointEmitter.vue';
+import { reactive } from 'vue';
 
 const { BreakpointName } = BreakpointEmitter.constants;
 
-export default {
+const TopicStore = reactive({
   state: {
     linkableSections: [],
     breakpoint: BreakpointName.large,
@@ -47,4 +48,6 @@ export default {
   setReferences(references) {
     this.state.references = references;
   },
-};
+});
+
+export default TopicStore;

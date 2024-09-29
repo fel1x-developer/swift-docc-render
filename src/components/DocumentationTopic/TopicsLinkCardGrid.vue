@@ -15,10 +15,11 @@
     :pages="pages"
   >
     <template #page="{ page }">
-      <Row :columns="{
-        large: compactCards ? 3 : 2,
-        medium: compactCards ? 3 : 2,
-      }">
+      <Row
+        :columns="{
+          large: compactCards ? 3 : 2,
+          medium: compactCards ? 3 : 2,
+        }">
         <Column
           v-for="item in page"
           :key="item.title"

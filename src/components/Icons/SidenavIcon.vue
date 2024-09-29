@@ -10,9 +10,9 @@
 
 <template>
   <SVGIcon viewBox="0 0 14 14" height="14" class="sidenav-icon" themeId="sidenav">
-    <path d="M6.533 1.867h-6.533v10.267h14v-10.267zM0.933 11.2v-8.4h4.667v8.4zM13.067 11.2h-6.533v-8.4h6.533z"></path>
-    <path d="M1.867 5.133h2.8v0.933h-2.8z"></path>
-    <path d="M1.867 7.933h2.8v0.933h-2.8z"></path>
+    <path d="M6.533 1.867h-6.533v10.267h14v-10.267zM0.933 11.2v-8.4h4.667v8.4zM13.067 11.2h-6.533v-8.4h6.533z" />
+    <path d="M1.867 5.133h2.8v0.933h-2.8z" />
+    <path d="M1.867 7.933h2.8v0.933h-2.8z" />
   </SVGIcon>
 </template>
 

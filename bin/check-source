@@ -24,7 +24,7 @@ function replace_acceptable_years() {
 printf "=> Checking license headers… "
 tmp=$(mktemp /tmp/.docc-render-check-source_XXXXXX)
 
-for language in js-or-scss dist-js-or-css markup markdown; do
+for language in js-ts-or-scss dist-js-or-css markup markdown; do
   declare -a matching_files
   declare -a exceptions
   declare -a reader
@@ -32,9 +32,9 @@ for language in js-or-scss dist-js-or-css markup markdown; do
   matching_files=( -name '*' )
   reader=head
   case "$language" in
-      js-or-scss)
-        exceptions=( -path "./dist/*" -o -path "./docs/*" )
-        matching_files=( -name '*.js' -o -name '*.scss' )
+      js-ts-or-scss)
+        exceptions=( -path "./dist/*" -o -path "./docs/*" -o -path '.*' )
+        matching_files=( -name '*.js' -o -name "*.ts" -o -name '*.scss' )
         cat > "$tmp" <<"EOF"
 /**
  * This source file is part of the Swift.org open source project

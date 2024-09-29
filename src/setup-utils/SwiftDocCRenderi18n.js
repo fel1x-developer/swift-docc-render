@@ -8,18 +8,20 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import VueI18n from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 import * as lang from 'theme/lang/index';
 
-export default function createi18nInstance(config = lang) {
+function createi18nInstance(config = lang) {
   const { defaultLocale, messages, dateTimeFormats = {} } = config;
 
-  const i18n = new VueI18n({
+  return createI18n({
     dateTimeFormats,
     locale: defaultLocale,
     fallbackLocale: defaultLocale,
     messages,
   });
-
-  return i18n;
 }
+
+const SwiftDocCRenderi18n = createi18nInstance();
+
+export default SwiftDocCRenderi18n;

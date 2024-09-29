@@ -114,7 +114,7 @@ export default {
     },
   },
   render() {
-    return this.$scopedSlots.default({
+    return this.$slots.default({
       technology: this.technologyWithChildren,
       isFetching: this.isFetching,
       errorFetching: this.errorFetching,

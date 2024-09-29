@@ -12,7 +12,7 @@
   <div class="tutorials-navigation-menu" :class="{ collapsed }">
     <button
       class="toggle"
-      :aria-expanded="collapsed ? 'false': 'true'"
+      :aria-expanded="collapsed ? 'false' : 'true'"
       type="button"
       @click.stop="onClick"
     >

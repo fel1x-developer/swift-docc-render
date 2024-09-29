@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * This source file is part of the Swift.org open source project
  *
@@ -18,7 +16,7 @@ const path = require('path');
 const Parser = require('tree-sitter');
 const JavaScript = require('tree-sitter-javascript');
 const JSDoc = require('tree-sitter-jsdoc');
-const Vue = require('tree-sitter-vue');
+const Vue = require('@fel1x-developer/tree-sitter-vue');
 
 async function* find(dir, predicate = () => true) {
   const files = await fs.promises.readdir(dir);
@@ -184,7 +182,10 @@ function createDeclaration(componentName, slotNames = []) {
   const componentsDir = path.join(rootDir, 'src/components');
   for await (const filepath of findVueFiles(componentsDir)) {
     const contents = await fs.promises.readFile(filepath, { encoding: 'utf8' });
-    const vueTree = vueParser.parse(contents);
+    const options = {
+      bufferSize: 1024 * 1024, // Set the bufferSize to 1 MB (1024 KB)
+    };
+    const vueTree = vueParser.parse(contents, undefined, options);
 
     const { script } = uniqueCaptures(scriptTextQuery, vueTree);
     if (script) {

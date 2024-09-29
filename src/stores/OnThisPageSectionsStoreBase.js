@@ -7,8 +7,9 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
+import { reactive } from 'vue';
 
-export default {
+const OnThisPageSectionsStoreBase = reactive({
   state: {
     onThisPageSections: [],
     currentPageAnchor: null,
@@ -33,4 +34,6 @@ export default {
     if (i === -1) return;
     this.state.currentPageAnchor = sectionAnchor;
   },
-};
+});
+
+export default OnThisPageSectionsStoreBase;

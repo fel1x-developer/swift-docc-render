@@ -12,7 +12,7 @@
   <GenericModal
     isFullscreen
     :showClose="false"
-    :visible.sync="isVisible"
+    v-model:visible="isVisible"
     backdropBackgroundColorOverride="rgba(0, 0, 0, 0.7)"
   >
     <div
@@ -20,7 +20,7 @@
     >
       <div
         class="quick-navigation__container"
-        :class="{ 'focus' : focusedInput }"
+        :class="{ focus: focusedInput }"
       >
         <FilterInput
           v-model="userInput"
@@ -38,7 +38,7 @@
           <template #icon>
             <div
               class="quick-navigation__magnifier-icon-container"
-              :class="{ 'blue': userInput.length }"
+              :class="{ blue: userInput.length }"
             >
               <MagnifierIcon />
             </div>
@@ -46,7 +46,7 @@
         </FilterInput>
         <div
           class="quick-navigation__match-list"
-          :class="{ 'active' : processedUserInput.length }"
+          :class="{ active: processedUserInput.length }"
         >
           <div
             v-if="noResultsWereFound"
@@ -58,7 +58,7 @@
           </div>
           <template v-else>
             <div
-              v-bind="{[SCROLL_LOCK_DISABLE_ATTR]: true}"
+              v-bind="{ [SCROLL_LOCK_DISABLE_ATTR]: true }"
               class="quick-navigation__refs"
               @keydown.down.exact.prevent="focusNext"
               @keydown.up.exact.prevent="focusPrev"
@@ -93,7 +93,7 @@
                         <span
                           v-text="formatSymbolTitle(
                             symbol.title,
-                            symbol.start + symbol.matchLength
+                            symbol.start + symbol.matchLength,
                           )"
                         />
                       </div>
@@ -123,7 +123,7 @@
               class="quick-navigation__preview"
               :json="previewJSON"
               :state="previewState"
-              v-bind="{[SCROLL_LOCK_DISABLE_ATTR]: true}"
+              v-bind="{ [SCROLL_LOCK_DISABLE_ATTR]: true }"
             />
           </template>
         </div>

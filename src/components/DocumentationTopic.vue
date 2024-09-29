@@ -15,7 +15,8 @@
   >
     <component
       :is="isTargetIDE ? 'div' : 'main'"
-      class="main" id="app-main"
+      class="main"
+      id="app-main"
     >
       <DocumentationHero
         :role="role"
@@ -66,7 +67,8 @@
         </div>
         <Availability
           v-if="shouldShowAvailability"
-          :platforms="platforms" :technologies="technologies"
+          :platforms="platforms"
+          :technologies="technologies"
         />
         <div
           v-if="declarations.length"
@@ -79,7 +81,7 @@
             :conformance="conformance"
             :declarations="declaration.declarations"
             :source="remoteSource"
-            :declListExpanded.sync="declListExpanded"
+            v-model:declListExpanded="declListExpanded"
           />
         </div>
       </DocumentationHero>
@@ -118,7 +120,7 @@
               >
                 {{ declListToggleText }}
                 <div class="icon">
-                  <InlinePlusCircleIcon :class="{'expand': declListExpanded }" />
+                  <InlinePlusCircleIcon :class="{ expand: declListExpanded }" />
                 </div>
               </button>
             </div>

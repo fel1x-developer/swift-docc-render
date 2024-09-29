@@ -272,7 +272,7 @@ export default {
     this.$bridge.on('codeColors', this.handleCodeColorsChange);
     this.$bridge.send({ type: 'requestCodeColors' });
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.$bridge.off('contentUpdate', this.handleContentUpdateFromBridge);
     this.$bridge.off('codeColors', this.handleCodeColorsChange);
   },
@@ -292,7 +292,7 @@ export default {
     }
 
     fetchDataForRouteEnter(to, from, next).then(data => next((vm) => {
-      updateLocale(to.params.locale, vm);
+      updateLocale(to.params.locale);
 
       vm.topicData = data; // eslint-disable-line no-param-reassign
       if (to.query.language === Language.objectiveC.key.url && vm.objcOverrides) {
@@ -312,7 +312,7 @@ export default {
         if (to.query.language === Language.objectiveC.key.url && this.objcOverrides) {
           this.applyObjcOverrides();
         }
-        updateLocale(to.params.locale, this);
+        updateLocale(to.params.locale);
         next();
       }).catch(next);
     } else {

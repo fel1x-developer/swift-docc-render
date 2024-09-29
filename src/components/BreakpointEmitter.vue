@@ -43,8 +43,8 @@ export default {
     },
   },
   render() {
-    if (this.$scopedSlots.default) {
-      return this.$scopedSlots.default({ matchingBreakpoint: this.matchingBreakpoint });
+    if (this.$slots.default) {
+      return this.$slots.default({ matchingBreakpoint: this.matchingBreakpoint });
     }
     return null;
   },

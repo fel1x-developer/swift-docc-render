@@ -14,7 +14,7 @@
     :class="{ 'has-badge': hasBadge }"
     class="hierarchy"
   >
-     <HierarchyItem
+    <HierarchyItem
       v-if="root"
       :key="root.title"
       class="root-hierarchy"

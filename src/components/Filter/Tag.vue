@@ -12,7 +12,7 @@
   <li class="tag" role="presentation">
     <button
       ref="button"
-      :class="{ 'focus': isActiveTag }"
+      :class="{ focus: isActiveTag }"
       role="option"
       :aria-selected="ariaSelected"
       aria-roledescription="tag"

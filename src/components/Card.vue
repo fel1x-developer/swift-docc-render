@@ -44,7 +44,7 @@
       </div>
       <component
         v-if="linkText"
-        :is="hasButton ? 'ButtonLink': 'div'"
+        :is="hasButton ? 'ButtonLink' : 'div'"
         class="link"
       >
         {{ linkText }}

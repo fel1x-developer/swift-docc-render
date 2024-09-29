@@ -9,7 +9,7 @@
 -->
 
 <template>
-  <ImageAsset :alt="alt" :variants="variants"/>
+  <ImageAsset :alt="alt" :variants="variants" />
 </template>
 
 <script>

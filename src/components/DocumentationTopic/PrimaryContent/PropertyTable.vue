@@ -12,12 +12,15 @@
   <section>
     <LinkableHeading :anchor="anchor">{{ title }}</LinkableHeading>
     <ParametersTable :parameters="properties" :changes="propertyChanges" class="property-table">
-      <template #symbol="{ name, type, content, changes, deprecated }">
-        <div class="property-name" :class="{ deprecated: deprecated }">
+      <template
+        #symbol="{
+          name, type, content, changes, deprecated,
+        }">
+        <div class="property-name" :class="{ deprecated }">
           <WordBreak tag="code">{{ name }}</WordBreak>
         </div>
         <PossiblyChangedType
-          v-if="!shouldShiftType({name, content})"
+          v-if="!shouldShiftType({ name, content })"
           :type="type"
           :changes="changes.type"
         />
@@ -35,7 +38,7 @@
         }"
       >
         <PossiblyChangedType
-          v-if="shouldShiftType({name, content})"
+          v-if="shouldShiftType({ name, content })"
           :type="type"
           :changes="changes.type"
         />

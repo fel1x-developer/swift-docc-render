@@ -21,30 +21,30 @@ export default [
     path: '/tutorials/:id',
     name: 'tutorials-overview',
     component: () => import(
-      /* webpackChunkName: "tutorials-overview" */ 'theme/views/TutorialsOverview.vue'
+      'theme/views/TutorialsOverview.vue'
     ),
   },
   {
-    path: '/tutorials/:id/*',
+    path: '/tutorials/:id/:pathMatch(.*)*',
     name: 'topic',
     component: () => import(
-      /* webpackChunkName: "topic" */ 'theme/views/Topic.vue'
+      'theme/views/Topic.vue'
     ),
   },
   {
-    path: '/documentation*',
+    path: '/documentation/:pathMatch(.*)*',
     name: documentationTopicName,
     component: () => import(
-      /* webpackChunkName: "documentation-topic" */ 'theme/views/DocumentationTopic.vue'
+      'theme/views/DocumentationTopic.vue'
     ),
   },
   {
-    path: '*',
+    path: '/:pathMatch(.*)*',
     name: notFoundRouteName,
     component: NotFound,
   },
   {
-    path: '*', // purposefully unreachable without a forced navigation
+    path: '/:pathMatch(.*)*', // purposefully unreachable without a forced navigation
     name: serverErrorRouteName,
     component: ServerError,
   },

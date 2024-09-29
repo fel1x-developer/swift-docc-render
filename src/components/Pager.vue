@@ -264,7 +264,7 @@ export default {
       this.setupObserver();
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.observer?.disconnect();
   },
 };

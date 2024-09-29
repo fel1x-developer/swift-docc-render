@@ -22,7 +22,9 @@
         <slot
           name="pre-title"
           className="pre-title"
-          v-bind="{ closeNav, inBreakpoint, currentBreakpoint, isOpen }"
+          v-bind="{
+            closeNav, inBreakpoint, currentBreakpoint, isOpen,
+          }"
         />
         <div v-if="$slots.default" class="nav-title">
           <slot />
@@ -206,7 +208,7 @@ export default {
     this.handleFlashOnMount();
     await this.$nextTick();
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener('keydown', this.onEscape);
     window.removeEventListener('popstate', this.closeNav);
     window.removeEventListener('orientationchange', this.closeNav);

@@ -18,7 +18,7 @@
       :rootReference="hierarchy.reference"
       :identifierUrl="identifierUrl"
     />
-    <main id="app-main"  tabindex="0">
+    <main id="app-main" tabindex="0">
       <Section
         v-for="(section, index) in sections"
         :section="section"
@@ -149,11 +149,11 @@ export default {
     },
   },
   mounted() {
-    this.$bridge.on('codeColors', this.handleCodeColorsChange);
-    this.$bridge.send({ type: 'requestCodeColors' });
+    getCurrentInstance().appContext.config.globalProperties.$bridge.on('codeColors', this.handleCodeColorsChange);
+    getCurrentInstance().appContext.config.globalProperties.$bridge.send({ type: 'requestCodeColors' });
   },
-  beforeDestroy() {
-    this.$bridge.off('codeColors', this.handleCodeColorsChange);
+  beforeUnmount() {
+    getCurrentInstance().appContext.config.globalProperties.$bridge.off('codeColors', this.handleCodeColorsChange);
   },
 };
 </script>

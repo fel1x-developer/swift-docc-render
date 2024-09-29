@@ -69,7 +69,7 @@ export default {
     // renders the default scoped slot, providing a `value`,
     // conditionally wrapping it in a changed div
     const generateContent = (renderData, className) => {
-      const content = this.$scopedSlots.default({ value: renderData });
+      const content = this.$slots.default({ value: renderData });
 
       if (className && wrapChanges) return h('div', { class: className }, [content]);
       return content ? content[0] : null;

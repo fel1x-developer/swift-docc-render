@@ -10,7 +10,9 @@
 <template>
   <ImageAsset
     v-if="shouldUseAsset"
-    v-bind="{ variants, loading: null, shouldCalculateOptimalWidth, alt }"
+    v-bind="{
+      variants, loading: null, shouldCalculateOptimalWidth, alt,
+    }"
   />
   <SVGIcon v-else :icon-url="iconUrl" :themeId="themeId" />
 </template>

@@ -11,12 +11,14 @@
 <template>
   <SVGIcon
     class="two-letter-icon"
-    width="16px" height="16px" viewBox="0 0 16 16"
+    width="16px"
+    height="16px"
+    viewBox="0 0 16 16"
     themeId="two-letter"
   >
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
       <g transform="translate(1.000000, 1.000000)">
-        <rect stroke="currentColor" x="0.5" y="0.5" width="13" height="13"></rect>
+        <rect stroke="currentColor" x="0.5" y="0.5" width="13" height="13" />
         <text font-size="8" font-weight="bold" fill="currentColor">
           <tspan x="8.2" y="11">{{ second }}</tspan>
         </text>

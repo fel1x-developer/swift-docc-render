@@ -17,7 +17,7 @@
     >
       <TopicLinkBlockIcon class="mention-icon" :role="role" />
       {{ title }}
-  </Reference>
+    </Reference>
   </div>
 </template>
 

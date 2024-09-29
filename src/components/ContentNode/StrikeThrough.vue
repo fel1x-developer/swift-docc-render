@@ -12,7 +12,7 @@
   <s
     :data-before-text="$t('accessibility.strike.start')"
     :data-after-text="$t('accessibility.strike.end')">
-      <slot />
+    <slot />
   </s>
 </template>
 

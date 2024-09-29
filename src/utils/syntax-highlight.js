@@ -84,7 +84,7 @@ async function importHighlightFileForLanguage(language) {
       if (CustomLanguagesSet.has(file)) {
         languageFile = await import(
           /* webpackChunkName: "highlight-js-custom-[request]" */
-          `../utils/custom-highlight-lang/${file}`
+          `../utils/custom-highlight-lang/${file}.js`
         );
       } else {
         languageFile = await import(

@@ -8,13 +8,13 @@
   See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 -->
 
-<template functional>
+<template>
   <component
-    :is="$options.components.NavMenuItemBase"
-    :class="[{ collapsed: props.isCollapsed }, data.staticClass]"
+    :is="NavMenuItemBase"
+    :class="[{ collapsed: isCollapsed }, $attrs.class]"
     class="hierarchy-item"
   >
-    <router-link v-if="props.url" class="parent item nav-menu-link" :to="props.url">
+    <router-link v-if="url" class="parent item nav-menu-link" :to="url">
       <slot />
     </router-link>
     <template v-else>

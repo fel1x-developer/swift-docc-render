@@ -43,7 +43,7 @@ export default {
     updateRouter({ target: { value: slug } }) {
       this.$router.push(getLocaleParam(slug));
       AppStore.setPreferredLocale(slug);
-      updateLocale(slug, this);
+      updateLocale(slug);
     },
   },
   computed: {

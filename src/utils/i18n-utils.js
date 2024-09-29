@@ -8,6 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { useI18n } from 'vue-i18n';
 import locales from 'theme/lang/locales.json';
 import { defaultLocale } from 'theme/lang/index';
 import { updateLangTag } from 'docc-render/utils/metadata';
@@ -49,13 +50,13 @@ export function getLocaleParam(slug) {
 /**
  * Updates i18n global var and html lang
  * @param {String} slug - locale used
- * @param {Object} env - context
  */
-export function updateLocale(slug = defaultLocale, env = {}) {
+export function updateLocale(slug = defaultLocale) {
   // exist if current locale is not supported
   if (!localeIsValid(slug)) return;
   // update locale global var
-  env.$i18n.locale = slug; // eslint-disable-line no-param-reassign
+  const { locale } = useI18n();
+  locale.value = slug;
   // get code
   const code = getCodeForSlug(slug);
   // update html lang

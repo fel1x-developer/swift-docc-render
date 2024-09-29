@@ -18,14 +18,14 @@
         v-for="(choice, index) in choices"
         :key="index"
         :class="choiceClasses[index]"
-        >
-          <component :is="getIconComponent(index)" class="choice-icon" />
-          <input type="radio" :value="index" v-model="selectedIndex" name="assessment">
-          <ContentNode class="question" :content="choice.content" />
-          <template v-if="userChoices[index].checked">
-            <ContentNode class="answer" :content="choice.justification" />
-            <p class="answer" v-if="choice.reaction">{{ choice.reaction }}</p>
-          </template>
+      >
+        <component :is="getIconComponent(index)" class="choice-icon" />
+        <input type="radio" :value="index" v-model="selectedIndex" name="assessment">
+        <ContentNode class="question" :content="choice.content" />
+        <template v-if="userChoices[index].checked">
+          <ContentNode class="answer" :content="choice.justification" />
+          <p class="answer" v-if="choice.reaction">{{ choice.reaction }}</p>
+        </template>
       </label>
     </fieldset>
     <div aria-live="assertive" class="visuallyhidden">
@@ -49,7 +49,7 @@
         @click.native="submit"
         :disabled="selectedIndex === null || showNextQuestion"
       >
-       {{ $t('tutorials.submit') }}
+        {{ $t('tutorials.submit') }}
       </ButtonLink>
       <ButtonLink
         v-if="isLast"

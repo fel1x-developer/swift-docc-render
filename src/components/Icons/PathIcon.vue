@@ -10,11 +10,11 @@
 
 <template>
   <SVGIcon viewBox="0 0 14 14" themeId="path">
-    <path d="M0 0.948h2.8v2.8h-2.8z"></path>
-    <path d="M11.2 10.252h2.8v2.8h-2.8z"></path>
-    <path d="M6.533 1.852h0.933v10.267h-0.933z"></path>
-    <path d="M2.8 1.852h4.667v0.933h-4.667z"></path>
-    <path d="M6.533 11.186h4.667v0.933h-4.667z"></path>
+    <path d="M0 0.948h2.8v2.8h-2.8z" />
+    <path d="M11.2 10.252h2.8v2.8h-2.8z" />
+    <path d="M6.533 1.852h0.933v10.267h-0.933z" />
+    <path d="M2.8 1.852h4.667v0.933h-4.667z" />
+    <path d="M6.533 11.186h4.667v0.933h-4.667z" />
   </SVGIcon>
 </template>
 

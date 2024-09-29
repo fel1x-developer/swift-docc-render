@@ -44,7 +44,7 @@
     >
       {{ text }}
       <InlineReplayIcon v-if="videoEnded" class="control-icon icon-inline" />
-      <PauseIcon v-else-if="isPlaying" class="control-icon icon-inline"></PauseIcon>
+      <PauseIcon v-else-if="isPlaying" class="control-icon icon-inline" />
       <PlayIcon v-else class="control-icon icon-inline" />
     </a>
   </div>

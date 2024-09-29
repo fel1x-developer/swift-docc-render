@@ -22,7 +22,7 @@ export default {
   },
   created() {
     const cb = () => { this.loaded = true; };
-    this.$router.onReady(cb, cb);
+    this.$router.isReady().then(cb).catch(cb);
   },
 };
 </script>

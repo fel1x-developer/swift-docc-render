@@ -20,7 +20,9 @@
         v-if="enhanceBackground"
         :type="type"
         :image-override="iconOverride"
-        key="first" class="background-icon first-icon" with-colors
+        key="first"
+        class="background-icon first-icon"
+        with-colors
       />
     </div>
     <div class="documentation-hero__above-content">
@@ -28,9 +30,11 @@
     </div>
     <div
       class="documentation-hero__content"
-      :class="{ 'short-hero': shortHero,
+      :class="{
+        'short-hero': shortHero,
         'extra-bottom-padding': shouldShowLanguageSwitcher,
-        'minimized-hero': enableMinimized }">
+        'minimized-hero': enableMinimized,
+      }">
       <slot />
     </div>
   </div>

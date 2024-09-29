@@ -8,7 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-export default {
+import { reactive } from 'vue';
+
+const TutorialsOverviewStore = reactive({
   state: {
     activeTutorialLink: null,
     activeVolume: null,
@@ -28,4 +30,6 @@ export default {
   setReferences(references) {
     this.state.references = references;
   },
-};
+});
+
+export default TutorialsOverviewStore;

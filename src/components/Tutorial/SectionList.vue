@@ -11,13 +11,13 @@
 <template>
   <div class="sections">
     <Section
-       v-for="(section, index) in tasks"
-       v-bind="section"
-       :key="index"
-       :id="section.anchor"
-       :sectionNumber="index + 1"
-       :isRuntimePreviewVisible="isRuntimePreviewVisible"
-       @runtime-preview-toggle="onRuntimePreviewToggle"
+      v-for="(section, index) in tasks"
+      v-bind="section"
+      :key="index"
+      :id="section.anchor"
+      :sectionNumber="index + 1"
+      :isRuntimePreviewVisible="isRuntimePreviewVisible"
+      @runtime-preview-toggle="onRuntimePreviewToggle"
     />
   </div>
 </template>

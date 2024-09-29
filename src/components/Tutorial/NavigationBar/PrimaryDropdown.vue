@@ -22,8 +22,8 @@
         closeDropdown,
         navigateOverOptions,
         OptionClass,
-        ActiveOptionClass
-     }"
+        ActiveOptionClass,
+      }"
     >
       <ul
         :class="contentClasses"
@@ -57,7 +57,7 @@
                     :class="{ [OptionClass]: true, [ActiveOptionClass]: isActive }"
                     :value="title"
                     :aria-selected="isActive"
-                    :aria-current="isActive ? 'tutorial': false"
+                    :aria-current="isActive ? 'tutorial' : false"
                     :tabindex="-1"
                     @click="setActive(navigate, closeDropdown, $event)"
                     @keydown.enter="setActive(navigate, closeDropdown, $event)"

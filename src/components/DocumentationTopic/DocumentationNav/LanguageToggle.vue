@@ -52,7 +52,7 @@
       class="language-list-container"
     >
       <span class="nav-menu-setting-label">{{ $t('formats.colon', {
-        content: $t('language')
+        content: $t('language'),
       }) }}</span>
       <ul class="language-list">
         <li

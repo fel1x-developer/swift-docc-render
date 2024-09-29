@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { bridge } from '@/main';
+
 export default {
   inject: {
     performanceMetricsEnabled: {
@@ -34,7 +36,7 @@ export default {
       }
 
       // Send the 'rendered' message when Vue has patched the DOM with the latest data.
-      this.$bridge.send({
+      bridge.send({
         type: 'rendered',
         data: {
           time,

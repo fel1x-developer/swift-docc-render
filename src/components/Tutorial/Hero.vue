@@ -37,7 +37,7 @@
                 </a>
               </p>
               <GenericModal
-                :visible.sync="callToActionModalVisible"
+                v-model:visible="callToActionModalVisible"
                 isFullscreen
                 theme="dark"
               >

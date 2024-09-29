@@ -41,7 +41,7 @@
               <QuickNavigationModal
                 v-if="enableQuickNavigation"
                 :children="slotProps.flatChildren"
-                :showQuickNavigationModal.sync="showQuickNavigationModal"
+                v-model:showQuickNavigationModal="showQuickNavigationModal"
                 :technology="technology ? technology.title : ''"
               />
               <transition name="delay-hiding">
@@ -209,7 +209,7 @@ export default {
   mounted() {
     if (this.enableQuickNavigation) window.addEventListener('keydown', this.onQuickNavigationKeydown);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.enableQuickNavigation) window.removeEventListener('keydown', this.onQuickNavigationKeydown);
   },
   inject: {

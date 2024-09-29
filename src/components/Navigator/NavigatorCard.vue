@@ -18,10 +18,10 @@
     @close="$emit('close')"
   >
     <template #above-navigator-head>
-      <slot name="above-navigator-head"/>
+      <slot name="above-navigator-head" />
     </template>
     <template #navigator-head>
-      <slot name="navigator-head"/>
+      <slot name="navigator-head" />
     </template>
     <template #body="{ className }">
       <slot name="post-head" />
@@ -101,7 +101,7 @@
               v-model="filter"
               :tags="suggestedTags"
               :translatableTags="translatableTags"
-              :selected-tags.sync="selectedTags"
+              v-model:selected-tags="selectedTags"
               :placeholder="$t('filter.title')"
               :should-keep-open-on-blur="false"
               :shouldTruncateTags="shouldTruncateTags"

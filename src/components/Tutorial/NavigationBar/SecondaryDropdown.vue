@@ -24,7 +24,7 @@
         contentClasses,
         navigateOverOptions,
         OptionClass,
-        ActiveOptionClass
+        ActiveOptionClass,
       }"
     >
       <ul
@@ -42,7 +42,7 @@
         >
           <li
             :value="option.title"
-            :class="[OptionClass, { [ActiveOptionClass] : currentOption === option.title }]"
+            :class="[OptionClass, { [ActiveOptionClass]: currentOption === option.title }]"
             :aria-selected="currentOption === option.title"
             :aria-current="ariaCurrent(option.title)"
             :tabindex="-1"

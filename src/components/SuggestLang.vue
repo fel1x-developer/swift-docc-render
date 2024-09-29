@@ -9,26 +9,26 @@
 -->
 
 <template>
-<div v-if="displaySuggestLang" class="suggest-lang">
-  <div class="suggest-lang__wrapper">
-    <router-link
-      :to="getLocaleParam(preferredLocale)"
-      @click.native="setPreferredLocale(preferredLocale)"
-      class="suggest-lang__link"
-      :lang="getCodeForSlug(preferredLocale)"
-    >{{ $i18n.messages[preferredLocale]['view-in'] }}<InlineChevronRightIcon class="icon-inline" />
-    </router-link>
-    <div class="suggest-lang__close-icon-wrapper">
-      <button
-        class="suggest-lang__close-icon-button"
-        :aria-label="$t('continue-viewing')"
-        @click="setPreferredLocale($i18n.locale)"
-      >
-        <CloseIcon class="icon-inline" />
-      </button>
+  <div v-if="displaySuggestLang" class="suggest-lang">
+    <div class="suggest-lang__wrapper">
+      <router-link
+        :to="getLocaleParam(preferredLocale)"
+        @click.native="setPreferredLocale(preferredLocale)"
+        class="suggest-lang__link"
+        :lang="getCodeForSlug(preferredLocale)"
+      >{{ $i18n.messages[preferredLocale]['view-in'] }}<InlineChevronRightIcon class="icon-inline" />
+      </router-link>
+      <div class="suggest-lang__close-icon-wrapper">
+        <button
+          class="suggest-lang__close-icon-button"
+          :aria-label="$t('continue-viewing')"
+          @click="setPreferredLocale($i18n.locale)"
+        >
+          <CloseIcon class="icon-inline" />
+        </button>
+      </div>
     </div>
   </div>
-</div>
 </template>
 <script>
 import InlineChevronRightIcon from 'theme/components/Icons/InlineChevronRightIcon.vue';

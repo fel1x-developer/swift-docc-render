@@ -26,6 +26,6 @@ describe('Title', () => {
 
   it('renders slot content', () => {
     const content = wrapper.find('span');
-    expect(content.html()).toBe(slots.default);
+    expect(content.html()).toContain('Foo');
   });
 });

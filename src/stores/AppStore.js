@@ -12,6 +12,9 @@ import ColorScheme from 'docc-render/constants/ColorScheme';
 import ImageLoadingStrategy from 'docc-render/constants/ImageLoadingStrategy';
 import Settings from 'docc-render/utils/settings';
 import appLocales from 'theme/lang/locales.json';
+import { reactive } from 'vue';
+
+const { VITE_APP_TARGET } = import.meta.env;
 
 const supportsAutoColorScheme = (typeof window.matchMedia !== 'undefined') && [
   ColorScheme.light,
@@ -21,9 +24,9 @@ const supportsAutoColorScheme = (typeof window.matchMedia !== 'undefined') && [
 
 const defaultColorScheme = supportsAutoColorScheme ? ColorScheme.auto : ColorScheme.light;
 
-export default {
+const AppStore = reactive({
   state: {
-    imageLoadingStrategy: process.env.VUE_APP_TARGET === 'ide'
+    imageLoadingStrategy: VITE_APP_TARGET === 'ide'
       ? ImageLoadingStrategy.eager : ImageLoadingStrategy.lazy,
     preferredColorScheme: Settings.preferredColorScheme || defaultColorScheme,
     preferredLocale: Settings.preferredLocale,
@@ -33,7 +36,7 @@ export default {
     includedArchiveIdentifiers: [],
   },
   reset() {
-    this.state.imageLoadingStrategy = process.env.VUE_APP_TARGET === 'ide'
+    this.state.imageLoadingStrategy = VITE_APP_TARGET === 'ide'
       ? ImageLoadingStrategy.eager : ImageLoadingStrategy.lazy;
     this.state.preferredColorScheme = Settings.preferredColorScheme || defaultColorScheme;
     this.state.supportsAutoColorScheme = supportsAutoColorScheme;
@@ -70,4 +73,6 @@ export default {
       this.state.preferredColorScheme = Settings.preferredColorScheme;
     }
   },
-};
+});
+
+export default AppStore;

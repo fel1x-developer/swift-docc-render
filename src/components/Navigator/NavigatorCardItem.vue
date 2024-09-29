@@ -33,7 +33,7 @@
         class="tree-toggle"
         tabindex="-1"
         :aria-labelledby="item.uid"
-        :aria-expanded="expanded ? 'true': 'false'"
+        :aria-expanded="expanded ? 'true' : 'false'"
         :aria-describedby="ariaDescribedBy"
         @click.exact.prevent="toggleTree"
         @click.alt.prevent="toggleEntireTree"
@@ -56,7 +56,7 @@
       />
       <span
         v-else
-        :class="[{ [`changed changed-${apiChange}`]: apiChange }, className ]"
+        :class="[{ [`changed changed-${apiChange}`]: apiChange }, className]"
       />
     </template>
     <template #title-container>
@@ -71,8 +71,8 @@
           'number-siblings': item.index + 1,
           'total-siblings': item.siblingsCount,
           'parent-siblings': item.parent,
-          'number-parent': item.childUIDs.length
-        }
+          'number-parent': item.childUIDs.length,
+        },
       ) }}</span>
       <span
         v-if="!isParent"
@@ -82,7 +82,7 @@
         {{ $t('filter.siblings-label', {
           'number-siblings': item.index + 1,
           'total-siblings': item.siblingsCount,
-          'parent-siblings': item.parent
+          'parent-siblings': item.parent,
         }) }}
       </span>
       <component

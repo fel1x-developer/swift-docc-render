@@ -6,7 +6,11 @@
  *
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
-*/
+ */
+
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution');
+const createAliasSetting = require('@vue/eslint-config-airbnb-with-typescript/createAliasSetting');
 
 module.exports = {
   root: true,
@@ -14,11 +18,14 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:vue/essential',
-    '@vue/airbnb',
+    'plugin:vue/vue3-essential',
+    '@vue/eslint-config-airbnb-with-typescript',
+    '@vue/eslint-config-airbnb-with-typescript/allow-js-in-vue',
+    'plugin:vuejs-accessibility/recommended',
+    'plugin:vitest-globals/recommended',
   ],
   parserOptions: {
-    parser: '@babel/eslint-parser',
+    ecmaVersion: 'latest'
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? [
@@ -71,4 +78,7 @@ module.exports = {
       },
     },
   ],
-};
+  settings: {
+    ...createAliasSetting(['./tsconfig.json']),
+  }
+}

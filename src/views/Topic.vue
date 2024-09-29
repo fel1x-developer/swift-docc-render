@@ -97,10 +97,10 @@ export default {
     this.store.reset();
   },
   mounted() {
-    this.$bridge.on('contentUpdate', this.handleContentUpdateFromBridge);
+    getCurrentInstance().appContext.config.globalProperties.$bridge.on('contentUpdate', this.handleContentUpdateFromBridge);
   },
-  beforeDestroy() {
-    this.$bridge.off('contentUpdate', this.handleContentUpdateFromBridge);
+  beforeUnmount() {
+    getCurrentInstance().appContext.config.globalProperties.$bridge.off('contentUpdate', this.handleContentUpdateFromBridge);
   },
   methods: {
     componentFor(topic) {

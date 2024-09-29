@@ -9,7 +9,7 @@
 -->
 
 <template>
- <div class="type">{{ typeOutput }}</div>
+  <div class="type">{{ typeOutput }}</div>
 </template>
 
 <script>

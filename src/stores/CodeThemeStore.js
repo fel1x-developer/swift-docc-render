@@ -7,8 +7,9 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
+import { reactive } from 'vue';
 
-export default {
+const CodeThemeStore = reactive({
   state: {
     codeColors: null,
   },
@@ -29,4 +30,6 @@ export default {
       [key]: rgbaValue(color),
     }), {});
   },
-};
+});
+
+export default CodeThemeStore;

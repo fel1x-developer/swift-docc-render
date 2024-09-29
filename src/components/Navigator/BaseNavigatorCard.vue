@@ -13,9 +13,9 @@
     <div class="navigator-card-full-height">
       <div class="navigator-card-inner">
         <div class="head-wrapper">
-          <slot name="above-navigator-head"/>
+          <slot name="above-navigator-head" />
           <div class="head-inner">
-            <slot name="navigator-head"/>
+            <slot name="navigator-head" />
             <button
               :id="SIDEBAR_HIDE_BUTTON_ID"
               class="close-card"
@@ -26,7 +26,7 @@
             </button>
           </div>
         </div>
-        <slot name="body" className="card-body"/>
+        <slot name="body" className="card-body" />
       </div>
     </div>
   </div>

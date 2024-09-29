@@ -42,7 +42,7 @@
         v-bind="{
           value,
           isOpen,
-          contentClasses: ['form-dropdown-content', { 'is-open' : isOpen }],
+          contentClasses: ['form-dropdown-content', { 'is-open': isOpen }],
           closeDropdown,
           onChangeAction,
           closeAndFocusToggler,
@@ -96,7 +96,7 @@ export default {
   mounted() {
     document.addEventListener('click', this.closeOnLoseFocus);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     document.removeEventListener('click', this.closeOnLoseFocus);
   },
   methods: {

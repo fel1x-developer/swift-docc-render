@@ -28,7 +28,7 @@
     >
       <template #filter><slot name="filter" /></template>
       <template #navigator-head>
-        <slot name="navigator-head" className="nav-title"/>
+        <slot name="navigator-head" className="nav-title" />
       </template>
     </NavigatorCard>
     <LoadingNavigatorCard
@@ -37,7 +37,7 @@
     />
     <div aria-live="polite" class="visuallyhidden">
       {{ $t('navigator.navigator-is', {
-        state: isFetching ? $t('navigator.state.loading') : $t('navigator.state.ready')
+        state: isFetching ? $t('navigator.state.loading') : $t('navigator.state.ready'),
       }) }}
     </div>
   </nav>

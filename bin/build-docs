@@ -24,7 +24,7 @@ echo "Building docs for $CATALOG"
 # Generate a symbol graph for the app as JSON and store it in a tmp directory
 rm -rf $SGF
 mkdir -p $TMP_DIR
-$SCRIPT_DIR/generate-symbol-graph > $SGF
+node $SCRIPT_DIR/generate-symbol-graph.cjs > $SGF
 echo "Generated symbol graph: $SGF"
 
 # Build the doc catalog for the app with the symbol graph using DocC and store

@@ -12,7 +12,7 @@
   <div class="tags">
     <div
       class="scroll-wrapper"
-      :class="{ 'scrolling': isScrolling }"
+      :class="{ scrolling: isScrolling }"
       ref="scroll-wrapper"
       @scroll="handleScroll"
     >

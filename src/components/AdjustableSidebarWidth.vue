@@ -13,7 +13,7 @@
     class="adjustable-sidebar-width"
     :class="{
       dragging: isDragging,
-      'sidebar-hidden': !enableNavigator || hiddenOnLarge
+      'sidebar-hidden': !enableNavigator || hiddenOnLarge,
     }"
   >
     <div
@@ -26,7 +26,7 @@
         :style="asideStyles"
         class="aside"
         ref="aside"
-        :aria-hidden="hiddenOnLarge ? 'true': null"
+        :aria-hidden="hiddenOnLarge ? 'true' : null"
         @transitionstart.self="trackTransitionStart"
         @transitionend.self="trackTransitionEnd"
       >

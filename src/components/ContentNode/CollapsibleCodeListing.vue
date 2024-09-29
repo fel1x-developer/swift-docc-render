@@ -16,8 +16,8 @@
     <!-- Do not add newlines in <pre>, as they'll appear in the rendered HTML. -->
     <pre><CodeBlock><div
       v-for="(content, index) in this.content"
-      :class="['container-general',{ collapsible: content.collapsible === true },
-    { collapsed: content.collapsible === true && collapsed }]"
+      :class="['container-general', { collapsible: content.collapsible === true },
+               { collapsed: content.collapsible === true && collapsed }]"
       :key="index"
     ><div
       v-for="(line, index) in content.code"

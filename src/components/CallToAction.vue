@@ -14,11 +14,11 @@
       <LeftColumn>
         <span class="label">{{label}}</span>
         <h2> {{ title }} </h2>
-        <ContentNode v-if="abstract" class="description" :content="[abstractParagraph]"/>
+        <ContentNode v-if="abstract" class="description" :content="[abstractParagraph]" />
         <Button v-if="action" :action="action" />
       </LeftColumn>
       <RightColumn class="right-column">
-        <Asset v-if="media" class="media" :identifier="media"/>
+        <Asset v-if="media" class="media" :identifier="media" />
       </RightColumn>
     </Row>
   </div>

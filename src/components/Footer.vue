@@ -13,7 +13,7 @@
     <div class="row">
       <ColorSchemeToggle />
     </div>
-    <slot className="row"/>
+    <slot className="row" />
   </footer>
 </template>
 
@@ -34,10 +34,10 @@ export default {
 }
 
 .row {
-  @include breakpoint-content;
   display: flex;
   flex-direction: row-reverse;
   margin: 20px auto;
+  @include breakpoint-content;
   @include breakpoint(small) {
     width: 100%;
     padding: 0 $nav-padding-small;

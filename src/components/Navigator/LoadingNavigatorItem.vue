@@ -15,7 +15,7 @@
     class="loading-navigator-item"
   >
     <template #navigator-icon="{ className }">
-      <div :class="className"/>
+      <div :class="className" />
     </template>
     <template #title-container>
       <div

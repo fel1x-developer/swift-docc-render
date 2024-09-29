@@ -20,7 +20,11 @@
     :aria-label="$t('api-reference')"
     :showActions="hasMenuItems"
   >
-    <template #pre-title="{ closeNav, isOpen, currentBreakpoint, className }" v-if="displaySidenav">
+    <template
+      #pre-title="{
+        closeNav, isOpen, currentBreakpoint, className,
+      }"
+      v-if="displaySidenav">
       <div :class="className">
         <div class="sidenav-toggle-wrapper">
           <button
@@ -30,9 +34,9 @@
             :tabindex="isOpen ? -1 : null"
             @click.prevent="handleSidenavToggle(closeNav, currentBreakpoint)"
           >
-          <span class="sidenav-icon-wrapper">
-            <SidenavIcon class="icon-inline sidenav-icon" />
-          </span>
+            <span class="sidenav-icon-wrapper">
+              <SidenavIcon class="icon-inline sidenav-icon" />
+            </span>
           </button>
         </div>
       </div>

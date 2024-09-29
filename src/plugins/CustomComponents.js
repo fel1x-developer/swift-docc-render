@@ -48,7 +48,7 @@ function registerCustomComponent(name) {
   }
 }
 
-export default function CustomComponents(Vue, options = {
+export default function CustomComponents(app, options = {
   names: [
     'header',
     'footer',
@@ -63,7 +63,7 @@ export default function CustomComponents(Vue, options = {
   // Example: <custom-header>
   //
   // eslint-disable-next-line no-param-reassign
-  Vue.config.ignoredElements = /^custom-/;
+  app.config.compilerOptions.isCustomElement = tag => tag.startsWith('custom-');
 
   // eslint-disable-next-line no-param-reassign
   names.forEach(registerCustomComponent);

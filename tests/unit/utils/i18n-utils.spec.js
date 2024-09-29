@@ -57,7 +57,7 @@ describe('localeIsValid', () => {
 
 describe('updateLocale', () => {
   it('updates current global var for locale', () => {
-    updateLocale(to.params.locale, env);
+    updateLocale(to.params.locale);
     expect(env.$i18n.locale).toBe('cn');
     expect(updateLangTag).toHaveBeenCalledTimes(1);
   });

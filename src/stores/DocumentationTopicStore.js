@@ -11,11 +11,12 @@
 import ApiChangesStoreBase from 'docc-render/stores/ApiChangesStoreBase';
 import OnThisPageSectionsStoreBase from 'docc-render/stores/OnThisPageSectionsStoreBase';
 import Settings from 'docc-render/utils/settings';
+import { reactive } from 'vue';
 
 const { state: changesState, ...changesActions } = ApiChangesStoreBase;
 const { state: pageSectionsState, ...pageSectionsActions } = OnThisPageSectionsStoreBase;
 
-export default {
+const DocumentationTopicStore = reactive({
   state: {
     preferredLanguage: Settings.preferredLanguage,
     contentWidth: 0,
@@ -40,4 +41,6 @@ export default {
   },
   ...changesActions,
   ...pageSectionsActions,
-};
+});
+
+export default DocumentationTopicStore;

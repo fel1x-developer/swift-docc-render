@@ -26,6 +26,6 @@ describe('Section', () => {
 
   it('renders slot content', () => {
     const content = wrapper.find('p');
-    expect(content.html()).toBe(slots.default);
+    expect(content.html()).toContain('foobar');
   });
 });

@@ -14,20 +14,21 @@
     role="search"
     tabindex="0"
     :aria-labelledby="searchAriaLabelledBy"
-    :class="{ 'focus': showSuggestedTags && !preventBorderStyle }"
+    :class="{ focus: showSuggestedTags && !preventBorderStyle }"
     @blur.capture="handleBlur"
     @focus.capture="handleFocus"
   >
-    <div :class="['filter__wrapper', {
-      'filter__wrapper--reversed': positionReversed,
-      'filter__wrapper--no-border-style': preventBorderStyle
-    }]">
+    <div
+      :class="['filter__wrapper', {
+        'filter__wrapper--reversed': positionReversed,
+        'filter__wrapper--no-border-style': preventBorderStyle,
+      }]">
       <div class="filter__top-wrapper">
         <button
           class="filter__filter-button"
           aria-hidden="true"
           tabindex="-1"
-          :class="{ 'blue': inputIsNotEmpty }"
+          :class="{ blue: inputIsNotEmpty }"
           @click="focusInput"
           @mousedown.prevent
         >
@@ -36,7 +37,7 @@
           </slot>
         </button>
         <div
-          :class="['filter__input-box-wrapper', { 'scrolling': isScrolling }]"
+          :class="['filter__input-box-wrapper', { scrolling: isScrolling }]"
           @scroll="handleScroll"
         >
           <TagList

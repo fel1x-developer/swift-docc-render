@@ -14,7 +14,7 @@
     :anchor="anchor"
     :title="introProps.title"
   >
-    <Intro v-bind="introProps"/>
+    <Intro v-bind="introProps" />
     <Steps
       v-if="stepsSection.length > 0"
       :content="stepsSection"

@@ -12,7 +12,10 @@
   <section>
     <LinkableHeading :anchor="anchor">{{ title }}</LinkableHeading>
     <ParametersTable :parameters="sanitizedResponses" :changes="propertyChanges" key-by="status">
-      <template #symbol="{ status, type, reason, content, changes }">
+      <template
+        #symbol="{
+          status, type, reason, content, changes,
+        }">
         <div class="response-name">
           <code>
             {{ status }}
@@ -26,10 +29,12 @@
         />
       </template>
       <template
-        #description="{ content, mimeType, reason, type, status, changes }"
+        #description="{
+          content, mimeType, reason, type, status, changes,
+        }"
       >
         <PossiblyChangedType
-          v-if="shouldShiftType({content, reason, status})"
+          v-if="shouldShiftType({ content, reason, status })"
           :type="type"
           :changes="changes.type"
         />

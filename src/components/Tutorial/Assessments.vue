@@ -54,9 +54,9 @@ import GridColumn from 'docc-render/components/GridColumn.vue';
 import GridRow from 'docc-render/components/GridRow.vue';
 import LinkableElement from 'docc-render/components/LinkableElement.vue';
 
+import { h } from 'vue';
 import AssessmentsProgress from './AssessmentsProgress.vue';
 import Quiz from './Assessments/Quiz.vue';
-import { h } from 'vue';
 
 const additionalScrollOffset = 12;
 const SuccessMessage = 'tutorials.assessment.success-message';

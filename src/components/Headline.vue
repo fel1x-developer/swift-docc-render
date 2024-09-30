@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { h } from 'vue'
+import { h } from 'vue';
 
 const headingLevelMin = 1;
 const headingLevelMax = 6;

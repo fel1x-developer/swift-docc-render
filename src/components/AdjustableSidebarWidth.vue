@@ -205,7 +205,7 @@ export default {
       window.addEventListener('scroll', this.storeTopOffset, { passive: true });
     }
 
-    this.$once('vue:beforeDestroy', () => {
+    this.$once('vue:beforeUnmount', () => {
       window.removeEventListener('keydown', this.onEscapeKeydown);
       window.removeEventListener('resize', this.storeWindowSize);
       window.removeEventListener('orientationchange', this.storeWindowSize);

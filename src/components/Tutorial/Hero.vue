@@ -75,8 +75,8 @@ import GenericModal from 'docc-render/components/GenericModal.vue';
 import PlayIcon from 'theme/components/Icons/PlayIcon.vue';
 import { normalizePath, toCSSUrl } from 'docc-render/utils/assets';
 import referencesProvider from 'docc-render/mixins/referencesProvider';
-import HeroMetadata from './HeroMetadata.vue';
 import { h } from 'vue';
+import HeroMetadata from './HeroMetadata.vue';
 
 export default {
   name: 'Hero',

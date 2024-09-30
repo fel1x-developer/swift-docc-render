@@ -147,7 +147,7 @@ export default {
     if (this.isThemeDynamic) {
       const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
       matchMedia.addListener(this.onColorSchemePreferenceChange);
-      this.$once('vue:beforeDestroy', () => {
+      this.$once('vue:beforeUnmount', () => {
         matchMedia.removeListener(this.onColorSchemePreferenceChange);
       });
 

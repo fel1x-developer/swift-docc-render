@@ -141,7 +141,7 @@ export default {
     // persisted settings and the application store state, even when the page
     // is loaded through a back/forward page cache
     window.addEventListener('pageshow', this.syncPreferredColorScheme);
-    this.$once('vue:beforeDestroy', () => {
+    this.$once('vue:beforeUnmount', () => {
       window.removeEventListener('pageshow', this.syncPreferredColorScheme);
     });
   },
@@ -150,7 +150,7 @@ export default {
     (document.querySelector('.footer-current-year') || {}).innerText = new Date().getFullYear();
     this.attachColorSchemeListeners();
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.fromKeyboard) {
       window.removeEventListener('mousedown', this.onMouseDown);
     } else {
@@ -178,7 +178,7 @@ export default {
       if (!window.matchMedia) return;
       const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
       matchMedia.addListener(this.onColorSchemePreferenceChange);
-      this.$once('vue:beforeDestroy', () => {
+      this.$once('vue:beforeUnmount', () => {
         matchMedia.removeListener(this.onColorSchemePreferenceChange);
       });
 

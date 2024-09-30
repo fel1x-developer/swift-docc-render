@@ -136,7 +136,7 @@ export default {
     }, 150);
     window.addEventListener('resize', cb);
     window.addEventListener('orientationchange', cb);
-    this.$once('vue:beforeDestroy', () => {
+    this.$once('vue:beforeUnmount', () => {
       window.removeEventListener('resize', cb);
       window.removeEventListener('orientationchange', cb);
     });

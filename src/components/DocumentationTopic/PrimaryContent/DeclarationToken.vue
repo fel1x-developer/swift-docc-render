@@ -10,11 +10,11 @@
 
 <script>
 import WordBreak from 'docc-render/components/WordBreak.vue';
+import { h } from 'vue';
 import ChangedToken from './DeclarationToken/ChangedToken.vue';
 import LinkableToken from './DeclarationToken/LinkableToken.vue';
 import RawText from './DeclarationToken/RawText.vue';
 import SyntaxToken from './DeclarationToken/SyntaxToken.vue';
-import { h } from 'vue';
 
 const TokenKind = {
   attribute: 'attribute',

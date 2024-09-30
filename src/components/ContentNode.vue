@@ -10,6 +10,7 @@
 
 <script>
 import referencesProvider from 'docc-render/mixins/referencesProvider';
+import { h } from 'vue';
 import Aside from './ContentNode/Aside.vue';
 import CodeListing from './ContentNode/CodeListing.vue';
 import LinkableHeading from './ContentNode/LinkableHeading.vue';
@@ -31,7 +32,6 @@ import TaskList from './ContentNode/TaskList.vue';
 import LinksBlock from './ContentNode/LinksBlock.vue';
 import DeviceFrame from './ContentNode/DeviceFrame.vue';
 import ThematicBreak from './ContentNode/ThematicBreak.vue';
-import { h } from 'vue';
 
 const { CaptionPosition, CaptionTag } = Caption.constants;
 

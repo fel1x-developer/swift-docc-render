@@ -58,7 +58,7 @@ export default {
   },
   async mounted() {
     window.addEventListener('scroll', this.onScroll, false);
-    this.$once('vue:beforeDestroy', () => {
+    this.$once('vue:beforeUnmount', () => {
       window.removeEventListener('scroll', this.onScroll);
     });
   },

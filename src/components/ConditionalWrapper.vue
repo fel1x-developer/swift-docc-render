@@ -8,21 +8,20 @@
   See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 -->
 <script>
+import { defineOptions, h } from 'vue';
 /**
  * Conditionally renders a component around the default slot.
  */
-export default {
-  functional: true,
-  name: 'ConditionalWrapper',
-  props: {
-    tag: [Object, String],
-    shouldWrap: Boolean,
-  },
-  render(context) {
-    if (context.props.shouldWrap) {
-      return h(context.props.tag, context.data, context.children);
-    }
-    return context.children;
-  },
+const ConditionalWrapper = (props, context) => {
+  defineOptions({
+    name: 'ConditionalWrapper',
+  });
+
+  if (context.props.shouldWrap) {
+    return h(context.props.tag, context.data, context.children);
+  }
+  return context.slots;
 };
+
+export default ConditionalWrapper;
 </script>

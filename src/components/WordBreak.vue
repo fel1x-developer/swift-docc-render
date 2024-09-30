@@ -9,7 +9,7 @@
 -->
 
 <script>
-import { h } from 'vue';
+import { defineOptions, h } from 'vue';
 
 /**
  * Indicate safe places to break apart words across multiple lines when necessary.
@@ -70,47 +70,39 @@ import { h } from 'vue';
  * <!-- https://foo .bar /baz /qux -->
  * ```
  */
-export default {
-  functional: true,
-  name: 'WordBreak',
-  render({ props, slots, data }) {
-    const childNodes = (slots().default || []);
-    const textNodes = childNodes.filter(node => node.text && !node.tag);
+const WordBreak = (props, context) => {
+  defineOptions({
+    name: 'WordBreak',
+  });
 
-    // Don't attempt word breaking unless this component wraps raw strings
-    if (textNodes.length === 0 || textNodes.length !== childNodes.length) {
-      return h(props.tag, data, childNodes);
-    }
+  const childNodes = (context.slots().default || []);
+  const textNodes = childNodes.filter(node => node.text && !node.tag);
 
-    const word = textNodes.map(({ text }) => text).join();
-    const childrenWithBreaks = [];
+  // Don't attempt word breaking unless this component wraps raw strings
+  if (textNodes.length === 0 || textNodes.length !== childNodes.length) {
+    return h(props.tag, context.attrs, childNodes);
+  }
 
-    let match = null;
-    let lastIndex = 0;
-    // Find each regex match in the wrapped string and create an array of each
-    // individual substring along with a corresponding <wbr> element.
-    // eslint-disable-next-line no-cond-assign
-    while ((match = props.safeBoundaryPattern.exec(word)) !== null) {
-      const nextIndex = match.index + 1;
+  const word = textNodes.map(({ text }) => text).join();
+  const childrenWithBreaks = [];
 
-      childrenWithBreaks.push(word.slice(lastIndex, nextIndex));
-      childrenWithBreaks.push(h('wbr', { key: match.index }));
+  let match = null;
+  let lastIndex = 0;
+  // Find each regex match in the wrapped string and create an array of each
+  // individual substring along with a corresponding <wbr> element.
+  // eslint-disable-next-line no-cond-assign
+  while ((match = props.safeBoundaryPattern.exec(word)) !== null) {
+    const nextIndex = match.index + 1;
 
-      lastIndex = nextIndex;
-    }
-    childrenWithBreaks.push(word.slice(lastIndex, word.length));
+    childrenWithBreaks.push(word.slice(lastIndex, nextIndex));
+    childrenWithBreaks.push(h('wbr', { key: match.index }));
 
-    return h(props.tag, data, childrenWithBreaks);
-  },
-  props: {
-    safeBoundaryPattern: {
-      type: RegExp,
-      default: () => /([a-z](?=[A-Z])|(:)\w|\w(?=[._]\w))/g,
-    },
-    tag: {
-      type: String,
-      default: () => 'span',
-    },
-  },
+    lastIndex = nextIndex;
+  }
+  childrenWithBreaks.push(word.slice(lastIndex, word.length));
+
+  return h(props.tag, context.attrs, childrenWithBreaks);
 };
+
+export default WordBreak;
 </script>

@@ -29,9 +29,9 @@
       </label>
     </fieldset>
     <div aria-live="assertive" class="visuallyhidden">
-      <i18n
+      <i18n-t
         v-if="checkedIndex != null"
-        path="tutorials.assessment.answer-result"
+        keypath="tutorials.assessment.answer-result"
         tag="span"
       >
         <template #answer>
@@ -41,7 +41,7 @@
           ? $t('tutorials.assessment.correct')
           : $t('tutorials.assessment.incorrect')
         }}</template>
-      </i18n>
+      </i18n-t>
     </div>
     <div class="controls">
       <ButtonLink

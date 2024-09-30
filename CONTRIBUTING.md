@@ -78,10 +78,10 @@ more details.
     You may want to set an http endpoint as a proxy to handle data requests while developing locally.
 
     ```shell
-    VUE_APP_DEV_SERVER_PROXY=https://localhost:8000 npm run serve
+    VITE_APP_DEV_SERVER_PROXY=https://localhost:8000 npm run serve
     ```
 
-    As an alternative you can just create a `.env.development.local` file on the root of the project to add the `VUE_APP_DEV_SERVER_PROXY` env varible so you don't have to set it in the `npm run serve` script each time.
+    As an alternative you can just create a `.env.development.local` file on the root of the project to add the `VITE_APP_DEV_SERVER_PROXY` env varible so you don't have to set it in the `npm run serve` script each time.
     
 ### Build Steps
 
@@ -149,7 +149,7 @@ Before opening a pull request, we ask that you:
 ### Tests and linting
 
 Run the following script to:
-- Run unit tests with [Jest](https://jestjs.io/)
+- Run unit tests with [Vitest](https://vitest.dev/)
 - Find syntax errors with [ESLint](https://eslint.org/)
 - Check that all files have license headers
 

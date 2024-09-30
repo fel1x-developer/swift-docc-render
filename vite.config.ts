@@ -7,7 +7,7 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { fileURLToPath } from 'node:url';
 import LICENSE_HEADER from './src/setup-utils/license-header-built-files';
 
-const target = process.env.VUE_APP_TARGET || '';
+const target = process.env.VITE_APP_TARGET || '';
 const buildTarget = ['ide', 'default'].includes(target) ? target : 'default';
 
 // https://vitejs.dev/config/

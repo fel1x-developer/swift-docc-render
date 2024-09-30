@@ -24,7 +24,7 @@ export async function fetchData(path, params = {}, options = {}) {
     // response, so this needs to be special cased as a good response here.
     // Otherwise, the `ok` property will return true for any http status within
     // the range of 200-299
-    if (process.env.VUE_APP_TARGET === 'ide' && response.status === 0) {
+    if (import.meta.env.VITE_APP_TARGET === 'ide' && response.status === 0) {
       return false;
     }
 
@@ -80,7 +80,7 @@ export async function fetchDataForRouteEnter(to, from, next) {
   try {
     data = await fetchData(path, to.query);
   } catch (error) {
-    if (process.env.VUE_APP_TARGET === 'ide') {
+    if (import.meta.env.VITE_APP_TARGET === 'ide') {
       console.error(error);
       // We need to throw false to pass false to the following `catch` function
       // so we stop the navigation by calling `next(false)`

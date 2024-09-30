@@ -65,7 +65,7 @@ module.exports = {
     {
       files: ['**/__mocks__/*.js'],
       env: {
-        jest: true,
+        'vitest-globals/env': true,
       },
     },
     {
@@ -74,7 +74,7 @@ module.exports = {
         '**/tests/unit/**/*.spec.{j,t}s?(x)',
       ],
       env: {
-        jest: true,
+        'vitest-globals/env': true,
       },
     },
   ],

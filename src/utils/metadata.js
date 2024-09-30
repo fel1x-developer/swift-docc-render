@@ -10,7 +10,7 @@
 import { getSetting } from 'docc-render/utils/theme-settings';
 import { resolveAbsoluteUrl } from 'docc-render/utils/url-helper';
 
-const themeTitle = getSetting(['meta', 'title'], process.env.VUE_APP_TITLE);
+const themeTitle = getSetting(['meta', 'title'], import.meta.env.VITE_APP_TITLE);
 
 const createMetaTags = ({
   title,

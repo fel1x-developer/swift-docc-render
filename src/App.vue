@@ -63,7 +63,7 @@ export default {
   provide() {
     return {
       isTargetIDE: this.isTargetIDE,
-      performanceMetricsEnabled: process.env.VUE_APP_PERFORMANCE_ENABLED === 'true',
+      performanceMetricsEnabled: import.meta.env.VITE_APP_PERFORMANCE_ENABLED === 'true',
     };
   },
   data() {
@@ -71,7 +71,7 @@ export default {
       AppTopID,
       appState: AppStore.state,
       fromKeyboard: false,
-      isTargetIDE: process.env.VUE_APP_TARGET === 'ide',
+      isTargetIDE: import.meta.env.VITE_APP_TARGET === 'ide',
       themeSettings: themeSettingsState,
       baseNavStickyAnchorId,
     };

@@ -39,8 +39,8 @@ const Languages = {
   xml: ['html', 'xhtml', 'rss', 'atom', 'xjb', 'xsd', 'xsl', 'plist', 'wsf', 'svg'],
   // load more languages from the environment
   ...(
-    process.env.VUE_APP_HLJS_LANGUAGES
-      ? Object.fromEntries(process.env.VUE_APP_HLJS_LANGUAGES.split(',').map(l => [l, []]))
+    import.meta.env.VITE_APP_HLJS_LANGUAGES
+      ? Object.fromEntries(import.meta.env.VITE_APP_HLJS_LANGUAGES.split(',').map(l => [l, []]))
       : undefined
   ),
 };
@@ -74,7 +74,7 @@ async function importHighlightFileForLanguage(language) {
   const files = [language];
   try {
     // use a reduce to sequentially resolve promises, in the order given.
-    await files.reduce(async (previousPromise, file) => {
+    files.reduce(async (previousPromise, file) => {
       // This line will wait for the last async function to finish.
       // The first iteration uses an already resolved Promise
       // so, it will immediately continue.
@@ -83,14 +83,11 @@ async function importHighlightFileForLanguage(language) {
 
       if (CustomLanguagesSet.has(file)) {
         languageFile = await import(
-          /* webpackChunkName: "highlight-js-custom-[request]" */
           `../utils/custom-highlight-lang/${file}.js`
         );
       } else {
         languageFile = await import(
-          // See bug https://github.com/webpack/webpack/issues/13865
-          /* webpackChunkName: "highlight-js-[request]" */
-          `highlight-js-alias/lib/languages/${file}.js`
+          `highlight-js/${file}.js`
         );
       }
 

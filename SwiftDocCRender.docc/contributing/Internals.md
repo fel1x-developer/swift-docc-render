@@ -146,7 +146,7 @@ If you need access to a global mixin or var, from `_core.scss` you have to impor
 
 #### Unit tests
 
-DocC-Render is unit tested, using the [Jest](https://jestjs.io/) testing framework. All components and utilities strive to have a corresponding test file inside the  `tests` folder, mirroring the file's location.
+DocC-Render is unit tested, using the [Vitest](https://vitest.dev/) testing framework. All components and utilities strive to have a corresponding test file inside the  `tests` folder, mirroring the file's location.
 
 Unit tests can be run via:
 
@@ -174,9 +174,9 @@ DocC-Render has a few build-time environment flags, that allow you to set config
 
 **List of env variables:**
 
-* **VUE_APP_DEV_SERVER_PROXY** - The HTTP endpoint or  local filepath to read render JSON from when using the development server
-* **VUE_APP_TITLE** - An optional default page title to apply to pages
-* **VUE_APP_HLJS_LANGUAGES** - An optional comma-separated list of highlight.js languages to include in the build
+* **VITE_APP_DEV_SERVER_PROXY** - The HTTP endpoint or  local filepath to read render JSON from when using the development server
+* **VITE_APP_TITLE** - An optional default page title to apply to pages
+* **VITE_APP_HLJS_LANGUAGES** - An optional comma-separated list of highlight.js languages to include in the build
 
 #### Available Scripts
 

@@ -8,8 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-export default jest.fn().mockImplementation(() => ({
-  stop: jest.fn(),
-  start: jest.fn(),
-  destroy: jest.fn(),
+export default vi.fn().mockImplementation(() => ({
+  stop: vi.fn(),
+  start: vi.fn(),
+  destroy: vi.fn(),
 }));

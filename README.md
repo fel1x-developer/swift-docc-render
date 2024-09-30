@@ -27,13 +27,13 @@ SPAs are web apps that render dynamically at runtime entirely in the browser, us
 
 3. **Run a local server with hot reload at [localhost:8080](http://localhost:8080/)**
 
-    You may want to set a proxy to handle data requests while developing locally by setting the VUE_APP_DEV_SERVER_PROXY env variable to a documentation archive (.doccarchive or .docc-build) on your disk or served in a HTTP endpoint:
+    You may want to set a proxy to handle data requests while developing locally by setting the VITE_APP_DEV_SERVER_PROXY env variable to a documentation archive (.doccarchive or .docc-build) on your disk or served in a HTTP endpoint:
 
     ```shell
-    VUE_APP_DEV_SERVER_PROXY=[path to documentation archive] npm run serve
+    VITE_APP_DEV_SERVER_PROXY=[path to documentation archive] npm run serve
     ```
 
-    As an alternative you can just create a `.env.development.local` file on the root of the project to add the `VUE_APP_DEV_SERVER_PROXY` env variable so you don't have to set it in the `npm run serve` script each time.
+    As an alternative you can just create a `.env.development.local` file on the root of the project to add the `VITE_APP_DEV_SERVER_PROXY` env variable so you don't have to set it in the `npm run serve` script each time.
 
 ## Using Swift-DocC-Render to render documentation
 

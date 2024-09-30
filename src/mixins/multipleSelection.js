@@ -580,7 +580,7 @@ export default {
   mounted() {
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', this.updateKeyboardType);
-      this.$once('hook:beforeDestroy', () => {
+      this.$once('vue:beforeDestroy', () => {
         window.visualViewport.removeEventListener('resize', this.updateKeyboardType);
       });
     }

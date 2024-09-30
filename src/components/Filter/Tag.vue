@@ -91,7 +91,7 @@ export default {
     document.addEventListener('cut', this.handleCut);
     document.addEventListener('paste', this.handlePaste);
 
-    this.$once('hook:beforeDestroy', () => {
+    this.$once('vue:beforeDestroy', () => {
       document.removeEventListener('copy', this.handleCopy);
       document.removeEventListener('cut', this.handleCut);
       document.removeEventListener('paste', this.handlePaste);

@@ -59,7 +59,7 @@ export default {
       const changeHandler = event => this.handleMediaQueryChange(event, breakpointName);
       // init listener. Use the deprecated method as `addEventListener` is not supported by Safari
       query.addListener(changeHandler);
-      this.$once('hook:beforeDestroy', () => {
+      this.$once('vue:beforeDestroy', () => {
         query.removeListener(changeHandler);
       });
       // invoke the handler

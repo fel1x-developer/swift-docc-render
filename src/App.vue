@@ -141,7 +141,7 @@ export default {
     // persisted settings and the application store state, even when the page
     // is loaded through a back/forward page cache
     window.addEventListener('pageshow', this.syncPreferredColorScheme);
-    this.$once('hook:beforeDestroy', () => {
+    this.$once('vue:beforeDestroy', () => {
       window.removeEventListener('pageshow', this.syncPreferredColorScheme);
     });
   },
@@ -178,7 +178,7 @@ export default {
       if (!window.matchMedia) return;
       const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
       matchMedia.addListener(this.onColorSchemePreferenceChange);
-      this.$once('hook:beforeDestroy', () => {
+      this.$once('vue:beforeDestroy', () => {
         matchMedia.removeListener(this.onColorSchemePreferenceChange);
       });
 

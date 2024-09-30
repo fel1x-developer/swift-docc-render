@@ -37,6 +37,7 @@ import TopicTypeIcon from 'docc-render/components/TopicTypeIcon.vue';
 import { TopicRole } from 'docc-render/constants/roles';
 import CardSize from 'docc-render/constants/CardSize';
 import referencesProvider from 'docc-render/mixins/referencesProvider';
+import ContentNode from 'docc-render/components/ContentNode.vue';
 
 export const ROLE_LINK_TEXT = {
   [TopicRole.article]: 'documentation.card.read-article',
@@ -51,7 +52,7 @@ export default {
   components: {
     TopicTypeIcon,
     Card,
-    ContentNode: () => import('docc-render/components/ContentNode.vue'),
+    ContentNode,
   },
   mixins: [referencesProvider],
   props: {

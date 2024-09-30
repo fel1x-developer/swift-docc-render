@@ -72,6 +72,7 @@
 import PagerControl from 'docc-render/components/PagerControl.vue';
 import { BreakpointAttributes } from 'docc-render/utils/breakpoints';
 import DocumentationTopicStore from 'docc-render/stores/DocumentationTopicStore';
+import { h } from 'vue';
 
 const GUTTERS_WIDTH = 174;
 
@@ -151,22 +152,22 @@ export default {
   name: 'Pager',
   components: {
     ControlNext: {
-      render(createElement) {
-        return createElement(PagerControl, {
+      render() {
+        return h(PagerControl, {
           props: { action: PagerControl.Action.next },
         });
       },
     },
     ControlPrevious: {
-      render(createElement) {
-        return createElement(PagerControl, {
+      render() {
+        return h(PagerControl, {
           props: { action: PagerControl.Action.previous },
         });
       },
     },
     Gutter: {
-      render(createElement) {
-        return createElement('div', { class: 'gutter' }, (
+      render() {
+        return h('div', { class: 'gutter' }, (
           this.$slots.default
         ));
       },

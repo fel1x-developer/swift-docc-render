@@ -31,6 +31,7 @@ import TaskList from './ContentNode/TaskList.vue';
 import LinksBlock from './ContentNode/LinksBlock.vue';
 import DeviceFrame from './ContentNode/DeviceFrame.vue';
 import ThematicBreak from './ContentNode/ThematicBreak.vue';
+import { h } from 'vue';
 
 const { CaptionPosition, CaptionTag } = Caption.constants;
 
@@ -114,17 +115,17 @@ const TableColumnAlignments = {
 // The point after which a TabNavigator turns to vertical mode.
 const TabNavigatorVerticalThreshold = 7;
 
-// Recursively call the passed `createElement` function for each content node
+// Recursively call the passed `h` function for each content node
 // and any of its children by mapping each node `type` to a given Vue component
 //
 // Note: A plain string of text is returned for nodes with `type="text"`
-function renderNode(createElement, references) {
+function renderNode(h, references) {
   const renderChildren = children => children.map(
-    renderNode(createElement, references),
+    renderNode(h, references),
   );
 
   const renderListItems = items => items.map(item => (
-    createElement('li', {}, (
+    h('li', {}, (
       renderChildren(item.content)
     ))
   ));
@@ -138,7 +139,7 @@ function renderNode(createElement, references) {
     const align = alignments[cellIndex] || TableColumnAlignments.unset;
     let classes = null;
     if (align !== TableColumnAlignments.unset) classes = `${align}-cell`;
-    return createElement(element, { attrs: { ...attrs, colspan, rowspan }, class: classes }, (
+    return h(element, { attrs: { ...attrs, colspan, rowspan }, class: classes }, (
       renderChildren(data)
     ));
   };
@@ -153,13 +154,13 @@ function renderNode(createElement, references) {
     case TableHeaderStyle.both: {
       const [firstRow, ...otherRows] = rows;
       return [
-        createElement('thead', {}, [
-          createElement('tr', {}, firstRow.map((cell, cellIndex) => (
+        h('thead', {}, [
+          h('tr', {}, firstRow.map((cell, cellIndex) => (
             renderTableCell('th', { scope: 'col' }, cell, cellIndex, 0, extendedData, alignments)
           ))),
         ]),
-        createElement('tbody', {}, otherRows.map(([firstCell, ...otherCells], rowIndex) => (
-          createElement('tr', {}, [
+        h('tbody', {}, otherRows.map(([firstCell, ...otherCells], rowIndex) => (
+          h('tr', {}, [
             renderTableCell(
               'th', { scope: 'row' }, firstCell, 0, rowIndex + 1, extendedData, alignments,
             ),
@@ -173,8 +174,8 @@ function renderNode(createElement, references) {
     // tbody with rows, th for first cell of each row, td for other cells
     case TableHeaderStyle.column:
       return [
-        createElement('tbody', {}, rows.map(([firstCell, ...otherCells], rowIndex) => (
-          createElement('tr', {}, [
+        h('tbody', {}, rows.map(([firstCell, ...otherCells], rowIndex) => (
+          h('tr', {}, [
             renderTableCell(
               'th', { scope: 'row' }, firstCell, 0, rowIndex, extendedData, alignments,
             ),
@@ -189,13 +190,13 @@ function renderNode(createElement, references) {
     case TableHeaderStyle.row: {
       const [firstRow, ...otherRows] = rows;
       return [
-        createElement('thead', {}, [
-          createElement('tr', {}, firstRow.map((cell, cellIndex) => renderTableCell(
+        h('thead', {}, [
+          h('tr', {}, firstRow.map((cell, cellIndex) => renderTableCell(
             'th', { scope: 'col' }, cell, cellIndex, 0, extendedData, alignments,
           ))),
         ]),
-        createElement('tbody', {}, otherRows.map((row, rowIndex) => (
-          createElement('tr', {}, row.map((cell, cellIndex) => (
+        h('tbody', {}, otherRows.map((row, rowIndex) => (
+          h('tr', {}, row.map((cell, cellIndex) => (
             renderTableCell('td', {}, cell, cellIndex, rowIndex + 1, extendedData, alignments)
           )))
         ))),
@@ -204,9 +205,9 @@ function renderNode(createElement, references) {
     default:
       // tbody with all rows and every cell is td
       return [
-        createElement('tbody', {}, (
+        h('tbody', {}, (
           rows.map((row, rowIndex) => (
-            createElement('tr', {}, (
+            h('tr', {}, (
               row.map((cell, cellIndex) => (
                 renderTableCell('td', {}, cell, cellIndex, rowIndex, extendedData, alignments)
               ))
@@ -237,7 +238,7 @@ function renderNode(createElement, references) {
       const index = position === CaptionPosition.trailing ? 1 : 0;
       const tag = CaptionTag.figcaption;
       figureContent.splice(index, 0,
-        createElement(Caption, {
+        h(Caption, {
           props: {
             title,
             position,
@@ -245,11 +246,11 @@ function renderNode(createElement, references) {
           },
         }, renderChildren(abstract)));
     }
-    return createElement(Figure, { props: { anchor } }, figureContent);
+    return h(Figure, { props: { anchor } }, figureContent);
   };
 
   const renderDeviceFrame = ({ metadata: { deviceFrame }, ...node }) => (
-    createElement(DeviceFrame, {
+    h(DeviceFrame, {
       props: {
         device: deviceFrame,
       },
@@ -260,7 +261,7 @@ function renderNode(createElement, references) {
     switch (node.type) {
     case BlockType.aside: {
       const props = { kind: node.style, name: node.name };
-      return createElement(Aside, { props }, (
+      return h(Aside, { props }, (
         renderChildren(node.content)
       ));
     }
@@ -275,24 +276,24 @@ function renderNode(createElement, references) {
         content: node.code,
         showLineNumbers: node.showLineNumbers,
       };
-      return createElement(CodeListing, { props });
+      return h(CodeListing, { props });
     }
     case BlockType.endpointExample: {
       const props = {
         request: node.request,
         response: node.response,
       };
-      return createElement(EndpointExample, { props }, renderChildren(node.summary || []));
+      return h(EndpointExample, { props }, renderChildren(node.summary || []));
     }
     case BlockType.heading: {
       const props = {
         anchor: node.anchor,
         level: node.level,
       };
-      return createElement(LinkableHeading, { props }, node.text);
+      return h(LinkableHeading, { props }, node.text);
     }
     case BlockType.orderedList:
-      return createElement('ol', {
+      return h('ol', {
         attrs: {
           start: node.start,
         },
@@ -304,7 +305,7 @@ function renderNode(createElement, references) {
         && node.inlineContent[0].type === InlineType.image;
       const props = hasSingleImage ? { class: ['inline-image-container'] } : {};
 
-      return createElement('p', props, (
+      return h('p', props, (
         renderChildren(node.inlineContent)
       ));
     }
@@ -317,7 +318,7 @@ function renderNode(createElement, references) {
         const { title } = node.metadata;
         const position = title ? CaptionPosition.leading : CaptionPosition.trailing;
         const tag = CaptionTag.caption;
-        children.unshift(createElement(Caption, {
+        children.unshift(h(Caption, {
           props: {
             title,
             position,
@@ -328,7 +329,7 @@ function renderNode(createElement, references) {
         )));
       }
 
-      return createElement(Table, {
+      return h(Table, {
         attrs: {
           id: node.metadata && node.metadata.anchor,
         },
@@ -340,18 +341,18 @@ function renderNode(createElement, references) {
       ));
     }
     case BlockType.termList:
-      return createElement('dl', {}, node.items.map(({ term, definition }) => [
-        createElement('dt', {}, (
+      return h('dl', {}, node.items.map(({ term, definition }) => [
+        h('dt', {}, (
           renderChildren(term.inlineContent)
         )),
-        createElement('dd', {}, (
+        h('dd', {}, (
           renderChildren(definition.content)
         )),
       ]));
     case BlockType.unorderedList: {
       const isTaskList = list => TaskList.props.tasks.validator(list.items);
       return isTaskList(node) ? (
-        createElement(TaskList, {
+        h(TaskList, {
           props: {
             tasks: node.items,
           },
@@ -360,7 +361,7 @@ function renderNode(createElement, references) {
           },
         })
       ) : (
-        createElement('ul', {}, (
+        h('ul', {}, (
           renderListItems(node.items)
         ))
       );
@@ -369,11 +370,11 @@ function renderNode(createElement, references) {
       const props = {
         example: node.example,
       };
-      return createElement(DictionaryExample, { props }, renderChildren(node.summary || []));
+      return h(DictionaryExample, { props }, renderChildren(node.summary || []));
     }
     case BlockType.small: {
-      return createElement('p', {}, [
-        createElement(Small, {}, renderChildren(node.inlineContent)),
+      return h('p', {}, [
+        h(Small, {}, renderChildren(node.inlineContent)),
       ]);
     }
     case BlockType.video: {
@@ -382,7 +383,7 @@ function renderNode(createElement, references) {
       }
       if (!references[node.identifier]) return null;
       const { deviceFrame } = node.metadata || {};
-      return createElement(BlockVideo, {
+      return h(BlockVideo, {
         props: {
           identifier: node.identifier,
           deviceFrame,
@@ -391,9 +392,9 @@ function renderNode(createElement, references) {
     }
     case BlockType.row: {
       const columns = node.numberOfColumns ? { large: node.numberOfColumns } : undefined;
-      return createElement(
+      return h(
         Row, { props: { columns } }, node.columns.map(col => (
-          createElement(
+          h(
             Column, { props: { span: col.size } }, renderChildren(col.content),
           )
         )),
@@ -407,7 +408,7 @@ function renderNode(createElement, references) {
         ...slots,
         [tab.title]: () => renderChildren(tab.content),
       }), {});
-      return createElement(TabNavigator, {
+      return h(TabNavigator, {
         props: {
           titles,
           vertical,
@@ -416,7 +417,7 @@ function renderNode(createElement, references) {
       });
     }
     case BlockType.links: {
-      return createElement(LinksBlock, {
+      return h(LinksBlock, {
         props: {
           blockStyle: node.style,
           identifiers: node.items,
@@ -424,14 +425,14 @@ function renderNode(createElement, references) {
       });
     }
     case BlockType.thematicBreak:
-      return createElement(ThematicBreak);
+      return h(ThematicBreak);
     case InlineType.codeVoice:
-      return createElement(CodeVoice, {}, (
+      return h(CodeVoice, {}, (
         node.code
       ));
     case InlineType.emphasis:
     case InlineType.newTerm:
-      return createElement('em', (
+      return h('em', (
         renderChildren(node.inlineContent)
       ));
     case InlineType.image: {
@@ -444,7 +445,7 @@ function renderNode(createElement, references) {
       if (node.metadata && node.metadata.deviceFrame) {
         return renderDeviceFrame(node);
       }
-      return createElement(InlineImage, {
+      return h(InlineImage, {
         props: {
           alt: image.alt,
           variants: image.variants,
@@ -453,7 +454,7 @@ function renderNode(createElement, references) {
     }
     case InlineType.link:
       // Note: `InlineType.link` has been deprecated, but may still be found in old JSON.
-      return createElement('a', {
+      return h('a', {
         attrs: { href: node.destination },
         class: 'inline-link',
       }, (
@@ -465,7 +466,7 @@ function renderNode(createElement, references) {
       const titleInlineContent = node.overridingTitleInlineContent
         || reference.titleInlineContent;
       const titlePlainText = node.overridingTitle || reference.title;
-      return createElement(Reference, {
+      return h(Reference, {
         props: {
           url: reference.url,
           kind: reference.kind,
@@ -482,21 +483,21 @@ function renderNode(createElement, references) {
     }
     case InlineType.strong:
     case InlineType.inlineHead:
-      return createElement('strong', (
+      return h('strong', (
         renderChildren(node.inlineContent)
       ));
     case InlineType.text:
       return node.text === '\n' ? (
-        createElement('br')
+        h('br')
       ) : (
         node.text
       );
     case InlineType.superscript:
-      return createElement('sup', renderChildren(node.inlineContent));
+      return h('sup', renderChildren(node.inlineContent));
     case InlineType.subscript:
-      return createElement('sub', renderChildren(node.inlineContent));
+      return h('sub', renderChildren(node.inlineContent));
     case InlineType.strikethrough:
-      return createElement(StrikeThrough, renderChildren(node.inlineContent));
+      return h(StrikeThrough, renderChildren(node.inlineContent));
     default:
       return null;
     }
@@ -521,11 +522,11 @@ export default {
   name: 'ContentNode',
   constants: { TableHeaderStyle, TableColumnAlignments },
   mixins: [referencesProvider],
-  render: function render(createElement) {
+  render: function render() {
     // Dynamically map each content item and any children to their
     // corresponding components, and wrap the whole tree in a <div>
-    return createElement(this.tag, { class: 'content' }, (
-      this.content.map(renderNode(createElement, this.references), this)
+    return h(this.tag, { class: 'content' }, (
+      this.content.map(renderNode(h, this.references), this)
     ));
   },
   props: {

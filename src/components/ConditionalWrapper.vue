@@ -18,7 +18,7 @@ export default {
     tag: [Object, String],
     shouldWrap: Boolean,
   },
-  render(h, context) {
+  render(context) {
     if (context.props.shouldWrap) {
       return h(context.props.tag, context.data, context.children);
     }

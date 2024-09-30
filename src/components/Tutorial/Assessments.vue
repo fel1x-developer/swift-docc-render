@@ -56,6 +56,7 @@ import LinkableElement from 'docc-render/components/LinkableElement.vue';
 
 import AssessmentsProgress from './AssessmentsProgress.vue';
 import Quiz from './Assessments/Quiz.vue';
+import { h } from 'vue';
 
 const additionalScrollOffset = 12;
 const SuccessMessage = 'tutorials.assessment.success-message';
@@ -69,8 +70,8 @@ export default {
     Progress: AssessmentsProgress,
     Row: GridRow,
     HeaderColumn: {
-      render(createElement) {
-        return createElement(
+      render() {
+        return h(
           GridColumn,
           {
             props: {
@@ -85,8 +86,8 @@ export default {
       },
     },
     MainColumn: {
-      render(createElement) {
-        return createElement(
+      render() {
+        return h(
           GridColumn,
           {
             props: {

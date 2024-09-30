@@ -45,11 +45,11 @@ storage.get.mockImplementation((key, value) => value);
 
 const { SCROLL_LOCK_ID } = AdjustableSidebarWidth.constants;
 
-const scrollLockTarget = document.createElement('DIV');
+const scrollLockTarget = document.h('DIV');
 scrollLockTarget.id = SCROLL_LOCK_ID;
 document.body.appendChild(scrollLockTarget);
 
-const navStickyElement = document.createElement('DIV');
+const navStickyElement = document.h('DIV');
 navStickyElement.id = baseNavStickyAnchorId;
 const boundingClientSpy = vi.spyOn(navStickyElement, 'getBoundingClientRect')
   .mockReturnValue({ y: 0 });
@@ -66,7 +66,7 @@ const createWrapper = opts => shallowMount(AdjustableSidebarWidth, {
   scopedSlots: {
     aside(props) {
       slotProps = props;
-      return this.$createElement('div', { class: 'aside-content' }, 'Aside Content');
+      return this.$h('div', { class: 'aside-content' }, 'Aside Content');
     },
   },
   mocks: { $route: {} },

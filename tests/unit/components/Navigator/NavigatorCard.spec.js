@@ -232,7 +232,7 @@ function setOffsetParent(element, value) {
 
 function attachDivWithID(id) {
   if (document.getElementById(id)) return;
-  const div = document.createElement('DIV');
+  const div = document.h('DIV');
   div.id = id;
   document.body.appendChild(div);
 }

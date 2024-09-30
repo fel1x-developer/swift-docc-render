@@ -39,7 +39,7 @@ describe('BaseNavigatorCard', () => {
   });
 
   it('emits a `close` event, and focuses the open toggle', async () => {
-    const btn = document.createElement('BUTTON');
+    const btn = document.h('BUTTON');
     btn.id = baseNavOpenSidenavButtonId;
     document.body.appendChild(btn);
     const wrapper = createWrapper();

@@ -14,7 +14,7 @@ describe('hide', () => {
   let element;
 
   beforeEach(() => {
-    element = document.createElement('div');
+    element = document.h('div');
   });
 
   describe('when binding value is `true`', () => {

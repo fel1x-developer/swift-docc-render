@@ -31,12 +31,12 @@ const createWrapper = ({ propsData, ...rest } = {}) => mount(DropdownCustom, {
   scopedSlots: {
     default(props) {
       slotProps = props;
-      return this.$createElement('ul', { class: 'defaultSlot' }, [
-        this.$createElement('li', {
+      return this.$h('ul', { class: 'defaultSlot' }, [
+        this.$h('li', {
           attrs: { tabindex: 0 },
           class: [slotProps.OptionClass, slotProps.ActiveOptionClass],
         }, 'first'),
-        this.$createElement('li', {
+        this.$h('li', {
           attrs: { tabindex: 0 },
           class: [slotProps.OptionClass],
         }, 'second'),

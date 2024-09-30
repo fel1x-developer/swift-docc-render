@@ -110,7 +110,7 @@ const defaultProps = {
   flatChildren: [],
 };
 
-const fauxAnchor = document.createElement('DIV');
+const fauxAnchor = document.h('DIV');
 Object.defineProperty(fauxAnchor, 'offsetTop', { value: 0, writable: true });
 fauxAnchor.id = baseNavStickyAnchorId;
 document.body.appendChild(fauxAnchor);

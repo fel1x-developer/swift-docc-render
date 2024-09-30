@@ -154,7 +154,7 @@ describe('NavBase', () => {
       scopedSlots: {
         'pre-title': function preTitle(props) {
           preTitleProps = props;
-          return this.$createElement('div', { class: 'pre-title-slot' }, 'Pre Title');
+          return this.$h('div', { class: 'pre-title-slot' }, 'Pre Title');
         },
       },
     });
@@ -218,7 +218,7 @@ describe('NavBase', () => {
       scopedSlots: {
         tray(props) {
           slotProps = props;
-          return this.$createElement('div', { class: 'tray-slot' }, 'Tray slot content');
+          return this.$h('div', { class: 'tray-slot' }, 'Tray slot content');
         },
       },
     });
@@ -337,7 +337,7 @@ describe('NavBase', () => {
 
   it('gets the anchor as an intersection target', async () => {
     // create the sticky anchor and add it to the body
-    const sticky = document.createElement('DIV');
+    const sticky = document.h('DIV');
     sticky.setAttribute('id', baseNavStickyAnchorId);
     document.body.appendChild(sticky);
     wrapper = await createWrapper();

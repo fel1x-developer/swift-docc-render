@@ -41,7 +41,7 @@ describe('ContentNode', () => {
       propsData: { tasks },
       scopedSlots: {
         task: function render(slotProps) {
-          return this.$createElement('p', slotProps.task.text);
+          return this.$h('p', slotProps.task.text);
         },
       },
     });

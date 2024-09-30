@@ -48,6 +48,7 @@ import ContentNode from 'docc-render/components/ContentNode.vue';
 import GridRow from 'docc-render/components/GridRow.vue';
 import GridColumn from 'docc-render/components/GridColumn.vue';
 import Headline from 'docc-render/components/Headline.vue';
+import { h } from 'vue';
 
 export default {
   name: 'SectionIntro',
@@ -63,8 +64,8 @@ export default {
     Headline,
     Row: GridRow,
     Column: {
-      render(createElement) {
-        return createElement(GridColumn, {
+      render() {
+        return h(GridColumn, {
           props: {
             span: {
               large: 6,

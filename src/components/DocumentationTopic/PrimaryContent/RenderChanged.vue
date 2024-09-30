@@ -9,6 +9,8 @@
 -->
 
 <script>
+import { h } from 'vue';
+
 const ChangedClasses = {
   added: 'change-added',
   removed: 'change-removed',
@@ -56,7 +58,7 @@ export default {
       default: false,
     },
   },
-  render(h) {
+  render() {
     const {
       value, changes = {}, wrapChanges, renderSingleChange,
     } = this;

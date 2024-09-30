@@ -90,7 +90,7 @@ describe('BaseDropdown', () => {
       scopedSlots: {
         dropdown(props) {
           scopedSlotProps = props;
-          return this.$createElement('div', { class: 'foo' }, 'Foo');
+          return this.$h('div', { class: 'foo' }, 'Foo');
         },
       },
     });

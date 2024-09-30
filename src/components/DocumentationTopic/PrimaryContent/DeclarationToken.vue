@@ -14,6 +14,7 @@ import ChangedToken from './DeclarationToken/ChangedToken.vue';
 import LinkableToken from './DeclarationToken/LinkableToken.vue';
 import RawText from './DeclarationToken/RawText.vue';
 import SyntaxToken from './DeclarationToken/SyntaxToken.vue';
+import { h } from 'vue';
 
 const TokenKind = {
   attribute: 'attribute',
@@ -33,7 +34,7 @@ const TokenKind = {
 
 export default {
   name: 'DeclarationToken',
-  render: function _render(createElement) {
+  render: function _render() {
     const {
       kind,
       text,
@@ -42,39 +43,39 @@ export default {
     switch (kind) {
     case TokenKind.text: {
       const props = { text };
-      return createElement(RawText, { props });
+      return h(RawText, { props });
     }
     case TokenKind.typeIdentifier: {
       const props = { identifier: this.identifier };
-      return createElement(LinkableToken, {
+      return h(LinkableToken, {
         class: 'type-identifier-link',
         props,
       }, [
-        createElement(WordBreak, text),
+        h(WordBreak, text),
       ]);
     }
     case TokenKind.attribute: {
       const { identifier } = this;
       return identifier ? (
-        createElement(LinkableToken, {
+        h(LinkableToken, {
           class: 'attribute-link',
           props: { identifier },
         }, [
-          createElement(WordBreak, text),
+          h(WordBreak, text),
         ])
       ) : (
-        createElement(SyntaxToken, { props: { kind, text } })
+        h(SyntaxToken, { props: { kind, text } })
       );
     }
     case TokenKind.added:
     case TokenKind.removed:
-      return createElement(ChangedToken, { props: { tokens, kind } });
+      return h(ChangedToken, { props: { tokens, kind } });
     default: {
       const props = {
         kind,
         text,
       };
-      return createElement(SyntaxToken, { props });
+      return h(SyntaxToken, { props });
     }
     }
   },

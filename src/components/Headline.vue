@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { h } from 'vue'
+
 const headingLevelMin = 1;
 const headingLevelMax = 6;
 
@@ -32,8 +34,8 @@ const HeadingLevel = {
 // Private component used for headings with a dynamic level in templates
 const Heading = {
   name: 'Heading',
-  render: function render(createElement) {
-    return createElement(`h${this.level}`, this.$slots.default);
+  render: function render() {
+    return h(`h${this.level}`, this.$slots.default);
   },
   props: {
     level: HeadingLevel,

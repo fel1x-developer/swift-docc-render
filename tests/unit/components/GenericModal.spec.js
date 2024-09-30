@@ -311,7 +311,7 @@ describe('GenericModal', () => {
   });
 
   it('focuses the `close` button on `open`, and reverts back to last focus target, on close', async () => {
-    const button = document.createElement('button');
+    const button = document.h('button');
     document.body.appendChild(button);
 
     const wrapper = createWrapper({
@@ -338,7 +338,7 @@ describe('GenericModal', () => {
   });
 
   it('does not throw if the close button is hidden, while opening', async () => {
-    const button = document.createElement('button');
+    const button = document.h('button');
     document.body.appendChild(button);
 
     const wrapper = createWrapper({

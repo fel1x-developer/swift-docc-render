@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { h } from 'vue';
 import Asset from 'docc-render/components/Asset.vue';
 import ContentNode from 'docc-render/components/ContentNode.vue';
 import GridRow from 'docc-render/components/GridRow.vue';
@@ -39,8 +40,8 @@ export default {
     Button: CallToActionButton,
     ContentNode,
     LeftColumn: {
-      render(createElement) {
-        return createElement(
+      render() {
+        return h(
           GridColumn,
           {
             props: {
@@ -55,8 +56,8 @@ export default {
       },
     },
     RightColumn: {
-      render(createElement) {
-        return createElement(
+      render() {
+        return h(
           GridColumn,
           {
             props: {

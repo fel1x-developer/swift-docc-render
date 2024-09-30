@@ -34,7 +34,7 @@ describe('Footer', () => {
       scopedSlots: {
         default(props) {
           slotProps = props;
-          return this.$createElement('div', { class: 'slot-class' }, 'Slot Content');
+          return this.$h('div', { class: 'slot-class' }, 'Slot Content');
         },
       },
     });

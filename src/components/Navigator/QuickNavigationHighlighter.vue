@@ -9,6 +9,8 @@
 -->
 
 <script>
+import { h } from 'vue';
+
 /**
  * Component used to mark plain text.
  */
@@ -24,23 +26,23 @@ export default {
       default: '',
     },
   },
-  render(createElement) {
+  render() {
     const { matcherText, text } = this;
     const children = [];
     let lastIndex = 0;
     if (!matcherText) {
-      return createElement('span', { class: 'highlight' }, text);
+      return h('span', { class: 'highlight' }, text);
     }
     [...matcherText].forEach((char) => {
       const charIndex = text.toLowerCase().indexOf(char.toLowerCase(), lastIndex);
       if (lastIndex) {
-        children.push(createElement('span', text.slice(lastIndex, charIndex)));
+        children.push(h('span', text.slice(lastIndex, charIndex)));
       }
       const nextIndex = charIndex + 1;
-      children.push(createElement('span', { class: 'match' }, text.slice(charIndex, nextIndex)));
+      children.push(h('span', { class: 'match' }, text.slice(charIndex, nextIndex)));
       lastIndex = nextIndex;
     });
-    return createElement('p', { class: 'highlight' }, children);
+    return h('p', { class: 'highlight' }, children);
   },
 };
 </script>

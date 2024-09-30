@@ -67,7 +67,7 @@ const createWrapper = (overrides) => {
     scopedSlots: {
       default(params) {
         Object.assign(scopedSlotAssertions, params);
-        return this.$createElement('div');
+        return this.$h('div');
       },
     },
     ...overrides,

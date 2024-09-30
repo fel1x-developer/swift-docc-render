@@ -9,11 +9,13 @@
 -->
 
 <script>
+import { h } from 'vue';
+
 // This component simply renders text with a span and a `token-[kind]` class.
 export default {
   name: 'SyntaxToken',
-  render(createElement) {
-    return createElement('span', {
+  render() {
+    return h('span', {
       class: `token-${this.kind}`,
     }, (
       this.text

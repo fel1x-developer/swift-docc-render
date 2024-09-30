@@ -76,6 +76,7 @@ import PlayIcon from 'theme/components/Icons/PlayIcon.vue';
 import { normalizePath, toCSSUrl } from 'docc-render/utils/assets';
 import referencesProvider from 'docc-render/mixins/referencesProvider';
 import HeroMetadata from './HeroMetadata.vue';
+import { h } from 'vue';
 
 export default {
   name: 'Hero',
@@ -83,8 +84,8 @@ export default {
     PlayIcon,
     GenericModal,
     Column: {
-      render(createElement) {
-        return createElement(GridColumn, {
+      render() {
+        return h(GridColumn, {
           props: {
             span: {
               large: 7,

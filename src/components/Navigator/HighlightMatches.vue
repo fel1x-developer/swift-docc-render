@@ -9,6 +9,8 @@
 -->
 
 <script>
+import { h } from 'vue';
+
 /**
  * Component used to mark plain text, based on a provided matcher string.
  */
@@ -24,11 +26,11 @@ export default {
       default: undefined,
     },
   },
-  render(createElement) {
+  render() {
     // Return a simple p when no text is being highlighted
     const { matcher, text } = this;
     if (!matcher) {
-      return createElement('p', { class: 'highlight' }, text);
+      return h('p', { class: 'highlight' }, text);
     }
 
     const children = [];
@@ -50,13 +52,13 @@ export default {
       // find text from last match upto current one
       const spanText = text.slice(lastIndex, match.index);
       if (spanText) {
-        children.push(createElement('span', spanText));
+        children.push(h('span', spanText));
       }
 
       // find match text
       const matchText = text.slice(match.index, nextIndex);
       if (matchText) {
-        children.push(createElement('span', { class: 'match' }, matchText));
+        children.push(h('span', { class: 'match' }, matchText));
       }
 
       lastIndex = nextIndex;
@@ -65,10 +67,10 @@ export default {
     // after the last highlighted match (if any)
     const spanText = text.slice(lastIndex, text.length);
     if (spanText) {
-      children.push(createElement('span', spanText));
+      children.push(h('span', spanText));
     }
 
-    return createElement('p', { class: 'highlight' }, children);
+    return h('p', { class: 'highlight' }, children);
   },
 };
 </script>

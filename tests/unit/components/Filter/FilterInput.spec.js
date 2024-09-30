@@ -505,7 +505,7 @@ describe('FilterInput', () => {
   describe('once `suggestedTags` is rendered', () => {
     let suggestedTags;
     let deleteButton;
-    const relatedTargetCard = document.createElement('a');
+    const relatedTargetCard = document.h('a');
     document.body.appendChild(relatedTargetCard);
 
     beforeEach(async () => {
@@ -594,7 +594,7 @@ describe('FilterInput', () => {
     });
 
     it('hides the tags, if new focus outside component', async () => {
-      const inputTarget = document.createElement('input');
+      const inputTarget = document.h('input');
 
       await input.trigger('blur', {
         relatedTarget: inputTarget.element,
@@ -607,7 +607,7 @@ describe('FilterInput', () => {
     });
 
     it('hides the tags, if the new focus target is a link, outside the FilterInput', async () => {
-      const relatedTargetOther = document.createElement('p');
+      const relatedTargetOther = document.h('p');
 
       await input.trigger('blur', {
         relatedTarget: relatedTargetCard,
@@ -1220,7 +1220,7 @@ describe('FilterInput', () => {
         // Focus on the first tag
         selectedTagsComponent.vm.$emit('focus', {
           tagName: selectedTags[0],
-          event: { relatedTarget: document.createElement('input') },
+          event: { relatedTarget: document.h('input') },
         });
 
         // All tags should be active
@@ -1240,7 +1240,7 @@ describe('FilterInput', () => {
         // Focus on the middle tag
         selectedTagsComponent.vm.$emit('focus', {
           tagName: selectedTags[1],
-          event: { relatedTarget: document.createElement('input') },
+          event: { relatedTarget: document.h('input') },
         });
 
         // Tags from middle to the last one should get active
@@ -1385,7 +1385,7 @@ describe('FilterInput', () => {
       });
 
       it('selects the whole range between the init tag index and the end of the active tags from left to right', async () => {
-        const relatedTargetCard = document.createElement('a');
+        const relatedTargetCard = document.h('a');
         // Select init tag
         selectedTagsComponent.vm.$emit('click-tags', {
           tagName: selectedTags[0],
@@ -1524,7 +1524,7 @@ describe('FilterInput', () => {
         });
 
         it('resets all the active tags when selected tags get blur', async () => {
-          const relatedTargetCard = document.createElement('a');
+          const relatedTargetCard = document.h('a');
 
           await selectedTagsComponent.trigger('blur', {
             relatedTarget: relatedTargetCard,

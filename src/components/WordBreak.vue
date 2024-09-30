@@ -9,6 +9,8 @@
 -->
 
 <script>
+import { h } from 'vue';
+
 /**
  * Indicate safe places to break apart words across multiple lines when necessary.
  *
@@ -71,13 +73,13 @@
 export default {
   functional: true,
   name: 'WordBreak',
-  render(createElement, { props, slots, data }) {
+  render({ props, slots, data }) {
     const childNodes = (slots().default || []);
     const textNodes = childNodes.filter(node => node.text && !node.tag);
 
     // Don't attempt word breaking unless this component wraps raw strings
     if (textNodes.length === 0 || textNodes.length !== childNodes.length) {
-      return createElement(props.tag, data, childNodes);
+      return h(props.tag, data, childNodes);
     }
 
     const word = textNodes.map(({ text }) => text).join();
@@ -92,13 +94,13 @@ export default {
       const nextIndex = match.index + 1;
 
       childrenWithBreaks.push(word.slice(lastIndex, nextIndex));
-      childrenWithBreaks.push(createElement('wbr', { key: match.index }));
+      childrenWithBreaks.push(h('wbr', { key: match.index }));
 
       lastIndex = nextIndex;
     }
     childrenWithBreaks.push(word.slice(lastIndex, word.length));
 
-    return createElement(props.tag, data, childrenWithBreaks);
+    return h(props.tag, data, childrenWithBreaks);
   },
   props: {
     safeBoundaryPattern: {

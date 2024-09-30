@@ -11,7 +11,7 @@
 import { indentDeclaration } from 'docc-render/utils/indentation';
 
 const prepare = (originalCode) => {
-  const decl = document.createElement('div');
+  const decl = document.h('div');
   decl.classList.add('declaration');
   decl.classList.add('code-listing');
   decl.innerHTML = `<pre><code>${originalCode}</code></pre>`;

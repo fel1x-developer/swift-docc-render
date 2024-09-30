@@ -35,7 +35,7 @@ async function prepare(content, language) {
   await registerHighlightLanguage(language);
   // use this for a reference
   const highlightedCode = highlight(content.join("\n"), language);
-  const tempElement = document.createElement("code");
+  const tempElement = document.h("code");
   tempElement.innerHTML = highlightedCode;
 
   // transform the content
@@ -162,7 +162,7 @@ describe("syntax-highlight", () => {
   });
 
   it("wraps multiline nested html elements", () => {
-    const code = document.createElement("CODE");
+    const code = document.h("CODE");
     code.innerHTML = `<span class="syntax-function">function <span class="syntax-title function_">someName</span>(<span class="syntax-params">foo,
           bar,
           baz</span>)</span> <span class="syntax-function-body">{

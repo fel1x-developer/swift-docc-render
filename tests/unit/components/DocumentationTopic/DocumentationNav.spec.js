@@ -202,7 +202,7 @@ describe('DocumentationNav', () => {
   });
 
   it('renders a sidenav toggle, emitting `@toggle-sidenav` event', async () => {
-    const btn = document.createElement('button');
+    const btn = document.h('button');
     btn.id = SIDEBAR_HIDE_BUTTON_ID;
     document.body.appendChild(btn);
     const sidenavToggleWrapper = wrapper.find('.sidenav-toggle-wrapper');

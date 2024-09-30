@@ -38,6 +38,7 @@ import CodeThemeStore from 'docc-render/stores/CodeThemeStore';
 import metadata from 'theme/mixins/metadata';
 import Hero from 'theme/components/Tutorial/Hero.vue';
 import NavigationBar from 'theme/components/Tutorial/NavigationBar.vue';
+import { h } from 'vue';
 import Assessments from './Tutorial/Assessments.vue';
 import SectionList from './Tutorial/SectionList.vue';
 import CallToAction from './Tutorial/CallToAction.vue';
@@ -53,7 +54,7 @@ const ValidSectionTypes = new Set(Object.keys(SectionComponents));
 
 const TutorialSection = {
   name: 'TutorialSection',
-  render: function render(createElement) {
+  render: function render() {
     // Dynamically map each section to a static Vue component based on the
     // `kind` value of the section payload. Sections with unrecognized `kind`
     // values should be ignored.
@@ -62,7 +63,7 @@ const TutorialSection = {
       ...props
     } = this.section;
     const component = SectionComponents[kind];
-    return component ? createElement(component, { props }) : null;
+    return component ? h(component, { props }) : null;
   },
   props: {
     section: {

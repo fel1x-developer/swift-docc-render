@@ -23,7 +23,7 @@
 export default {
   name: 'TransitionExpand',
   functional: true,
-  render(createElement, context) {
+  render(context) {
     const data = {
       props: {
         // transition name

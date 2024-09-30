@@ -37,9 +37,9 @@ describe('CustomComponents', () => {
   });
 
   it('utilizes `customElements.define` to register custom elements when templates exist', () => {
-    const customHeader = document.createElement('template');
+    const customHeader = document.h('template');
     customHeader.id = 'custom-header';
-    const customFooter = document.createElement('template');
+    const customFooter = document.h('template');
     customFooter.id = 'custom-footer';
     document.body.appendChild(customHeader);
     document.body.appendChild(customFooter);

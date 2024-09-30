@@ -21,8 +21,8 @@ const FakeComponentInner = {
 const FakeComponentOuter = {
   name: 'FakeComponentOuter',
   mixins: [referencesProvider],
-  render(createElement) {
-    return createElement(FakeComponentInner, {
+  render() {
+    return h(FakeComponentInner, {
       props: {
         references: this.references,
       },

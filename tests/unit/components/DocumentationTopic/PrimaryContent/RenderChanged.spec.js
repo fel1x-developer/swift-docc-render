@@ -41,7 +41,7 @@ const createWrapper = ({ propsData, scopedSlots, ...others } = {}) => (
     scopedSlots: {
       default(props) {
         scopedProps.push(props);
-        return this.$createElement('div', {}, `Default ${props.value.foo}`);
+        return this.$h('div', {}, `Default ${props.value.foo}`);
       },
       ...scopedSlots,
     },

@@ -7,25 +7,28 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
+
+import { vi } from 'vitest';
+
 import throttle from 'docc-render/utils/throttle';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe('throttle', () => {
   let nowSpy;
 
   beforeEach(() => {
-    nowSpy = jest.spyOn(global.Date, 'now');
+    nowSpy = vi.spyOn(global.Date, 'now');
     nowSpy.mockReturnValue(1664227837751);
   });
 
-  // newer version of Jest handle `Date.now()` but this version does not yet,
+  // newer version of vi handle `Date.now()` but this version does not yet,
   // so we need to carefully advance it in the same manner that the timeouts
   // are since `throttle` relies on both APIs in its implementation
   const advanceTime = (duration) => {
     const t = Date.now();
     nowSpy.mockReturnValue(t + duration);
-    jest.advanceTimersByTime(duration);
+    vi.advanceTimersByTime(duration);
   };
 
   afterEach(() => {
@@ -34,7 +37,7 @@ describe('throttle', () => {
 
   it('calls a function only once within the given interval of time', () => {
     // simulate throttling a function so that it only ever runs once per 50ms
-    const func = jest.fn();
+    const func = vi.fn();
     const interval = 50;
     const throttled = throttle(func, interval);
 

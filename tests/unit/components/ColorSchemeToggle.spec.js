@@ -8,13 +8,15 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import AppStore from 'docc-render/stores/AppStore';
 import ColorScheme from 'docc-render/constants/ColorScheme';
 import ColorSchemeToggle from 'docc-render/components/ColorSchemeToggle.vue';
 
-jest.mock('docc-render/stores/AppStore', () => ({
-  setPreferredColorScheme: jest.fn(),
+vi.mock('docc-render/stores/AppStore', () => ({
+  setPreferredColorScheme: vi.fn(),
 }));
 
 describe('ColorSchemeToggle', () => {
@@ -57,7 +59,7 @@ describe('ColorSchemeToggle', () => {
     expect(labels.at(2).text()).toBe('color-scheme.auto');
   });
 
-  it('renders radio buttons checked according to the preferred color scheme', () => {
+  it('renders radio buttons checked according to the preferred color scheme', async () => {
     const inputs = wrapper.findAll('input[type="radio"]');
     expect(inputs.length).toBe(3);
 
@@ -68,14 +70,14 @@ describe('ColorSchemeToggle', () => {
     expect(inputs.at(1).element.checked).toBe(false);
     expect(inputs.at(2).element.checked).toBe(true);
 
-    wrapper.setData({
+    await wrapper.setData({
       appState: { preferredColorScheme: dark },
     });
     expect(inputs.at(0).element.checked).toBe(false);
     expect(inputs.at(1).element.checked).toBe(true);
     expect(inputs.at(2).element.checked).toBe(false);
 
-    wrapper.setData({
+    await wrapper.setData({
       appState: { preferredColorScheme: light },
     });
     expect(inputs.at(0).element.checked).toBe(true);
@@ -89,16 +91,16 @@ describe('ColorSchemeToggle', () => {
     expect(AppStore.setPreferredColorScheme).toHaveBeenCalledWith(dark);
   });
 
-  it('sets body[data-color-scheme] to match the preferred color scheme', () => {
+  it('sets body[data-color-scheme] to match the preferred color scheme', async () => {
     expect(document.body.dataset.colorScheme).toBe(auto);
-    wrapper.setData({
+    await wrapper.setData({
       appState: { preferredColorScheme: dark },
     });
     expect(document.body.dataset.colorScheme).toBe(dark);
   });
 
-  it('only render Light/Dark options when Auto is not supported by device', () => {
-    wrapper.setData({
+  it('only render Light/Dark options when Auto is not supported by device', async () => {
+    await wrapper.setData({
       appState: {
         preferredColorScheme: light,
         supportsAutoColorScheme: false,

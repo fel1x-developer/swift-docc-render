@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import {
   createLocalVue,
   mount,
@@ -20,11 +22,11 @@ import Router from 'vue-router';
 import hide from 'docc-render/directives/hide';
 
 import Topic from 'docc-render/views/Topic.vue';
-import createRouterInstance from 'docc-render/setup-utils/SwiftDocCRenderRouter';
+import createRouterInstance from '@/setup-utils/SwiftDocCRenderRouter';
 
 const router = createRouterInstance();
 
-jest.mock('docc-render/utils/theme-settings');
+vi.mock('docc-render/utils/theme-settings');
 
 const topicData = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'tutorial.json')));
 window.scrollTo = () => ({});
@@ -34,17 +36,17 @@ localVue.directive('hide', hide);
 localVue.use(Router);
 
 // Mock DOM APIs.
-window.matchMedia = jest.fn(() => ({
-  addListener: jest.fn(),
-  addEventListener: jest.fn(),
+window.matchMedia = vi.fn(() => ({
+  addListener: vi.fn(),
+  addEventListener: vi.fn(),
   matches: true,
 }));
-window.MediaSource = jest.fn(() => ({
-  isTypeSupported: jest.fn(),
-  addEventListener: jest.fn(),
+window.MediaSource = vi.fn(() => ({
+  isTypeSupported: vi.fn(),
+  addEventListener: vi.fn(),
 }));
-window.URL.createObjectURL = jest.fn();
-window.HTMLMediaElement.prototype.addNextTrack = jest.fn();
+window.URL.createObjectURL = vi.fn();
+window.HTMLMediaElement.prototype.addNextTrack = vi.fn();
 
 // Retrieves all the image URLs from the references dictionary.
 const allImageURLsFrom = references => (
@@ -84,9 +86,9 @@ describe('image preloading', () => {
     },
     mocks: {
       $bridge: {
-        on: jest.fn(),
-        off: jest.fn(),
-        send: jest.fn(),
+        on: vi.fn(),
+        off: vi.fn(),
+        send: vi.fn(),
       },
     },
     stubs: {
@@ -98,7 +100,7 @@ describe('image preloading', () => {
 
   it('has all the images in the DOM on load in tutorial pages', async () => {
     const wrapper = mount(Topic, mountOptions);
-    wrapper.setData({ topicData });
+    await wrapper.setData({ topicData });
     await assertHasAllImages(wrapper, topicData.references);
   });
 });

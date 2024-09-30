@@ -8,30 +8,26 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-let fetchThemeSettings;
-let getSetting;
-let themeSettingsState;
+import { vi } from 'vitest';
 
 const themeSettings = {
   theme: 'foo',
 };
 
-const jsonMock = jest.fn().mockResolvedValue(themeSettings);
-const fetchMock = jest.fn().mockResolvedValue({
+const jsonMock = vi.fn().mockResolvedValue(themeSettings);
+const fetchMock = vi.fn().mockResolvedValue({
   json: jsonMock,
 });
 
-const resolveAbsoluteUrlMock = jest.fn();
+const resolveAbsoluteUrlMock = vi.fn();
 const mockUrlHelper = {
   resolveAbsoluteUrl: resolveAbsoluteUrlMock,
 };
 
-jest.mock('docc-render/utils/url-helper', () => (mockUrlHelper));
+vi.mock('docc-render/utils/url-helper', () => (mockUrlHelper));
 
-function importDeps() {
-  jest.resetModules();
-  // eslint-disable-next-line global-require
-  ({ fetchThemeSettings, getSetting, themeSettingsState } = require('@/utils/theme-settings'));
+async function importDeps() {
+  vi.resetModules();
 }
 
 window.fetch = fetchMock;
@@ -39,10 +35,11 @@ window.fetch = fetchMock;
 describe('theme-settings', () => {
   beforeEach(() => {
     importDeps();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('fetches the theme settings from a remote path', async () => {
+    const { fetchThemeSettings } = await import('@/utils/theme-settings');
     window.baseUrl = '/';
     resolveAbsoluteUrlMock.mockReturnValue('http://localhost/theme-settings.json');
     importDeps();
@@ -54,6 +51,7 @@ describe('theme-settings', () => {
   });
 
   it('uses the window.baseUrl for the json path', async () => {
+    const { fetchThemeSettings } = await import('@/utils/theme-settings');
     window.baseUrl = '/bar/foo/';
     resolveAbsoluteUrlMock.mockReturnValue(`http://localhost${window.baseUrl}theme-settings.json`);
     importDeps();
@@ -65,11 +63,13 @@ describe('theme-settings', () => {
   });
 
   it('silences errors while fetching theme settings', async () => {
+    const { fetchThemeSettings } = await import('@/utils/theme-settings');
     fetchMock.mockRejectedValueOnce('Foo is not JSON');
     expect(await fetchThemeSettings()).toEqual({});
   });
 
   it('retrieves already stored data', async () => {
+    const { getSetting, themeSettingsState } = await import('@/utils/theme-settings');
     expect(getSetting(['theme'])).toEqual({});
     Object.assign(themeSettingsState, themeSettings);
     expect(getSetting(['theme'])).toEqual(themeSettings.theme);

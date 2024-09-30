@@ -7,6 +7,9 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
+
+import { vi } from 'vitest';
+
 import {
   Orientation,
   pathJoin,
@@ -18,7 +21,7 @@ let normalizePath;
 const absoluteBaseUrl = 'https://foo.com';
 
 function importDeps() {
-  jest.resetModules();
+  vi.resetModules();
   // eslint-disable-next-line global-require
   ({ normalizePath } = require('@/utils/assets'));
 }

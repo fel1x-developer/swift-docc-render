@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import apiChangesObserving from 'docc-render/mixins/apiChangesObserving';
 import VueRouter from 'vue-router';
@@ -17,7 +19,7 @@ import { flushPromises } from '../../../test-utils';
 const localVue = createLocalVue();
 localVue.use(VueRouter);
 
-jest.mock('docc-render/utils/data');
+vi.mock('docc-render/utils/data');
 const response = { changes: 'foo' };
 
 fetchAPIChangesForRoute.mockResolvedValue(response);
@@ -35,8 +37,8 @@ const router = new VueRouter({
 });
 
 const store = {
-  setAPIChanges: jest.fn(),
-  setSelectedAPIChangesVersion: jest.fn(),
+  setAPIChanges: vi.fn(),
+  setSelectedAPIChangesVersion: vi.fn(),
 };
 
 const createWrapperWithQuery = (changeQuery) => {
@@ -46,7 +48,7 @@ const createWrapperWithQuery = (changeQuery) => {
     },
   });
   // make sure we reset the counter
-  jest.clearAllMocks();
+  vi.clearAllMocks();
   return shallowMount({
     name: 'TestComponentForapiChangesObserving',
     mixins: [apiChangesObserving],
@@ -66,13 +68,13 @@ const createWrapperWithQuery = (changeQuery) => {
   });
 };
 
-const pushSpy = jest.spyOn(router, 'push');
+const pushSpy = vi.spyOn(router, 'push');
 
 describe('apiChangesObserving', () => {
   let wrapper;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   afterEach(() => {
     wrapper.destroy();

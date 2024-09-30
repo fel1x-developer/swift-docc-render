@@ -20,7 +20,7 @@ const createWrapper = ({ propsData, ...other } = {}) => {
     provide: {
       tabnavData: {
         activeTab: 'foo',
-        selectTab: jest.fn(),
+        selectTab: vi.fn(),
       },
     },
     slots: {
@@ -47,19 +47,19 @@ describe('TabnavItem', () => {
     expect(wrapper.find('a.tabnav-link').exists()).toBe(true);
   });
 
-  it('updates the active link on link click', () => {
+  it('updates the active link on link click', async () => {
     const { wrapper, config } = createWrapper();
-    wrapper.find('a.tabnav-link').trigger('click');
+    await wrapper.find('a.tabnav-link').trigger('click');
     expect(config.provide.tabnavData.selectTab).toHaveBeenCalledTimes(1);
     expect(config.provide.tabnavData.selectTab).toHaveBeenCalledWith(config.propsData.value);
   });
 
-  it('adds the `active` class if a tab is selected', () => {
+  it('adds the `active` class if a tab is selected', async () => {
     const { wrapper, config } = createWrapper();
     const link = wrapper.find('a.tabnav-link');
     expect(link.classes()).not.toContain('active');
     expect(link.attributes('aria-current')).toBe('false');
-    wrapper.setProps({
+    await wrapper.setProps({
       value: config.provide.tabnavData.activeTab,
     });
     expect(link.classes()).toContain('active');

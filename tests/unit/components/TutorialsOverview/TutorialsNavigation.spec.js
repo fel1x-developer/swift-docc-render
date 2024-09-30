@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import TutorialsNavigation from 'docc-render/components/TutorialsOverview/TutorialsNavigation.vue';
 import TutorialsNavigationLink from 'docc-render/components/TutorialsOverview/TutorialsNavigationLink.vue';
@@ -41,12 +43,12 @@ describe('TutorialsNavigation', () => {
   const provide = {
     store: {
       state: { activeVolume: 'Volume A' },
-      setActiveVolume: jest.fn(),
+      setActiveVolume: vi.fn(),
     },
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     wrapper = shallowMount(TutorialsNavigation, {
       propsData,
       provide,

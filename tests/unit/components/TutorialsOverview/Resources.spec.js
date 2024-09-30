@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import Resources from 'docc-render/components/TutorialsOverview/Resources.vue';
 
@@ -36,8 +38,8 @@ describe('Resources', () => {
 
   const provide = {
     store: {
-      setActiveSidebarLink: jest.fn(),
-      setActiveVolume: jest.fn(),
+      setActiveSidebarLink: vi.fn(),
+      setActiveVolume: vi.fn(),
     },
   };
 

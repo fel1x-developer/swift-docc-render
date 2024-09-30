@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import NavBase from 'docc-render/components/NavBase.vue';
 import { shallowMount } from '@vue/test-utils';
 import NavMenuItems from 'docc-render/components/NavMenuItems.vue';
@@ -18,15 +20,15 @@ import { baseNavStickyAnchorId, MenuLinkModifierClasses } from 'docc-render/cons
 import { waitFrames } from 'docc-render/utils/loading';
 import { createEvent } from '../../../test-utils';
 
-jest.mock('docc-render/utils/changeElementVOVisibility');
-jest.mock('docc-render/utils/scroll-lock');
-jest.mock('docc-render/utils/loading');
+vi.mock('docc-render/utils/changeElementVOVisibility');
+vi.mock('docc-render/utils/scroll-lock');
+vi.mock('docc-render/utils/loading');
 
 const { BreakpointScopes, BreakpointName } = BreakpointEmitter.constants;
 const { NoBGTransitionFrames, NavStateClasses } = NavBase.constants;
 
-const emitEndOfTrayTransition = (wrapper, propertyName = 'max-height') => {
-  wrapper.find({ ref: 'tray' }).trigger('transitionend', { propertyName });
+const emitEndOfTrayTransition = async (wrapper, propertyName = 'max-height') => {
+  await wrapper.find({ ref: 'tray' }).trigger('transitionend', { propertyName });
 };
 
 const createWrapper = async ({ propsData, ...rest } = {}) => {
@@ -49,7 +51,7 @@ describe('NavBase', () => {
     window.Event = null;
   });
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   afterEach(() => {
     wrapper.destroy();
@@ -73,28 +75,28 @@ describe('NavBase', () => {
   it('adds a solid background class', async () => {
     wrapper = await createWrapper();
     expect(wrapper.classes()).not.toContain(NavStateClasses.hasSolidBackground);
-    wrapper.setProps({ hasSolidBackground: true });
+    await wrapper.setProps({ hasSolidBackground: true });
     expect(wrapper.classes()).toContain(NavStateClasses.hasSolidBackground);
   });
 
   it('adds a no border class', async () => {
     wrapper = await createWrapper();
     expect(wrapper.classes()).not.toContain(NavStateClasses.hasNoBorder);
-    wrapper.setProps({ hasNoBorder: true });
+    await wrapper.setProps({ hasNoBorder: true });
     expect(wrapper.classes()).toContain(NavStateClasses.hasNoBorder);
   });
 
   it('adds a full-width border class', async () => {
     wrapper = await createWrapper();
     expect(wrapper.classes()).not.toContain(NavStateClasses.hasFullWidthBorder);
-    wrapper.setProps({ hasFullWidthBorder: true });
+    await wrapper.setProps({ hasFullWidthBorder: true });
     expect(wrapper.classes()).toContain(NavStateClasses.hasFullWidthBorder);
   });
 
   it('adds a dark-theme class', async () => {
     wrapper = await createWrapper();
     expect(wrapper.classes()).not.toContain(NavStateClasses.isDark);
-    wrapper.setProps({ isDark: true });
+    await wrapper.setProps({ isDark: true });
     expect(wrapper.classes()).toContain(NavStateClasses.isDark);
   });
 
@@ -115,10 +117,10 @@ describe('NavBase', () => {
     const overlay = wrapper.find('.nav-overlay');
     expect(overlay.exists()).toBe(true);
     expect(wrapper.classes()).toContain(NavStateClasses.isOpen);
-    overlay.trigger('click');
+    await overlay.trigger('click');
     expect(wrapper.classes()).not.toContain(NavStateClasses.isOpen);
     // assert clicking again does not toggle on
-    overlay.trigger('click');
+    await overlay.trigger('click');
     expect(wrapper.classes()).not.toContain(NavStateClasses.isOpen);
   });
 
@@ -164,7 +166,7 @@ describe('NavBase', () => {
       inBreakpoint: false,
       currentBreakpoint: BreakpointName.large,
     });
-    wrapper.find('a.nav-menucta').trigger('click');
+    await wrapper.find('a.nav-menucta').trigger('click');
     expect(wrapper.classes()).toContain(NavStateClasses.isOpen);
     expect(preTitleProps).toEqual({
       className: 'pre-title',
@@ -195,9 +197,9 @@ describe('NavBase', () => {
     expect(toggle.attributes()).toHaveProperty('role', 'button');
     // assert the nav toggling works
     expect(wrapper.classes()).not.toContain(NavStateClasses.isOpen);
-    toggle.trigger('click');
+    await toggle.trigger('click');
     expect(wrapper.classes()).toContain(NavStateClasses.isOpen);
-    toggle.trigger('click');
+    await toggle.trigger('click');
     expect(wrapper.classes()).not.toContain(NavStateClasses.isOpen);
   });
 
@@ -206,7 +208,7 @@ describe('NavBase', () => {
     const toggle = wrapper.find({ ref: 'axToggle' });
     const label = toggle.find('.visuallyhidden');
     expect(label.text()).toBe('documentation.nav.open-menu');
-    toggle.trigger('click');
+    await toggle.trigger('click');
     expect(label.text()).toBe('documentation.nav.close-menu');
   });
 
@@ -248,9 +250,9 @@ describe('NavBase', () => {
       },
     });
     const tray = wrapper.find(NavMenuItems);
-    tray.find('.foo').trigger('click');
+    await tray.find('.foo').trigger('click');
     expect(wrapper.classes()).toContain(NavStateClasses.isOpen);
-    tray.find('.with-anchor a').trigger('click');
+    await tray.find('.with-anchor a').trigger('click');
     expect(wrapper.classes()).not.toContain(NavStateClasses.isOpen);
   });
 
@@ -265,13 +267,13 @@ describe('NavBase', () => {
       },
     });
     const tray = wrapper.find(NavMenuItems);
-    tray.find('.with-anchor a').trigger('click');
+    await tray.find('.with-anchor a').trigger('click');
     expect(wrapper.classes()).toContain(NavStateClasses.isOpen);
   });
 
   it('adds extra classes to stop scrolling while animating the tray up/down', async () => {
     wrapper = await createWrapper();
-    wrapper.find({ ref: 'axToggle' }).trigger('click');
+    await wrapper.find({ ref: 'axToggle' }).trigger('click');
     expect(wrapper.classes()).toContain(NavStateClasses.isOpen);
     expect(wrapper.classes()).toContain(NavStateClasses.isTransitioning);
     // assert it removes the class, after transition is done
@@ -282,7 +284,7 @@ describe('NavBase', () => {
     // assert the class is no more
     expect(wrapper.classes()).not.toContain(NavStateClasses.isTransitioning);
     // close the nav
-    wrapper.find({ ref: 'axToggle' }).trigger('click');
+    await wrapper.find({ ref: 'axToggle' }).trigger('click');
     // assert the correct classes are there
     expect(wrapper.classes()).not.toContain(NavStateClasses.isOpen);
     expect(wrapper.classes()).toContain(NavStateClasses.isTransitioning);
@@ -297,9 +299,9 @@ describe('NavBase', () => {
     const link = wrapper.find('a.nav-menucta');
     expect(link.attributes()).toHaveProperty('tabindex', '-1');
     expect(link.attributes()).toHaveProperty('href', '#');
-    link.trigger('click');
+    await link.trigger('click');
     expect(wrapper.classes()).toContain(NavStateClasses.isOpen);
-    link.trigger('click');
+    await link.trigger('click');
     expect(wrapper.classes()).not.toContain(NavStateClasses.isOpen);
   });
 
@@ -347,7 +349,7 @@ describe('NavBase', () => {
     wrapper = await createWrapper();
     const link = wrapper.find('a.nav-menucta');
     // open the nav
-    link.trigger('click');
+    await link.trigger('click');
     expect(wrapper.emitted('change')).toEqual([[true]]);
     expect(wrapper.emitted('open')).toEqual([[]]);
     expect(wrapper.emitted('close')).toBeFalsy();
@@ -361,7 +363,7 @@ describe('NavBase', () => {
     expect(wrapper.emitted('changed')).toEqual([[true]]);
     expect(wrapper.emitted('opened')).toEqual([[]]);
     // close the nav
-    link.trigger('click');
+    await link.trigger('click');
     // assert the `change` and `close` event are emitted
     expect(wrapper.emitted('change')).toEqual([[true], [false]]);
     expect(wrapper.emitted('close')).toEqual([[]]);
@@ -377,7 +379,7 @@ describe('NavBase', () => {
 
   it('does only counts transitions as ended, if coming from the tray', async () => {
     wrapper = await createWrapper();
-    wrapper.find(NavMenuItems).trigger('transitionend', { propertyName: 'max-height' });
+    await wrapper.find(NavMenuItems).trigger('transitionend', { propertyName: 'max-height' });
     expect(wrapper.emitted('changed')).toBeFalsy();
     expect(wrapper.emitted('closed')).toBeFalsy();
     expect(wrapper.emitted('opened')).toBeFalsy();
@@ -426,7 +428,7 @@ describe('NavBase', () => {
 
   it('locks the scrolling after all the transitions end', async () => {
     wrapper = await createWrapper();
-    wrapper.find({ ref: 'axToggle' }).trigger('click');
+    await wrapper.find({ ref: 'axToggle' }).trigger('click');
     // make sure its not locked still
     expect(scrollLock.lockScroll).toHaveBeenCalledTimes(0);
     // simulate end of transitions
@@ -438,12 +440,12 @@ describe('NavBase', () => {
   it('unlocks the scrolling, immediately after closing', async () => {
     wrapper = await createWrapper();
     const link = wrapper.find({ ref: 'axToggle' });
-    link.trigger('click');
+    await link.trigger('click');
     // simulate end of transitions
     emitEndOfTrayTransition(wrapper);
     // assert the lock is called once
     expect(scrollLock.lockScroll).toHaveBeenCalledTimes(1);
-    link.trigger('click');
+    await link.trigger('click');
     await wrapper.vm.$nextTick();
     expect(scrollLock.unlockScroll).toHaveBeenCalledTimes(1);
   });
@@ -464,7 +466,7 @@ describe('NavBase', () => {
   it('unlocks the scrolling, if still open before destroying', async () => {
     wrapper = await createWrapper();
     const link = wrapper.find({ ref: 'axToggle' });
-    link.trigger('click');
+    await link.trigger('click');
     expect(scrollLock.unlockScroll).toHaveBeenCalledTimes(0);
     wrapper.destroy();
     expect(scrollLock.unlockScroll).toHaveBeenCalledTimes(1);
@@ -473,8 +475,8 @@ describe('NavBase', () => {
   it('stays focus on axToggle, if nav expand is toggled from axToggle', async () => {
     wrapper = await createWrapper();
     const axToggle = wrapper.find({ ref: 'axToggle' });
-    const focusSpy = jest.spyOn(axToggle.element, 'focus');
-    axToggle.trigger('click');
+    const focusSpy = vi.spyOn(axToggle.element, 'focus');
+    await axToggle.trigger('click');
 
     // assert focus is not moved
     expect(focusSpy).toHaveBeenCalledTimes(0);
@@ -483,10 +485,10 @@ describe('NavBase', () => {
   it('blurs active element, if nav expand is toggled by mouse click', async () => {
     wrapper = await createWrapper();
     const navToggle = wrapper.find('.nav-menucta');
-    const blurSpy = jest.spyOn(navToggle.element, 'blur');
+    const blurSpy = vi.spyOn(navToggle.element, 'blur');
     // manually focus to fix JSDom issue
     navToggle.element.focus();
-    navToggle.trigger('click');
+    await navToggle.trigger('click');
     expect(blurSpy).toHaveBeenCalledTimes(1);
     // assert focus is on the body
     expect(document.activeElement).toEqual(document.body);
@@ -496,7 +498,7 @@ describe('NavBase', () => {
     wrapper = await createWrapper();
 
     expect(changeElementVOVisibility.hide).toHaveBeenCalledTimes(0);
-    wrapper.find({ ref: 'axToggle' }).trigger('click');
+    await wrapper.find({ ref: 'axToggle' }).trigger('click');
     expect(changeElementVOVisibility.hide).toHaveBeenCalledTimes(1);
     expect(changeElementVOVisibility.hide).toHaveBeenCalledWith(wrapper.vm.$refs.wrapper);
   });
@@ -505,9 +507,9 @@ describe('NavBase', () => {
     wrapper = await createWrapper();
 
     expect(changeElementVOVisibility.show).toHaveBeenCalledTimes(0);
-    wrapper.find({ ref: 'axToggle' }).trigger('click');
+    await wrapper.find({ ref: 'axToggle' }).trigger('click');
     expect(changeElementVOVisibility.hide).toHaveBeenCalledTimes(1);
-    wrapper.find({ ref: 'axToggle' }).trigger('click');
+    await wrapper.find({ ref: 'axToggle' }).trigger('click');
     expect(changeElementVOVisibility.show).toHaveBeenCalledTimes(1);
     expect(changeElementVOVisibility.show).toHaveBeenCalledWith(wrapper.vm.$refs.wrapper);
   });

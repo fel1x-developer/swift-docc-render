@@ -23,13 +23,13 @@ describe('Pager', () => {
   };
 
   beforeEach(() => {
-    window.IntersectionObserver = jest.fn().mockReturnValue({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.IntersectionObserver = vi.fn().mockReturnValue({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     });
-    window.HTMLElement.prototype.scrollIntoView = jest.fn();
-    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(fn => fn());
+    window.HTMLElement.prototype.scrollIntoView = vi.fn();
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(fn => fn());
   });
 
   afterEach(() => {
@@ -46,11 +46,11 @@ describe('Pager', () => {
     expect(indicators.length).toBe(propsData.pages.length);
   });
 
-  it('collapses the controllers if contentWidth is smaller than the large contentWidth + the gutters width in large viewport', () => {
+  it('collapses the controllers if contentWidth is smaller than the large contentWidth + the gutters width in large viewport', async () => {
     // set large viewport
     window.innerWidth = BreakpointAttributes.default.large.minWidth + 1;
     const wrapper = shallowMount(Pager, { propsData });
-    wrapper.setData({
+    await wrapper.setData({
       appState: {
         contentWidth: BreakpointAttributes.default.large.contentWidth + GUTTERS_WIDTH + 10,
       },
@@ -58,7 +58,7 @@ describe('Pager', () => {
 
     expect(wrapper.classes('with-compact-controls')).toBe(false);
 
-    wrapper.setData({
+    await wrapper.setData({
       appState: {
         contentWidth: BreakpointAttributes.default.large.contentWidth + GUTTERS_WIDTH - 10,
       },
@@ -67,12 +67,12 @@ describe('Pager', () => {
     expect(wrapper.classes('with-compact-controls')).toBe(true);
   });
 
-  it('collapses the controllers if contentWidth is smaller than the medium contentWidth + the gutters width in medium viewport', () => {
+  it('collapses the controllers if contentWidth is smaller than the medium contentWidth + the gutters width in medium viewport', async () => {
     // set medium viewport
     window.innerWidth = BreakpointAttributes.default.medium.maxWidth - 1;
     const wrapper = shallowMount(Pager, { propsData });
 
-    wrapper.setData({
+    await wrapper.setData({
       appState: {
         contentWidth: BreakpointAttributes.default.medium.contentWidth + GUTTERS_WIDTH + 10,
       },
@@ -80,7 +80,7 @@ describe('Pager', () => {
 
     expect(wrapper.classes('with-compact-controls')).toBe(false);
 
-    wrapper.setData({
+    await wrapper.setData({
       appState: {
         contentWidth: BreakpointAttributes.default.medium.contentWidth + GUTTERS_WIDTH - 10,
       },
@@ -89,12 +89,12 @@ describe('Pager', () => {
     expect(wrapper.classes('with-compact-controls')).toBe(true);
   });
 
-  it('collapses the controllers in small viewports', () => {
+  it('collapses the controllers in small viewports', async () => {
     // set small viewport
     window.innerWidth = BreakpointAttributes.default.small.minWidth;
     const wrapper = shallowMount(Pager, { propsData });
 
-    wrapper.setData({
+    await wrapper.setData({
       appState: {
         contentWidth: BreakpointAttributes.default.small.minWidth,
       },

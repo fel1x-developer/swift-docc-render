@@ -10,6 +10,8 @@
 
 /* eslint-disable */
 
+import { vi } from 'vitest';
+
 import {
   LanguageAliasEntries,
   SupportedLanguagesSet,
@@ -49,7 +51,7 @@ const tryHighlight = (code, lang) => () => highlight(code, lang);
 describe("syntax-highlight", () => {
   // reset the imported modules between tests
   beforeEach(async () => {
-    jest.resetModules();
+    vi.resetModules();
     hljs = await import("highlight.js/lib/core");
     ({ highlightContent, highlight, registerHighlightLanguage, LanguageAliasCacheMap } =
       await import("docc-render/utils/syntax-highlight"));

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import Availability from 'docc-render/components/DocumentationTopic/Summary/Availability.vue';
 
@@ -48,8 +50,8 @@ describe('Availability', () => {
   };
 
   const store = {
-    reset: jest.fn(),
-    setAPIChanges: jest.fn(),
+    reset: vi.fn(),
+    setAPIChanges: vi.fn(),
     state: {
       onThisPageSections: [],
       apiChanges: null,
@@ -116,8 +118,8 @@ describe('Availability', () => {
     expect(badges.at(3).props('variant')).toBe('deprecated');
   });
 
-  it('renders deprecated over beta badges', () => {
-    wrapper.setProps({
+  it('renders deprecated over beta badges', async () => {
+    await wrapper.setProps({
       platforms: [
         {
           introducedAt: '1.0',
@@ -133,8 +135,8 @@ describe('Availability', () => {
     expect(badge.at(0).props('variant')).toBe('deprecated');
   });
 
-  it('renders no beta/deprecated text if not relevant', () => {
-    wrapper.setProps({
+  it('renders no beta/deprecated text if not relevant', async () => {
+    await wrapper.setProps({
       platforms: [
         {
           introducedAt: '1.0',

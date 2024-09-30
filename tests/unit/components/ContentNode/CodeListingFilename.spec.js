@@ -33,14 +33,14 @@ describe('CodeListingFilename', () => {
     expect(span.text()).toBe(fileName);
   });
 
-  it('renders an anchor when `isFileNameActionable=true` and emits an event when clicked', () => {
+  it('renders an anchor when `isFileNameActionable=true` and emits an event when clicked', async () => {
     const wrapper = mount(fileName, true);
 
     const link = wrapper.find('a');
     expect(link.exists()).toBe(true);
     expect(link.text()).toBe(fileName);
 
-    link.trigger('click');
+    await link.trigger('click');
     expect(wrapper.emitted().click).toBeTruthy();
   });
 

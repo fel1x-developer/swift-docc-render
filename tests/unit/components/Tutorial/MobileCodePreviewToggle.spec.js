@@ -28,14 +28,14 @@ describe('MobileCodePreviewToggle', () => {
     expect(span.text()).toBe('tutorials.preview.title');
   });
 
-  it('renders an anchor when `isActionable=true` and emits an event when clicked', () => {
+  it('renders an anchor when `isActionable=true` and emits an event when clicked', async () => {
     const wrapper = mount(true);
 
     const link = wrapper.find('a');
     expect(link.exists()).toBe(true);
     expect(link.text()).toBe('tutorials.preview.title');
 
-    link.trigger('click');
+    await link.trigger('click');
     expect(wrapper.emitted().click).toBeTruthy();
   });
 });

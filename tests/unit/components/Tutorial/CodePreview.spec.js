@@ -106,22 +106,22 @@ describe('CodePreview', () => {
     });
   });
 
-  it('hides/shows the media preview when the hide button is clicked', () => {
+  it('hides/shows the media preview when the hide button is clicked', async () => {
     // Because preview asset is hidden by CSS, we check if the show/hide span exists
     const hideButton = wrapper.find('.header');
 
     expect(hideButton.attributes('title')).toBeFalsy();
 
-    hideButton.trigger('click');
+    await hideButton.trigger('click');
     expect(wrapper.emitted()['runtime-preview-toggle'][0]).toEqual([false]);
     let icon = wrapper.find('.preview-icon');
     expect(icon.is(DiagonalArrowIcon)).toBe(true);
     expect(icon.classes()).toContain('preview-hide');
     expect(icon.classes()).not.toContain('preview-show');
 
-    wrapper.setProps({ isRuntimePreviewVisible: false });
+    await wrapper.setProps({ isRuntimePreviewVisible: false });
 
-    hideButton.trigger('click');
+    await hideButton.trigger('click');
     expect(wrapper.emitted()['runtime-preview-toggle'][1]).toEqual([true]);
 
     icon = wrapper.find('.preview-icon');
@@ -320,8 +320,8 @@ describe('CodePreview', () => {
   });
 
   describe('without a runtime preview', () => {
-    beforeEach(() => {
-      wrapper.setProps({ preview: undefined });
+    beforeEach(async () => {
+      await wrapper.setProps({ preview: undefined });
     });
 
     it('renders the preview with a disabled state', () => {
@@ -337,9 +337,9 @@ describe('CodePreview', () => {
       expect(wrapper.contains('.preview-show')).toBe(true);
     });
 
-    it('does not emit `runtime-preview-toggle` events', () => {
+    it('does not emit `runtime-preview-toggle` events', async () => {
       const button = wrapper.find('button');
-      button.trigger('click');
+      await button.trigger('click');
       expect(wrapper.emitted()['runtime-preview-toggle']).toBeUndefined();
     });
   });

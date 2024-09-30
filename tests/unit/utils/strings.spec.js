@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import {
   anchorize,
   cssEscapeTopicIdHash,
@@ -64,7 +66,7 @@ describe('escapeHtml', () => {
 });
 
 describe('cssEscapeTopicIdHash', () => {
-  const escapeSpy = jest.spyOn(CSS, 'escape');
+  const escapeSpy = vi.spyOn(CSS, 'escape');
 
   it('calls CSS.escape', () => {
     expect(escapeSpy).not.toHaveBeenCalled();

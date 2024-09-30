@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import Language from 'docc-render/constants/Language';
 import LanguageSwitcher
@@ -19,8 +21,8 @@ const {
   Title,
 } = LanguageSwitcher.components;
 
-jest.mock('docc-render/utils/assets', () => ({
-  normalizeRelativePath: jest.fn(name => `/${name}`),
+vi.mock('docc-render/utils/assets', () => ({
+  normalizeRelativePath: vi.fn(name => `/${name}`),
 }));
 
 describe('LanguageSwitcher', () => {
@@ -40,7 +42,7 @@ describe('LanguageSwitcher', () => {
       },
     },
     $router: {
-      push: jest.fn(),
+      push: vi.fn(),
     },
   };
 
@@ -86,8 +88,8 @@ describe('LanguageSwitcher', () => {
     expect(links.at(1).text()).toBe(Language.objectiveC.name);
   });
 
-  it('renders the right links when the paths differ', () => {
-    wrapper.setProps({
+  it('renders the right links when the paths differ', async () => {
+    await wrapper.setProps({
       ...propsData,
       interfaceLanguage: Language.objectiveC.key.api,
       objcPath: 'documentation/bar',
@@ -127,7 +129,7 @@ describe('LanguageSwitcher', () => {
   });
 
   it('stores the preferred language when a link is clicked', () => {
-    const store = { setPreferredLanguage: jest.fn() };
+    const store = { setPreferredLanguage: vi.fn() };
     wrapper = shallowMount(LanguageSwitcher, {
       mocks,
       propsData,
@@ -144,7 +146,7 @@ describe('LanguageSwitcher', () => {
   });
 
   it('does not store the preferred language when links are clicked for IDE targets', () => {
-    const store = { setPreferredLanguage: jest.fn() };
+    const store = { setPreferredLanguage: vi.fn() };
     wrapper = shallowMount(LanguageSwitcher, {
       mocks,
       propsData,

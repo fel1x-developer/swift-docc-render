@@ -17,7 +17,7 @@ import ReferenceInternalSymbol
   from 'docc-render/components/ContentNode/ReferenceInternalSymbol.vue';
 import ReferenceInternal from 'docc-render/components/ContentNode/ReferenceInternal.vue';
 import Router from 'vue-router';
-import createRouterInstance from 'docc-render/setup-utils/SwiftDocCRenderRouter';
+import createRouterInstance from '@/setup-utils/SwiftDocCRenderRouter';
 import { TopicRole } from '@/constants/roles';
 
 const router = createRouterInstance();
@@ -234,7 +234,7 @@ describe('Reference', () => {
       slots: { default: 'Foobar' },
       mocks: {
         $router: {
-          resolve: jest.fn().mockReturnValue({ resolved: { name: '' } }),
+          resolve: vi.fn().mockReturnValue({ resolved: { name: '' } }),
         },
         $route: {
           query: {
@@ -253,7 +253,7 @@ describe('Reference', () => {
       slots: { default: 'Foobar' },
       mocks: {
         $router: {
-          resolve: jest.fn().mockReturnValue({ resolved: { name: '' } }),
+          resolve: vi.fn().mockReturnValue({ resolved: { name: '' } }),
         },
         $route: {
           query: {

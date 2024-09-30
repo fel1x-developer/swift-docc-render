@@ -8,13 +8,15 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import LocaleSelector from 'docc-render/components/LocaleSelector.vue';
 import { updateLocale, getLocaleParam } from 'docc-render/utils/i18n-utils';
 import AppStore from 'docc-render/stores/AppStore';
 
-jest.mock('theme/lang/locales.json', () => (
-  [
+vi.mock('theme/lang/locales.json', () => ({
+  default: [
     {
       code: 'en-US',
       name: 'English',
@@ -35,16 +37,16 @@ jest.mock('theme/lang/locales.json', () => (
       name: '한국어',
       slug: 'ko-KR',
     },
-  ]
-));
-
-jest.mock('docc-render/utils/i18n-utils', () => ({
-  updateLocale: jest.fn(),
-  getLocaleParam: jest.fn(),
+  ],
 }));
 
-jest.mock('docc-render/stores/AppStore', () => ({
-  setPreferredLocale: jest.fn(),
+vi.mock('docc-render/utils/i18n-utils', () => ({
+  updateLocale: vi.fn(),
+  getLocaleParam: vi.fn(),
+}));
+
+vi.mock('docc-render/stores/AppStore', () => ({
+  setPreferredLocale: vi.fn(),
   state: { availableLocales: ['en-US', 'zh-CN'] },
 }));
 
@@ -58,7 +60,7 @@ describe('LocaleSelector', () => {
     wrapper = shallowMount(LocaleSelector, {
       mocks: {
         $router: {
-          push: jest.fn(),
+          push: vi.fn(),
         },
       },
       propsData: {
@@ -72,10 +74,10 @@ describe('LocaleSelector', () => {
     expect(wrapper.find('select').exists()).toBe(true);
   });
 
-  it('updates router when option is selected', () => {
+  it('updates router when option is selected', async () => {
     const cnOption = wrapper.findAll('option').at(1);
     const slug = cnOption.attributes('value');
-    cnOption.trigger('change');
+    await cnOption.trigger('change');
 
     expect(updateLocale).toHaveBeenCalledTimes(1);
     expect(getLocaleParam).toHaveBeenCalledTimes(1);

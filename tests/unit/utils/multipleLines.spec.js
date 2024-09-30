@@ -8,11 +8,13 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { displaysMultipleLines } from '@/utils/multipleLines';
 
 const lineHeight = 25;
 
-window.getComputedStyle = jest.fn().mockReturnValue({
+window.getComputedStyle = vi.fn().mockReturnValue({
   lineHeight: `${lineHeight}px`,
 });
 
@@ -41,7 +43,7 @@ describe('displaysMultipleLines', () => {
     const sumOfExtraHeights = paddingTop + paddingBottom + borderTopWidth + borderBottomWidth;
     const heightOfSingleLineWithExtraHeights = lineHeight + sumOfExtraHeights;
 
-    window.getComputedStyle = jest.fn().mockReturnValue({
+    window.getComputedStyle = vi.fn().mockReturnValue({
       lineHeight: `${lineHeight}px`,
       paddingTop: `${paddingTop}px`,
       paddingBottom: `${paddingBottom}px`,

@@ -37,12 +37,12 @@ describe('TagList', () => {
     expect(tags.length).toBe(2);
   });
 
-  it('renders an `scrolling` class inside the tag list if `isScrolling` is true', () => {
+  it('renders an `scrolling` class inside the tag list if `isScrolling` is true', async () => {
     const list = wrapper.find({ ref: 'scroll-wrapper' });
 
     expect(list.classes('scrolling')).toBe(false);
 
-    wrapper.setData({ isScrolling: true });
+    await wrapper.setData({ isScrolling: true });
 
     expect(list.classes('scrolling')).toBe(true);
   });
@@ -62,48 +62,48 @@ describe('TagList', () => {
       expect(wrapper.vm.focusedIndex).toBe(0);
     });
 
-    it('allows the user to navigate through arrow keys', () => {
-      tag1.trigger('keydown.right');
+    it('allows the user to navigate through arrow keys', async () => {
+      await tag1.trigger('keydown.right');
       expect(wrapper.vm.focusedIndex).toBe(1);
 
-      tag2.trigger('keydown.left');
+      await tag2.trigger('keydown.left');
       expect(wrapper.vm.focusedIndex).toBe(0);
 
-      tag1.trigger('keydown.down');
+      await tag1.trigger('keydown.down');
       expect(wrapper.vm.focusedIndex).toBe(1);
 
-      tag2.trigger('keydown.up');
+      await tag2.trigger('keydown.up');
       expect(wrapper.vm.focusedIndex).toBe(0);
     });
 
-    it('does not allow users to navigate through arrow keys if they are holding shift + cmd or shift + ctrl', () => {
-      tag1.trigger('keydown.shift.cmd.right');
+    it('does not allow users to navigate through arrow keys if they are holding shift + cmd or shift + ctrl', async () => {
+      await tag1.trigger('keydown.shift.cmd.right');
       expect(wrapper.vm.focusedIndex).toBe(0);
 
-      tag2.trigger('keydown.shift.cmd.left');
+      await tag2.trigger('keydown.shift.cmd.left');
       expect(wrapper.vm.focusedIndex).toBe(0);
 
-      tag1.trigger('keydown.shift.cmd.down');
+      await tag1.trigger('keydown.shift.cmd.down');
       expect(wrapper.vm.focusedIndex).toBe(0);
 
-      tag2.trigger('keydown.shift.cmd.up');
+      await tag2.trigger('keydown.shift.cmd.up');
       expect(wrapper.vm.focusedIndex).toBe(0);
 
-      tag1.trigger('keydown.shift.ctrl.right');
+      await tag1.trigger('keydown.shift.ctrl.right');
       expect(wrapper.vm.focusedIndex).toBe(0);
 
-      tag2.trigger('keydown.shift.ctrl.left');
+      await tag2.trigger('keydown.shift.ctrl.left');
       expect(wrapper.vm.focusedIndex).toBe(0);
 
-      tag1.trigger('keydown.shift.ctrl.down');
+      await tag1.trigger('keydown.shift.ctrl.down');
       expect(wrapper.vm.focusedIndex).toBe(0);
 
-      tag2.trigger('keydown.shift.ctrl.up');
+      await tag2.trigger('keydown.shift.ctrl.up');
       expect(wrapper.vm.focusedIndex).toBe(0);
     });
 
-    it('emits `focus-prev` when clicking on the up arrow', () => {
-      tag1.trigger('keydown.up');
+    it('emits `focus-prev` when clicking on the up arrow', async () => {
+      await tag1.trigger('keydown.up');
       expect(wrapper.vm.focusedIndex).toBe(0);
       expect(wrapper.emitted('focus-prev')).toBeTruthy();
     });
@@ -118,67 +118,67 @@ describe('TagList', () => {
       expect(wrapper.vm.focusedIndex).toBe(1);
     });
 
-    it('emits `focus-next` when clicking on the down arrow', () => {
-      tag2.trigger('keydown.down');
+    it('emits `focus-next` when clicking on the down arrow', async () => {
+      await tag2.trigger('keydown.down');
       expect(wrapper.vm.focusedIndex).toBe(1);
       expect(wrapper.emitted('focus-next')).toBeTruthy();
     });
 
-    it('emits `focus-next` when clicking on the right arrow', () => {
-      tag2.trigger('keydown.right');
+    it('emits `focus-next` when clicking on the right arrow', async () => {
+      await tag2.trigger('keydown.right');
       expect(wrapper.vm.focusedIndex).toBe(1);
       expect(wrapper.emitted('focus-next')).toBeTruthy();
     });
   });
 
-  it('reset filters when pressing the delete button while being focus only on the list', () => {
+  it('reset filters when pressing the delete button while being focus only on the list', async () => {
     const list = wrapper.find({ ref: 'tags' });
     expect(list.exists()).toBe(true);
 
-    list.trigger('keydown.delete.self');
+    await list.trigger('keydown.delete.self');
     expect(wrapper.emitted('reset-filters')).toBeTruthy();
   });
 
-  it('does not reset filters when hitting `Enter` while being focus only on the list', () => {
+  it('does not reset filters when hitting `Enter` while being focus only on the list', async () => {
     const list = wrapper.find({ ref: 'tags' });
 
-    list.trigger('keydown', {
+    await list.trigger('keydown', {
       key: 'Enter',
     });
 
     expect(wrapper.emitted('reset-filters')).not.toBeTruthy();
   });
 
-  it('does not delete tag when hitting `Enter` while being focus only tag', () => {
+  it('does not delete tag when hitting `Enter` while being focus only tag', async () => {
     const tag = wrapper.find({ ref: 'tag' });
 
-    tag.trigger('keydown', {
+    await tag.trigger('keydown', {
       key: 'Enter',
     });
 
     expect(wrapper.emitted('delete-tag')).not.toBeTruthy();
   });
 
-  it('deletes tag when hitting an alphanum key or space while being focus only tag', () => {
+  it('deletes tag when hitting an alphanum key or space while being focus only tag', async () => {
     const tag = wrapper.find({ ref: 'tag' });
     const alphanumKey = 'a';
     const input = 'foo';
     const space = ' ';
-    wrapper.setProps({ input });
-    wrapper.setData({ focusedIndex: 0 });
-    tag.trigger('keydown', { key: alphanumKey });
+    await wrapper.setProps({ input });
+    await wrapper.setData({ focusedIndex: 0 });
+    await tag.trigger('keydown', { key: alphanumKey });
 
     expect(wrapper.emitted('delete-tag')[0][0].tagName).toEqual(propsData.tags[0]);
 
-    tag.trigger('keydown', { key: space });
+    await tag.trigger('keydown', { key: space });
 
     expect(wrapper.emitted('delete-tag')).toBeTruthy();
   });
 
-  it('emits `select-all` when user has text on input and `command + a` is triggered on any tag', () => {
-    wrapper.setProps({ input: 'something' });
+  it('emits `select-all` when user has text on input and `command + a` is triggered on any tag', async () => {
+    await wrapper.setProps({ input: 'something' });
 
-    wrapper.find({ ref: 'tags' }).trigger('keydown', {
+    await wrapper.find({ ref: 'tags' }).trigger('keydown', {
       key: 'a',
       metaKey: true,
     });
@@ -197,9 +197,9 @@ describe('TagList', () => {
   });
 
   describe('Removable Tags', () => {
-    it('sets passed down `isRemovableTag` on tags', () => {
+    it('sets passed down `isRemovableTag` on tags', async () => {
       expect(wrapper.find(Tag).props()).toHaveProperty('isRemovableTag', false);
-      wrapper.setProps({ areTagsRemovable: true });
+      await wrapper.setProps({ areTagsRemovable: true });
       expect(wrapper.find(Tag).props()).toHaveProperty('isRemovableTag', true);
     });
 

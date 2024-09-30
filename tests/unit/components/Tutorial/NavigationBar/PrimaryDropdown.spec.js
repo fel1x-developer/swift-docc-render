@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import {
   createLocalVue,
   mount,
@@ -17,7 +19,7 @@ import PrimaryDropdown from 'docc-render/components/Tutorial/NavigationBar/Prima
 import ReferenceUrlProvider from 'docc-render/components/ReferenceUrlProvider.vue';
 import DropdownCustom from 'docc-render/components/DropdownCustom.vue';
 
-const navigate = jest.fn();
+const navigate = vi.fn();
 
 const RouterLinkStub = {
   name: 'RouterLink',
@@ -105,7 +107,7 @@ describe('Primary Dropdown', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     const localVue = createLocalVue();
     localVue.directive('hide', hide);
 
@@ -117,7 +119,7 @@ describe('Primary Dropdown', () => {
       },
       mocks: {
         $router: {
-          push: jest.fn(),
+          push: vi.fn(),
         },
         $route: {
           query,
@@ -182,22 +184,22 @@ describe('Primary Dropdown', () => {
     });
   });
 
-  it('opens the dropdown on key `down`', () => {
-    btn.trigger('keydown.down');
+  it('opens the dropdown on key `down`', async () => {
+    await btn.trigger('keydown.down');
     expect(wrapper.classes('is-open')).toBe(true);
   });
 
-  it('opens the dropdown on key `up`', () => {
-    btn.trigger('keydown.up');
+  it('opens the dropdown on key `up`', async () => {
+    await btn.trigger('keydown.up');
     expect(wrapper.classes('is-open')).toBe(true);
   });
 
   it('focuses the next element, when `down` key is used on opened dropdown link', async () => {
     // open dropdown first using down key
-    btn.trigger('keydown.down');
+    await btn.trigger('keydown.down');
     expect(wrapper.classes('is-open')).toBe(true);
     // use the down key on the first link
-    firstLink.trigger('keydown.down');
+    await firstLink.trigger('keydown.down');
     await wrapper.vm.$nextTick();
     const secondOption = wrapper.findAll(`.${OptionClass}`).at(1).element;
     expect(document.activeElement).toEqual(secondOption);
@@ -205,25 +207,25 @@ describe('Primary Dropdown', () => {
 
   it('focuses the previous element, when `up` key is used on opened dropdown link', async () => {
     // open dropdown first using down key
-    btn.trigger('click');
+    await btn.trigger('click');
     // find the second option
     const secondOption = wrapper.findAll(`.${OptionClass}`).at(1);
     // use the down key on the first link
-    firstLink.trigger('keydown.down');
+    await firstLink.trigger('keydown.down');
     await wrapper.vm.$nextTick();
     // assert it is focused
     expect(document.activeElement).toEqual(secondOption.element);
     // now click up on the active element
-    secondOption.trigger('keydown.up');
+    await secondOption.trigger('keydown.up');
     await wrapper.vm.$nextTick();
     // assert the first element is active now
     expect(document.activeElement).toEqual(firstLink.element);
   });
 
   describe('when `esc` key is used on opened dropdown link', () => {
-    beforeEach(() => {
-      btn.trigger('click');
-      firstLink.trigger('keydown.esc');
+    beforeEach(async () => {
+      await btn.trigger('click');
+      await firstLink.trigger('keydown.esc');
     });
 
     it('closes the dropdown', () => {
@@ -232,9 +234,9 @@ describe('Primary Dropdown', () => {
   });
 
   describe('when `tab` key is used on opened dropdown link', () => {
-    beforeEach(() => {
-      btn.trigger('click');
-      firstLink.trigger('keydown.tab');
+    beforeEach(async () => {
+      await btn.trigger('click');
+      await firstLink.trigger('keydown.tab');
     });
 
     it('closes the dropdown', () => {
@@ -243,8 +245,8 @@ describe('Primary Dropdown', () => {
   });
 
   describe('when opened dropdown link is clicked', () => {
-    beforeEach(() => {
-      firstLink.trigger('click');
+    beforeEach(async () => {
+      await firstLink.trigger('click');
     });
 
     it('pushes the link path onto the router', () => {
@@ -257,9 +259,9 @@ describe('Primary Dropdown', () => {
   });
 
   describe('when `enter` key is used on opened dropdown link', () => {
-    beforeEach(() => {
-      btn.trigger('click');
-      firstLink.trigger('keydown.enter');
+    beforeEach(async () => {
+      await btn.trigger('click');
+      await firstLink.trigger('keydown.enter');
     });
 
     it('pushes the link path onto the router', () => {

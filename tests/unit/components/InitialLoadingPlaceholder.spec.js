@@ -8,10 +8,12 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import InitialLoadingPlaceholder from 'docc-render/components/InitialLoadingPlaceholder.vue';
 import { shallowMount } from '@vue/test-utils';
 
-const onReady = jest.fn();
+const onReady = vi.fn();
 
 const mocks = {
   $router: {
@@ -21,7 +23,7 @@ const mocks = {
 
 describe('InitialLoadingPlaceholder', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders the InitialLoadingPlaceholder', () => {

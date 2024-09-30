@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import Article from 'docc-render/components/Article.vue';
 import Topic from 'docc-render/views/Topic.vue';
@@ -16,16 +18,16 @@ import Tutorial from 'docc-render/components/Tutorial.vue';
 import onPageLoadScrollToFragment from 'docc-render/mixins/onPageLoadScrollToFragment';
 import { fetchDataForRouteEnter } from '@/utils/data';
 
-jest.mock('docc-render/mixins/onPageLoadScrollToFragment');
-jest.mock('@/utils/data');
+vi.mock('docc-render/mixins/onPageLoadScrollToFragment');
+vi.mock('@/utils/data');
 
 fetchDataForRouteEnter.mockResolvedValue({});
 
 const mocks = {
   $bridge: {
-    on: jest.fn(),
-    off: jest.fn(),
-    send: jest.fn(),
+    on: vi.fn(),
+    off: vi.fn(),
+    send: vi.fn(),
   },
   $route: {},
 };
@@ -34,7 +36,7 @@ describe('Topic', () => {
   let wrapper;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     wrapper = shallowMount(Topic, { mocks });
   });
 
@@ -62,7 +64,7 @@ describe('Topic', () => {
   });
 
   it('skips fetching data, if `meta.skipFetchingData` is `true`', () => {
-    const next = jest.fn();
+    const next = vi.fn();
     Topic.beforeRouteEnter({ meta: { skipFetchingData: true } }, {}, next);
     expect(next).toHaveBeenCalledTimes(1);
     expect(fetchDataForRouteEnter).toHaveBeenCalledTimes(0);
@@ -70,7 +72,7 @@ describe('Topic', () => {
     const params = {
       to: { name: 'foo', meta: {} },
       from: { name: 'bar' },
-      next: jest.fn(),
+      next: vi.fn(),
     };
     Topic.beforeRouteEnter(params.to, params.from, params.next);
     expect(fetchDataForRouteEnter).toHaveBeenCalledTimes(1);
@@ -79,7 +81,7 @@ describe('Topic', () => {
   });
 
   async function testRenderedMessageWithProvide(provide) {
-    const sendMock = jest.fn();
+    const sendMock = vi.fn();
     wrapper = shallowMount(Topic, {
       mocks: {
         ...mocks,
@@ -92,7 +94,7 @@ describe('Topic', () => {
     });
 
     // Mimic receiving JSON data.
-    wrapper.setData({
+    await wrapper.setData({
       topicData: {
         identifier: {
           interfaceLanguage: 'swift',
@@ -123,7 +125,7 @@ describe('Topic', () => {
     expect(window.renderedTimes).toBeFalsy();
 
     // Mimic receiving data.
-    wrapper.setData({
+    await wrapper.setData({
       topicData: {
         identifier: {
           interfaceLanguage: 'swift',
@@ -159,8 +161,8 @@ describe('Topic', () => {
       sections: [],
     };
 
-    beforeEach(() => {
-      wrapper.setData({
+    beforeEach(async () => {
+      await wrapper.setData({
         topicData: {
           ...props,
           kind: 'article',
@@ -184,9 +186,9 @@ describe('Topic', () => {
       });
     });
 
-    it('passes the hierarchy to Article', () => {
+    it('passes the hierarchy to Article', async () => {
       const hierarchy = { technologyNavigation: ['overview', 'tutorials'] };
-      wrapper.setData({
+      await wrapper.setData({
         topicData: {
           ...props,
           kind: 'article',
@@ -199,8 +201,8 @@ describe('Topic', () => {
       expect(article.props('hierarchy')).toEqual(hierarchy);
     });
 
-    it('passes the default hierarchy to Article if none is provided', () => {
-      wrapper.setData({
+    it('passes the default hierarchy to Article if none is provided', async () => {
+      await wrapper.setData({
         topicData: {
           ...props,
           kind: 'article',
@@ -224,8 +226,8 @@ describe('Topic', () => {
       sections: [],
     };
 
-    beforeEach(() => {
-      wrapper.setData({
+    beforeEach(async () => {
+      await wrapper.setData({
         topicData: {
           ...props,
           kind: 'project',
@@ -249,9 +251,9 @@ describe('Topic', () => {
       });
     });
 
-    it('passes the hierarchy to Tutorial', () => {
+    it('passes the hierarchy to Tutorial', async () => {
       const hierarchy = { technologyNavigation: ['overview', 'tutorials'] };
-      wrapper.setData({
+      await wrapper.setData({
         topicData: {
           ...props,
           hierarchy,
@@ -264,8 +266,8 @@ describe('Topic', () => {
       expect(tutorial.props('hierarchy')).toEqual(hierarchy);
     });
 
-    it('passes the default hierarchy to Tutorial if none is provided', () => {
-      wrapper.setData({
+    it('passes the default hierarchy to Tutorial if none is provided', async () => {
+      await wrapper.setData({
         topicData: {
           ...props,
           kind: 'project',

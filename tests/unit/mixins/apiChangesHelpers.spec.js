@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import { APIChangesMultipleLines } from 'docc-render/mixins/apiChangesHelpers';
 
@@ -24,7 +26,7 @@ describe('apiChangesHelpers', () => {
   let wrapper;
 
   beforeEach(() => {
-    window.getComputedStyle = jest.fn().mockReturnValue({
+    window.getComputedStyle = vi.fn().mockReturnValue({
       lineHeight: '25px',
     });
   });

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import {
   shallowMount,
   RouterLinkStub,
@@ -18,9 +20,9 @@ import BreakpointEmitter from '@/components/BreakpointEmitter.vue';
 import { SIDEBAR_HIDE_BUTTON_ID } from 'docc-render/constants/sidebar';
 import { flushPromises } from '../../../../test-utils';
 
-jest.mock('docc-render/utils/changeElementVOVisibility');
-jest.mock('docc-render/utils/scroll-lock');
-jest.mock('docc-render/utils/FocusTrap');
+vi.mock('docc-render/utils/changeElementVOVisibility');
+vi.mock('docc-render/utils/scroll-lock');
+vi.mock('docc-render/utils/FocusTrap');
 
 const {
   NavBase,
@@ -35,7 +37,7 @@ const stubs = {
 
 const mocks = {
   $router: {
-    push: jest.fn(),
+    push: vi.fn(),
   },
   $route: {
     query: {},
@@ -82,8 +84,8 @@ describe('DocumentationNav', () => {
     expect(nav.props()).toHaveProperty('isWideFormat', true);
   });
 
-  it('accepts an isDark prop', () => {
-    wrapper.setProps({
+  it('accepts an isDark prop', async () => {
+    await wrapper.setProps({
       isDark: true,
     });
     const nav = wrapper.find(NavBase);
@@ -121,8 +123,8 @@ describe('DocumentationNav', () => {
     expect(wrapper.find(NavBase).props()).toHaveProperty('showActions', false);
   });
 
-  it('accepts a hasNoBorder prop', () => {
-    wrapper.setProps({
+  it('accepts a hasNoBorder prop', async () => {
+    await wrapper.setProps({
       hasNoBorder: true,
     });
     const nav = wrapper.find(NavBase);
@@ -155,9 +157,9 @@ describe('DocumentationNav', () => {
     });
   });
 
-  it('does not render a `LanguageToggle` when there is no swift nor objc path', () => {
+  it('does not render a `LanguageToggle` when there is no swift nor objc path', async () => {
     expect(wrapper.contains(LanguageToggle)).toBe(true);
-    wrapper.setProps({ swiftPath: null, objcPath: null });
+    await wrapper.setProps({ swiftPath: null, objcPath: null });
     expect(wrapper.contains(LanguageToggle)).toBe(false);
   });
 
@@ -208,7 +210,7 @@ describe('DocumentationNav', () => {
     expect(sidenavToggleWrapper.isVisible()).toBe(true);
     // interact with button
     const button = sidenavToggleWrapper.find('.sidenav-toggle');
-    button.trigger('click');
+    await button.trigger('click');
     await flushPromises();
     // assert the button works and is rendered as expected
     expect(button.attributes('aria-label')).toBe('navigator.open-navigator');
@@ -223,12 +225,12 @@ describe('DocumentationNav', () => {
 
     wrapper.find(BreakpointEmitter).vm.$emit('change', BreakpointName.medium);
     await flushPromises();
-    wrapper.find('.nav-menucta').trigger('click');
+    await wrapper.find('.nav-menucta').trigger('click');
     expect(wrapper.classes()).toContain('nav--is-open');
     const toggle = wrapper.find('.sidenav-toggle');
     expect(toggle.attributes()).toHaveProperty('tabindex', '-1');
-    toggle.trigger('click');
-    wrapper.find('.nav-menu-tray').trigger('transitionend', { propertyName: 'max-height' });
+    await toggle.trigger('click');
+    await wrapper.find('.nav-menu-tray').trigger('transitionend', { propertyName: 'max-height' });
     expect(wrapper.classes()).not.toContain('nav--is-open');
     expect(wrapper.emitted('toggle-sidenav')).toBeFalsy();
     await flushPromises();
@@ -237,8 +239,8 @@ describe('DocumentationNav', () => {
     window.Event = backup;
   });
 
-  it('does not render the sidenav toggle if displaySidenav is false', () => {
-    wrapper.setProps({
+  it('does not render the sidenav toggle if displaySidenav is false', async () => {
+    await wrapper.setProps({
       displaySidenav: false,
     });
     expect(wrapper.find(NavBase).props()).toMatchObject({

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import ColorScheme from 'docc-render/constants/ColorScheme';
 import VideoAsset from 'docc-render/components/VideoAsset.vue';
@@ -16,7 +18,7 @@ import DeviceFrame from '@/components/ContentNode/DeviceFrame.vue';
 import ConditionalWrapper from '@/components/ConditionalWrapper.vue';
 import { flushPromises } from '../../../test-utils';
 
-const getIntrinsicDimensionsSpy = jest.spyOn(assetUtils, 'getIntrinsicDimensions').mockResolvedValue({
+const getIntrinsicDimensionsSpy = vi.spyOn(assetUtils, 'getIntrinsicDimensions').mockResolvedValue({
   width: 100,
   height: 100,
 });
@@ -49,7 +51,7 @@ describe('VideoAsset', () => {
   let wrapper;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     wrapper = shallowMount(VideoAsset, { data, propsData, stubs: { ConditionalWrapper } });
   });
 
@@ -68,14 +70,14 @@ describe('VideoAsset', () => {
     expect(hiddenDesc.text()).toBe(`video.description ${propsData.alt}`);
   });
 
-  it('adds a description reference to the `video` if showsDefaultControls is true', () => {
-    wrapper.setProps({ showsDefaultControls: true });
+  it('adds a description reference to the `video` if showsDefaultControls is true', async () => {
+    await wrapper.setProps({ showsDefaultControls: true });
     const video = wrapper.find('video');
     expect(video.attributes('aria-labelledby')).toBe(altTextId);
   });
 
-  it('does not add a description reference to the `video` if alt is not provided', () => {
-    wrapper.setProps({ alt: null });
+  it('does not add a description reference to the `video` if alt is not provided', async () => {
+    await wrapper.setProps({ alt: null });
     expect(wrapper.find('video').attributes()).not.toHaveProperty('aria-labelledby');
   });
 
@@ -97,7 +99,7 @@ describe('VideoAsset', () => {
     expect(video.attributes()).toMatchObject({
       width: '100',
     });
-    wrapper.setData({
+    await wrapper.setData({
       appState: { preferredColorScheme: ColorScheme.dark },
     });
     expect(wrapper.find('video').attributes('poster')).toEqual(propsData.posterVariants[1].url);
@@ -112,11 +114,11 @@ describe('VideoAsset', () => {
 
   it('applies a light poster if there is no dark variant but target prefers dark', async () => {
     expect(getIntrinsicDimensionsSpy).toHaveBeenCalledTimes(1);
-    wrapper.setProps({
+    await wrapper.setProps({
       posterVariants: [propsData.posterVariants[0]],
       variants: [propsData.variants[0]],
     });
-    wrapper.setData({
+    await wrapper.setData({
       appState: { preferredColorScheme: ColorScheme.dark },
     });
     await flushPromises();
@@ -127,7 +129,7 @@ describe('VideoAsset', () => {
 
   it('renders no poster if no light poster is provided, even if dark one exists', async () => {
     expect(getIntrinsicDimensionsSpy).toHaveBeenCalledTimes(1);
-    wrapper.setProps({
+    await wrapper.setProps({
       posterVariants: [propsData.posterVariants[1]],
     });
     expect(wrapper.find('video').attributes('poster')).toEqual(undefined);
@@ -140,7 +142,7 @@ describe('VideoAsset', () => {
 
   it('renders no poster if not available', async () => {
     expect(getIntrinsicDimensionsSpy).toHaveBeenCalledTimes(1);
-    wrapper.setProps({
+    await wrapper.setProps({
       posterVariants: [],
     });
     expect(wrapper.find('video').attributes('poster')).toEqual(undefined);
@@ -151,48 +153,48 @@ describe('VideoAsset', () => {
     expect(wrapper.attributes('height')).toBeFalsy();
   });
 
-  it('does not show controls when `showsDefaultControls=false`', () => {
-    wrapper.setProps({
+  it('does not show controls when `showsDefaultControls=false`', async () => {
+    await wrapper.setProps({
       showControls: false,
     });
     const source = wrapper.find('video source');
     expect(source.attributes('controls')).toBe(undefined);
   });
 
-  it('forwards `playing`, `pause` and `ended` events', () => {
+  it('forwards `playing`, `pause` and `ended` events', async () => {
     const video = wrapper.find('video');
 
-    video.trigger('playing');
+    await video.trigger('playing');
     expect(wrapper.emitted().playing.length).toBe(1);
 
-    video.trigger('pause');
+    await video.trigger('pause');
     expect(wrapper.emitted().pause.length).toBe(1);
 
-    video.trigger('ended');
+    await video.trigger('ended');
     expect(wrapper.emitted().ended.length).toBe(1);
   });
 
-  it('sets `autoplay` using `autoplays`', () => {
+  it('sets `autoplay` using `autoplays`', async () => {
     const video = wrapper.find('video');
 
     expect(video.attributes('autoplay')).toBeFalsy();
-    wrapper.setProps({ autoplays: true });
+    await wrapper.setProps({ autoplays: true });
     expect(video.attributes('autoplay')).toBe('autoplay');
   });
 
-  it('sets `controls` using `showsDefaultControls`', () => {
+  it('sets `controls` using `showsDefaultControls`', async () => {
     const video = wrapper.find('video');
     expect(video.attributes('controls')).toBe(undefined);
-    wrapper.setProps({ showsDefaultControls: true });
+    await wrapper.setProps({ showsDefaultControls: true });
     expect(video.attributes('controls')).toBe('controls');
   });
 
-  it('renders a source for the light variant when applicable', () => {
+  it('renders a source for the light variant when applicable', async () => {
     let source = wrapper.find('source');
     expect(source.exists()).toBe(true);
     expect(source.attributes('src')).toBe(propsData.variants[0].url);
 
-    wrapper.setData({
+    await wrapper.setData({
       appState: {
         preferredColorScheme: ColorScheme.light,
       },
@@ -202,8 +204,8 @@ describe('VideoAsset', () => {
     expect(source.attributes('src')).toBe(propsData.variants[0].url);
   });
 
-  it('renders a source for the dark variant when applicable', () => {
-    wrapper.setData({
+  it('renders a source for the dark variant when applicable', async () => {
+    await wrapper.setData({
       appState: {
         preferredColorScheme: ColorScheme.dark,
       },
@@ -212,7 +214,7 @@ describe('VideoAsset', () => {
     expect(source.exists()).toBe(true);
     expect(source.attributes('src')).toBe(propsData.variants[1].url);
 
-    wrapper.setData({
+    await wrapper.setData({
       appState: {
         preferredColorScheme: ColorScheme.auto,
         systemColorScheme: ColorScheme.dark,
@@ -223,16 +225,16 @@ describe('VideoAsset', () => {
     expect(source.attributes('src')).toBe(propsData.variants[1].url);
   });
 
-  it('renders a video as none-muted', () => {
-    wrapper.setProps({
+  it('renders a video as none-muted', async () => {
+    await wrapper.setProps({
       muted: false,
     });
     expect(wrapper.element.muted).toBeFalsy();
   });
 
-  it('renders a `ConditionalWrapper` around the video', () => {
+  it('renders a `ConditionalWrapper` around the video', async () => {
     expect(wrapper.find(DeviceFrame).exists()).toBeFalsy();
-    wrapper.setProps({
+    await wrapper.setProps({
       deviceFrame: 'phone',
     });
     const frame = wrapper.find(DeviceFrame);
@@ -245,13 +247,13 @@ describe('VideoAsset', () => {
     expect(video.find('source').attributes('src')).toBe(propsData.variants[0].url);
   });
 
-  it('sets the orientation after the metadata is loaded', () => {
+  it('sets the orientation after the metadata is loaded', async () => {
     const video = wrapper.find('video');
     expect(video.attributes('data-orientation')).toBeFalsy();
 
     wrapper.vm.$refs.video = { videoWidth: 300, videoHeight: 200 };
 
-    video.trigger('loadedmetadata');
+    await video.trigger('loadedmetadata');
     expect(video.attributes('data-orientation')).toBe('landscape');
   });
 });

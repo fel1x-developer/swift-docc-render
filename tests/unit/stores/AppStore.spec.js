@@ -27,8 +27,8 @@ describe('AppStore', () => {
   });
 
   it('has correct state in IDE mode', () => {
-    const originalTarget = process.env.VUE_APP_TARGET;
-    process.env.VUE_APP_TARGET = 'ide';
+    const originalTarget = import.meta.env.VITE_APP_TARGET;
+    import.meta.env.VITE_APP_TARGET = 'ide';
     AppStore.reset();
 
     expect(AppStore.state).toEqual({
@@ -42,7 +42,7 @@ describe('AppStore', () => {
     });
 
     // restore target
-    process.env.VUE_APP_TARGET = originalTarget;
+    import.meta.env.VITE_APP_TARGET = originalTarget;
   });
 
   describe('setImageLoadingStrategy', () => {

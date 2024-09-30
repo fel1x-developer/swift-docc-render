@@ -38,7 +38,7 @@ describe('keyboardNavigation', () => {
 
   it('allows the user to navigate to the last item on the list when pressing cmd + down key', async () => {
     const wrapper = createWrapper();
-    wrapper.trigger('keydown', {
+    await wrapper.trigger('keydown', {
       key: 'ArrowDown',
       metaKey: true,
     });
@@ -51,16 +51,16 @@ describe('keyboardNavigation', () => {
   it('allows the user to navigate to the first item on the list when pressing cmd + up key', async () => {
     const wrapper = createWrapper();
     // simulate going down a few times
-    wrapper.trigger('keydown', {
+    await wrapper.trigger('keydown', {
       key: 'ArrowDown',
     });
-    wrapper.trigger('keydown', {
+    await wrapper.trigger('keydown', {
       key: 'ArrowDown',
     });
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.focusedIndex).toBe(2);
     // now go to the top
-    wrapper.trigger('keydown', {
+    await wrapper.trigger('keydown', {
       key: 'ArrowUp',
       metaKey: true,
     });
@@ -68,50 +68,50 @@ describe('keyboardNavigation', () => {
     expect(wrapper.vm.focusedIndex).toBe(0);
   });
 
-  it('allows the user to navigate through arrow keys', () => {
+  it('allows the user to navigate through arrow keys', async () => {
     const wrapper = createWrapper();
-    wrapper.trigger('keydown.down');
+    await wrapper.trigger('keydown.down');
     expect(wrapper.vm.focusedIndex).toBe(1);
 
-    wrapper.trigger('keydown.up');
+    await wrapper.trigger('keydown.up');
     expect(wrapper.vm.focusedIndex).toBe(0);
   });
 
-  it('resets the `externalFocusChange` property', () => {
+  it('resets the `externalFocusChange` property', async () => {
     const wrapper = createWrapper();
-    wrapper.setData({ externalFocusChange: true });
-    wrapper.trigger('keydown.down');
+    await wrapper.setData({ externalFocusChange: true });
+    await wrapper.trigger('keydown.down');
     expect(wrapper.vm.focusedIndex).toBe(1);
     expect(wrapper.vm.externalFocusChange).toBe(false);
 
-    wrapper.setData({ externalFocusChange: true });
-    wrapper.trigger('keydown.up');
+    await wrapper.setData({ externalFocusChange: true });
+    await wrapper.trigger('keydown.up');
     expect(wrapper.vm.focusedIndex).toBe(0);
     expect(wrapper.vm.externalFocusChange).toBe(false);
 
-    wrapper.setData({ externalFocusChange: true });
-    wrapper.trigger('keydown', {
+    await wrapper.setData({ externalFocusChange: true });
+    await wrapper.trigger('keydown', {
       key: 'ArrowUp',
       metaKey: true,
     });
     expect(wrapper.vm.externalFocusChange).toBe(false);
   });
 
-  it('prevents the user to navigate when meta, ctrl or shift keys are pressed', () => {
+  it('prevents the user to navigate when meta, ctrl or shift keys are pressed', async () => {
     const wrapper = createWrapper();
-    wrapper.trigger('keydown', {
+    await wrapper.trigger('keydown', {
       key: 'down',
       metaKey: true,
     });
     expect(wrapper.vm.focusedIndex).toBe(0);
 
-    wrapper.trigger('keydown', {
+    await wrapper.trigger('keydown', {
       key: 'down',
       ctrlKey: true,
     });
     expect(wrapper.vm.focusedIndex).toBe(0);
 
-    wrapper.trigger('keydown', {
+    await wrapper.trigger('keydown', {
       key: 'down',
       shiftKey: true,
     });

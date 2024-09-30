@@ -79,9 +79,9 @@ describe('HierarchyCollapsedItems', () => {
   describe('when the toggle is clicked', () => {
     let toggle;
 
-    beforeEach(() => {
+    beforeEach(async () => {
       toggle = wrapper.find('.toggle');
-      toggle.trigger('click');
+      await toggle.trigger('click');
     });
 
     it('focuses the toggle', () => {

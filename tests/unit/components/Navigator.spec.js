@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import Navigator from '@/components/Navigator.vue';
 import { shallowMount } from '@vue/test-utils';
 import NavigatorCard from '@/components/Navigator/NavigatorCard.vue';
@@ -15,7 +17,7 @@ import { baseNavStickyAnchorId } from 'docc-render/constants/nav';
 import { TopicTypes } from '@/constants/TopicTypes';
 import { INDEX_ROOT_KEY } from '@/constants/sidebar';
 
-jest.mock('docc-render/utils/throttle', () => jest.fn(v => v));
+vi.mock('docc-render/utils/throttle', () => vi.fn(v => v));
 
 const { LoadingNavigatorCard } = Navigator.components;
 
@@ -122,11 +124,11 @@ const createWrapper = ({ propsData, ...others } = {}) => shallowMount(Navigator,
   ...others,
 });
 
-const errorSpy = jest.spyOn(console, 'error').mockReturnValue('');
+const errorSpy = vi.spyOn(console, 'error').mockReturnValue('');
 
 describe('Navigator', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders the Navigator', () => {

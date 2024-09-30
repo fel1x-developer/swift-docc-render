@@ -67,19 +67,18 @@ describe("Tabnav", () => {
     expect(wrapper.emitted("input")).toEqual([["bar"]]);
   });
 
-  it("works with `TabnavItem`", () => {
+  it("works with `TabnavItem`", async () => {
     const wrapper = shallowMount(Tabnav, {
       propsData,
-      stubs: { TabnavItem },
+      stubs: {TabnavItem},
       slots: {
         default:
           '<TabnavItem value="one">One</TabnavItem>' + '<TabnavItem value="two">Two</TabnavItem>'
       }
     });
-    wrapper
+    await wrapper
       .findAll(".tabnav-link")
-      .at(1)
-      .trigger("click");
+      .at(1).trigger("click");
     expect(wrapper.emitted("input")).toEqual([["two"]]);
   });
 

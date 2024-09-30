@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import scrollLock, { SCROLL_LOCK_DISABLE_ATTR } from 'docc-render/utils/scroll-lock';
 import { createEvent, parseHTMLString } from '../../../test-utils';
 
@@ -16,10 +18,10 @@ Object.defineProperty(window.navigator, 'platform', { value: '', writable: true 
 
 let DOM;
 let container;
-const preventDefault = jest.fn();
-const stopPropagation = jest.fn();
-const getBoundingClientRect = jest.fn();
-const scrollToSpy = jest.fn();
+const preventDefault = vi.fn();
+const stopPropagation = vi.fn();
+const getBoundingClientRect = vi.fn();
+const scrollToSpy = vi.fn();
 
 Object.defineProperty(window, 'scrollTo', {
   value: scrollToSpy,
@@ -27,7 +29,7 @@ Object.defineProperty(window, 'scrollTo', {
 
 describe('scroll-lock', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     DOM = parseHTMLString(`
       <div class="container">
         <div class="scrollable">long</div>
@@ -57,7 +59,7 @@ describe('scroll-lock', () => {
         stopPropagation,
         touches: [1],
         target: {
-          closest: jest.fn(),
+          closest: vi.fn(),
         },
       };
       // init the scroll lock
@@ -91,7 +93,7 @@ describe('scroll-lock', () => {
         ...touchMoveEvent,
         targetTouches: [{ clientY: -10 }],
         target: {
-          closest: jest.fn().mockReturnValue({
+          closest: vi.fn().mockReturnValue({
             ...container,
             clientHeight: 150,
           }),

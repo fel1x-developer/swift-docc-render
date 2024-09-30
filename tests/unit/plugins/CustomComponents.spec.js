@@ -8,16 +8,18 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import CustomComponents from 'docc-render/plugins/CustomComponents';
 import { createLocalVue } from '@vue/test-utils';
 
-const defineSpy = jest.spyOn(window.customElements, 'define');
+const defineSpy = vi.spyOn(window.customElements, 'define');
 
 describe('CustomComponents', () => {
   let localVue;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     localVue = createLocalVue();
   });
 

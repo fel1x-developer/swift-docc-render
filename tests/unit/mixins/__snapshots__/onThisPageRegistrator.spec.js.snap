@@ -1,4 +1,106 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OnThisPageRegistrator > extracts the sections from the JSON 1`] = `
+[
+  {
+    "anchor": "app-top",
+    "i18n": false,
+    "isSymbol": false,
+    "level": 1,
+    "title": "PageTitle",
+  },
+  {
+    "anchor": "provided-heading-anchor",
+    "i18n": false,
+    "level": 2,
+    "title": "Heading Level 2",
+  },
+  {
+    "anchor": "heading-level-3",
+    "i18n": false,
+    "level": 3,
+    "title": "Heading Level 3",
+  },
+  {
+    "anchor": "properties-title",
+    "i18n": true,
+    "level": 2,
+    "title": "Properties Title",
+  },
+  {
+    "anchor": "restbody-title",
+    "i18n": true,
+    "level": 2,
+    "title": "restBody Title",
+  },
+  {
+    "anchor": "restcookies-title",
+    "i18n": true,
+    "level": 2,
+    "title": "restCookies Title",
+  },
+  {
+    "anchor": "restendpoint-title",
+    "i18n": true,
+    "level": 2,
+    "title": "restEndpoint Title",
+  },
+  {
+    "anchor": "restheaders-title",
+    "i18n": true,
+    "level": 2,
+    "title": "restHeaders Title",
+  },
+  {
+    "anchor": "restparameters-title",
+    "i18n": true,
+    "level": 2,
+    "title": "restParameters Title",
+  },
+  {
+    "anchor": "restresponses-title",
+    "i18n": true,
+    "level": 2,
+    "title": "restResponses Title",
+  },
+  {
+    "anchor": "details",
+    "i18n": true,
+    "level": 2,
+    "title": "sections.details",
+  },
+  {
+    "anchor": "parameters",
+    "i18n": true,
+    "level": 2,
+    "title": "sections.parameters",
+  },
+  {
+    "anchor": "possibleValues",
+    "i18n": true,
+    "level": 2,
+    "title": "sections.possible-values",
+  },
+  {
+    "anchor": "topics",
+    "i18n": true,
+    "level": 2,
+    "title": "sections.topics",
+  },
+  {
+    "anchor": "relationships",
+    "i18n": true,
+    "level": 2,
+    "title": "sections.relationships",
+  },
+  {
+    "anchor": "see-also",
+    "i18n": true,
+    "level": 2,
+    "title": "sections.see-also",
+  },
+]
+`;
 
 exports[`OnThisPageRegistrator extracts the sections from the JSON 1`] = `
 Array [

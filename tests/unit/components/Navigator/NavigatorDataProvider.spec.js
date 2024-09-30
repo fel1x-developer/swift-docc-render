@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import NavigatorDataProvider from '@/components/Navigator/NavigatorDataProvider.vue';
 import { shallowMount } from '@vue/test-utils';
 import AppStore from 'docc-render/stores/AppStore';
@@ -17,7 +19,7 @@ import { fetchIndexPathsData } from '@/utils/data';
 import { INDEX_ROOT_KEY } from '@/constants/sidebar';
 import { flushPromises } from '../../../../test-utils';
 
-jest.mock('docc-render/utils/data');
+vi.mock('docc-render/utils/data');
 
 const technologyUrl = '/documentation/foo';
 
@@ -172,7 +174,7 @@ const createWrapper = ({ propsData, ...others } = {}) => shallowMount(NavigatorD
 
 describe('NavigatorDataProvider', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterEach(() => {

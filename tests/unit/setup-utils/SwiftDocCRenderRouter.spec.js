@@ -8,33 +8,35 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { restoreScrollOnReload, saveScrollOnReload, scrollBehavior } from 'docc-render/utils/router-utils';
 import Router from 'vue-router';
-import SwiftDocCRenderRouter from 'docc-render/setup-utils/SwiftDocCRenderRouter';
+import SwiftDocCRenderRouter from '@/setup-utils/SwiftDocCRenderRouter';
 import FetchError from 'docc-render/errors/FetchError';
 
-jest.mock('docc-render/utils/theme-settings', () => ({
+vi.mock('docc-render/utils/theme-settings', () => ({
   baseUrl: '/',
 }));
 
 const mockInstance = {
-  onError: jest.fn(),
-  onReady: jest.fn(),
-  replace: jest.fn(),
-  beforeEach: jest.fn(),
+  onError: vi.fn(),
+  onReady: vi.fn(),
+  replace: vi.fn(),
+  beforeEach: vi.fn(),
 };
 
-jest.mock('vue-router', () => jest.fn(() => (mockInstance)));
-jest.mock('docc-render/utils/router-utils', () => ({
-  restoreScrollOnReload: jest.fn(),
-  scrollBehavior: jest.fn(),
-  saveScrollOnReload: jest.fn(),
+vi.mock('vue-router', () => vi.fn(() => (mockInstance)));
+vi.mock('docc-render/utils/router-utils', () => ({
+  restoreScrollOnReload: vi.fn(),
+  scrollBehavior: vi.fn(),
+  saveScrollOnReload: vi.fn(),
 }));
 
 describe('SwiftDocCRenderRouter', () => {
   beforeEach(() => {
     window.removeEventListener('unload', saveScrollOnReload);
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('creates a new VueRouter instance and attaches the correct hooks', () => {
@@ -70,7 +72,7 @@ describe('SwiftDocCRenderRouter', () => {
   });
 
   it('does not have an error handler for IDE targets', () => {
-    process.env.VUE_APP_TARGET = 'ide';
+    import.meta.env.VITE_APP_TARGET = 'ide';
     expect(SwiftDocCRenderRouter().onError.mock.calls.length).toBe(0);
   });
 
@@ -107,13 +109,11 @@ describe('SwiftDocCRenderRouter', () => {
   });
 
   describe('route resolving', () => {
-    let router;
+    const router = SwiftDocCRenderRouter();
 
     beforeAll(() => {
-      jest.resetModules();
-      jest.unmock('vue-router');
-      // eslint-disable-next-line global-require
-      router = require('docc-render/setup-utils/SwiftDocCRenderRouter').default();
+      vi.resetModules();
+      vi.unmock('vue-router');
     });
 
     const resolve = path => router.resolve(path).route;

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import {
   createLocalVue,
   mount,
@@ -18,7 +20,7 @@ import DropdownCustom from 'docc-render/components/DropdownCustom.vue';
 
 const { OptionClass, ActiveOptionClass } = DropdownCustom.constants;
 
-const navigate = jest.fn();
+const navigate = vi.fn();
 
 const RouterLinkStub = {
   name: 'RouterLink',
@@ -79,7 +81,7 @@ describe('SecondaryDropdown', () => {
           query,
         },
         $router: {
-          push: jest.fn(),
+          push: vi.fn(),
         },
       },
       stubs: { 'router-link': RouterLinkStub },
@@ -114,8 +116,8 @@ describe('SecondaryDropdown', () => {
     expect(node.attributes('role')).toBe('listbox');
   });
 
-  it('changes the aria-expanded state to true when dropdown is open', () => {
-    btn.trigger('click');
+  it('changes the aria-expanded state to true when dropdown is open', async () => {
+    await btn.trigger('click');
 
     expect(btn.attributes('aria-expanded')).toBe('true');
     const optionsDropdown = wrapper.find('ul.options');
@@ -146,9 +148,9 @@ describe('SecondaryDropdown', () => {
   });
 
   describe('when the first link is clicked', () => {
-    beforeEach(() => {
-      btn.trigger('click');
-      firstLink.trigger('click');
+    beforeEach(async () => {
+      await btn.trigger('click');
+      await firstLink.trigger('click');
     });
 
     it('cals the navigate scoped slot property', () => {
@@ -173,9 +175,9 @@ describe('SecondaryDropdown', () => {
   });
 
   describe('when the enter key is used on the first link', () => {
-    beforeEach(() => {
-      btn.trigger('click');
-      firstLink.trigger('keydown.enter');
+    beforeEach(async () => {
+      await btn.trigger('click');
+      await firstLink.trigger('keydown.enter');
     });
 
     it('calls `navigate` scoped slot param', () => {
@@ -195,9 +197,9 @@ describe('SecondaryDropdown', () => {
   });
 
   describe('when the esc key is used on the first link', () => {
-    beforeEach(() => {
-      btn.trigger('click');
-      firstLink.trigger('keydown.esc');
+    beforeEach(async () => {
+      await btn.trigger('click');
+      await firstLink.trigger('keydown.esc');
     });
 
     it('closes the dropdown', () => {
@@ -206,9 +208,9 @@ describe('SecondaryDropdown', () => {
   });
 
   describe('when the tab key is used on the first link', () => {
-    beforeEach(() => {
-      btn.trigger('click');
-      firstLink.trigger('keydown.tab');
+    beforeEach(async () => {
+      await btn.trigger('click');
+      await firstLink.trigger('keydown.tab');
     });
 
     it('closes the dropdown', () => {
@@ -217,21 +219,21 @@ describe('SecondaryDropdown', () => {
   });
 
   it('focuses the next element, when the down key is used on the first link', async () => {
-    btn.trigger('click');
+    await btn.trigger('click');
     await wrapper.vm.$nextTick();
-    firstLink.trigger('keydown.down');
+    await firstLink.trigger('keydown.down');
     await wrapper.vm.$nextTick();
     expect(document.activeElement).toEqual(optionElements.at(1).element);
   });
 
   it('focuses the previous element, when the up key is used on the second link', async () => {
-    btn.trigger('click');
+    await btn.trigger('click');
     await wrapper.vm.$nextTick();
-    firstLink.trigger('keydown.down');
+    await firstLink.trigger('keydown.down');
     await wrapper.vm.$nextTick();
     const secondLink = optionElements.at(1);
     expect(document.activeElement).toEqual(secondLink.element);
-    secondLink.trigger('keydown.up');
+    await secondLink.trigger('keydown.up');
     await wrapper.vm.$nextTick();
     expect(document.activeElement).toEqual(firstLink.element);
   });

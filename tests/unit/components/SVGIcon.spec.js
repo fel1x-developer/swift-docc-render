@@ -8,11 +8,13 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import SVGIcon from '@/components/SVGIcon.vue';
 import { shallowMount } from '@vue/test-utils';
 import { getSetting } from 'docc-render/utils/theme-settings';
 
-jest.mock('docc-render/utils/theme-settings');
+vi.mock('docc-render/utils/theme-settings');
 
 getSetting.mockReturnValue(undefined);
 

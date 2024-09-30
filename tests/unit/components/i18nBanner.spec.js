@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import {
   shallowMount,
   RouterLinkStub,
@@ -16,21 +18,21 @@ import SuggestLang from 'docc-render/components/SuggestLang.vue';
 import AppStore from 'docc-render/stores/AppStore';
 import { getLocaleParam, getCodeForSlug } from 'docc-render/utils/i18n-utils';
 
-jest.mock('docc-render/utils/i18n-utils', () => ({
-  getCodeForSlug: jest.fn(value => value),
-  getLocaleParam: jest.fn(() => ({
+vi.mock('docc-render/utils/i18n-utils', () => ({
+  getCodeForSlug: vi.fn(value => value),
+  getLocaleParam: vi.fn(() => ({
     locale: undefined,
   })),
 }));
 
-jest.mock('docc-render/stores/AppStore', () => ({
-  setPreferredLocale: jest.fn(),
+vi.mock('docc-render/stores/AppStore', () => ({
+  setPreferredLocale: vi.fn(),
   state: {
     preferredLocale: '',
   },
 }));
 
-window.navigator = jest.fn().mockReturnValue({
+window.navigator = vi.fn().mockReturnValue({
   language: 'en-GB',
 });
 
@@ -81,14 +83,14 @@ describe('SuggestLang', () => {
     expect(link.attributes('lang')).toBe(matchingLocale);
   });
 
-  it('sets the preferred locale when router link is clicked', () => {
-    link.trigger('click');
+  it('sets the preferred locale when router link is clicked', async () => {
+    await link.trigger('click');
 
     expect(AppStore.setPreferredLocale).toHaveBeenCalledWith(matchingLocale);
   });
 
-  it('takes you to the preferredLocale url when clicking in router link', () => {
-    link.trigger('click');
+  it('takes you to the preferredLocale url when clicking in router link', async () => {
+    await link.trigger('click');
 
     expect(getLocaleParam).toHaveBeenCalledWith(matchingLocale);
     expect(link.props('to')).toEqual(params);
@@ -104,8 +106,8 @@ describe('SuggestLang', () => {
     expect(closeIcon.attributes('aria-label')).toBe('continue-viewing');
   });
 
-  it('set PreferredLocale as current locale when close icon is clicked', () => {
-    closeIcon.trigger('click');
+  it('set PreferredLocale as current locale when close icon is clicked', async () => {
+    await closeIcon.trigger('click');
     expect(AppStore.setPreferredLocale).toHaveBeenCalledWith(currentLocale);
   });
 });

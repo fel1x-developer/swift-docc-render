@@ -8,11 +8,13 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { localeIsValid, updateLocale, getLocaleParam } from '@/utils/i18n-utils';
 import { updateLangTag } from 'docc-render/utils/metadata';
 
-jest.mock('theme/lang/locales.json', () => (
-  [
+vi.mock('theme/lang/locales.json', () => ({
+  default: [
     {
       code: 'en-US',
       name: 'English',
@@ -23,14 +25,14 @@ jest.mock('theme/lang/locales.json', () => (
       name: '简体中文',
       slug: 'cn',
     },
-  ]
-));
-
-jest.mock('docc-render/utils/metadata', () => ({
-  updateLangTag: jest.fn(),
+  ],
 }));
 
-jest.mock('theme/lang/index.js', () => ({
+vi.mock('docc-render/utils/metadata', () => ({
+  updateLangTag: vi.fn(),
+}));
+
+vi.mock('theme/lang/index.js', () => ({
   defaultLocale: 'en',
 }));
 
@@ -57,7 +59,7 @@ describe('localeIsValid', () => {
 
 describe('updateLocale', () => {
   it('updates current global var for locale', () => {
-    updateLocale(to.params.locale);
+    updateLocale(to.params.locale, env);
     expect(env.$i18n.locale).toBe('cn');
     expect(updateLangTag).toHaveBeenCalledTimes(1);
   });

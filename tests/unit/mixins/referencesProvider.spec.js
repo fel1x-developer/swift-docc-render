@@ -93,7 +93,7 @@ describe('referencesProvider', () => {
   });
 
   it('removes `url` data for refs with non-empty `includedArchiveIdentifiers` app state', () => {
-    // empty `includedArchiveIdentifiers` — no changes to refs
+    // empty `includedArchiveIdentifiers` — no changes to refs
     const outer = createOuter();
     let inner = outer.find(FakeComponentInner);
     expect(inner.exists()).toBe(true);

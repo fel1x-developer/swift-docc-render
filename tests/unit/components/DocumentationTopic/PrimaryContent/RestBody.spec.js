@@ -115,8 +115,8 @@ describe('RestBody', () => {
       .toEqual(propsData.bodyContentType);
   });
 
-  it('displays the `PossiblyChangedType` in the `param-symbol` if no content exists', () => {
-    wrapper.setProps({
+  it('displays the `PossiblyChangedType` in the `param-symbol` if no content exists', async () => {
+    await wrapper.setProps({
       content: [],
     });
     expect(wrapper.find('.param .param-symbol').contains(PossiblyChangedType))
@@ -215,7 +215,7 @@ describe('RestBody', () => {
       },
     ];
 
-    beforeEach(() => wrapper.setProps({ parts }));
+    beforeEach(async () => wrapper.setProps({ parts }));
 
     it('renders an h3 for "Parts"', () => {
       const h3 = wrapper.find('h3');
@@ -247,7 +247,7 @@ describe('RestBody', () => {
     });
 
     it('displays the PossiblyChangedType in the `param-content` if no content exists', async () => {
-      wrapper.setProps({
+      await wrapper.setProps({
         parts: [
           {
             name: 'Any Key',
@@ -279,7 +279,7 @@ describe('RestBody', () => {
         value: '10',
       }];
 
-      wrapper.setProps({
+      await wrapper.setProps({
         parts: [
           {
             name: 'Any Key',

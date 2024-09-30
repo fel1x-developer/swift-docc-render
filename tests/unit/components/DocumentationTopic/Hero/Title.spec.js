@@ -26,10 +26,10 @@ describe('Title', () => {
     expect(wrapper.is('div.topictitle')).toBe(true);
   });
 
-  it('renders an eyebrow if provided', () => {
+  it('renders an eyebrow if provided', async () => {
     expect(wrapper.contains('.eyebrow')).toBe(false);
 
-    wrapper.setProps({ eyebrow: 'Thing' });
+    await wrapper.setProps({ eyebrow: 'Thing' });
 
     const eyebrow = wrapper.find('.eyebrow');
     expect(eyebrow.exists()).toBe(true);

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import OnThisPageSectionsStoreBase from '@/stores/OnThisPageSectionsStoreBase';
 
 const section = { title: 'Foo', level: 2, anchor: 'foo' };
@@ -15,7 +17,7 @@ const section2 = { title: 'Bar', level: 3, anchor: 'bar' };
 
 describe('OnThisPageSectionsStoreBase', () => {
   beforeEach(() => {
-    jest.resetModules();
+    vi.resetModules();
   });
   it('adds sections to the state with i18n true by default', () => {
     OnThisPageSectionsStoreBase.addOnThisPageSection(section);

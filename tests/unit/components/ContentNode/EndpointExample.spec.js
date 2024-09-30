@@ -85,19 +85,19 @@ describe('EndpointExample', () => {
     expect(wrapper.find('.controls').exists()).toBe(false);
   });
 
-  it('expands/collapses the CollapsibleCodeListing when the more/less toggle is clicked', () => {
+  it('expands/collapses the CollapsibleCodeListing when the more/less toggle is clicked', async () => {
     // show the response, as it is collapsible
     wrapper.find(Tabnav).vm.$emit('input', Tab.response);
 
     const codeListing = wrapper.find(CollapsibleCodeListing);
 
-    wrapper.find('.toggle').trigger('click');
+    await wrapper.find('.toggle').trigger('click');
 
     expect(codeListing.props('collapsed')).toBe(false);
     expect(wrapper.find('.toggle').text()).toBe('less');
     expect(wrapper.find(InlineMinusCircleSolidIcon).exists()).toBe(true);
 
-    wrapper.find('.toggle').trigger('click');
+    await wrapper.find('.toggle').trigger('click');
 
     expect(codeListing.props('collapsed')).toBe(true);
     expect(wrapper.find('.toggle').text()).toBe('more');

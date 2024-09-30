@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { prepareDataForHTMLClipboard } from 'docc-render/utils/clipboard';
 import { shallowMount } from '@vue/test-utils';
 import Tag from 'docc-render/components/Filter/Tag.vue';
@@ -27,7 +29,7 @@ describe('Tag', () => {
   beforeEach(() => {
     wrapper = shallowMount(Tag, { propsData, attachToDocument: true });
     button = wrapper.find('button');
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   afterEach(() => {
     // remove global even listeners before each test begins
@@ -42,68 +44,68 @@ describe('Tag', () => {
     expect(button.attributes()).toHaveProperty('aria-roledescription', 'tag');
   });
 
-  it('emits `click` when being clicked', () => {
-    button.trigger('click');
+  it('emits `click` when being clicked', async () => {
+    await button.trigger('click');
 
     expect(wrapper.emitted().click).toBeTruthy();
   });
 
-  it('emits `delete-tag` when being double clicked', () => {
-    button.trigger('dblclick');
+  it('emits `delete-tag` when being double clicked', async () => {
+    await button.trigger('dblclick');
 
     expect(wrapper.emitted('delete-tag')).toBeTruthy();
     expect(wrapper.emitted('delete-tag')[0][0].tagName).toEqual(propsData.name);
   });
 
-  it('does not emit `delete-tag` when being double clicked if `keyboardIsVirtual` is true', () => {
-    wrapper.setProps({ keyboardIsVirtual: true });
-    button.trigger('dblclick');
+  it('does not emit `delete-tag` when being double clicked if `keyboardIsVirtual` is true', async () => {
+    await wrapper.setProps({ keyboardIsVirtual: true });
+    await button.trigger('dblclick');
 
     expect(wrapper.emitted('delete-tag')).toBeFalsy();
   });
 
-  it('emits `delete-tag` when pressing the delete keydown', () => {
-    button.trigger('keydown.delete');
+  it('emits `delete-tag` when pressing the delete keydown', async () => {
+    await button.trigger('keydown.delete');
 
     expect(wrapper.emitted('delete-tag')).toBeTruthy();
   });
 
-  it('prevents blur when deleting a tag', () => {
-    button.trigger('keydown.delete');
+  it('prevents blur when deleting a tag', async () => {
+    await button.trigger('keydown.delete');
 
     expect(wrapper.emitted('prevent-blur')).toBeTruthy();
   });
 
-  it('focuses button when user clicks on tag', () => {
+  it('focuses button when user clicks on tag', async () => {
     // This is needed to focus tags on Safari
     // We use mousedown event instead of click to be able
     // to focus on the input right after on suggestedTags
-    button.trigger('mousedown');
+    await button.trigger('mousedown');
     expect(wrapper.emitted('delete-tag')).toBeFalsy();
 
     expect(document.activeElement).toBe(button.element);
     expect(wrapper.emitted('focus')).toBeTruthy();
   });
 
-  it('does not prevent blur when focusing in a tag', () => {
-    button.trigger('mousedown');
+  it('does not prevent blur when focusing in a tag', async () => {
+    await button.trigger('mousedown');
 
     expect(document.activeElement).toBe(button.element);
     expect(wrapper.emitted('prevent-blur')).toBeFalsy();
   });
 
-  it('does not focus the button when `keyboardIsVirtual` is true', () => {
+  it('does not focus the button when `keyboardIsVirtual` is true', async () => {
     // This is needed to prevent from focusing the button
     // on tags when user uses a virtual keyboard
-    wrapper.setProps({ keyboardIsVirtual: true });
+    await wrapper.setProps({ keyboardIsVirtual: true });
     button = wrapper.find('button');
-    button.trigger('mousedown');
+    await button.trigger('mousedown');
 
     expect(wrapper.emitted('focus')).toBeFalsy();
   });
 
-  it('does not delete the tag if clicked from VO but NOT focused', () => {
-    button.trigger('mousedown', {
+  it('does not delete the tag if clicked from VO but NOT focused', async () => {
+    await button.trigger('mousedown', {
       buttons: 0,
     });
     expect(wrapper.emitted('delete-tag')).toBeFalsy();
@@ -111,9 +113,9 @@ describe('Tag', () => {
     expect(document.activeElement).toBe(button.element);
   });
 
-  it('deletes the tag if clicked from VO and is focused', () => {
-    wrapper.setProps({ isFocused: true });
-    button.trigger('mousedown', {
+  it('deletes the tag if clicked from VO and is focused', async () => {
+    await wrapper.setProps({ isFocused: true });
+    await button.trigger('mousedown', {
       buttons: 0,
     });
     expect(wrapper.emitted('delete-tag')).toBeTruthy();
@@ -122,8 +124,8 @@ describe('Tag', () => {
     expect(wrapper.emitted('prevent-blur')).toBeTruthy();
   });
 
-  it('adds extra text `Add tag -` as a span inside button if `isRemovableTag: false`', () => {
-    wrapper.setProps({
+  it('adds extra text `Add tag -` as a span inside button if `isRemovableTag: false`', async () => {
+    await wrapper.setProps({
       isRemovableTag: false,
     });
     const span = wrapper.findAll('span.visuallyhidden');
@@ -132,8 +134,8 @@ describe('Tag', () => {
     expect(span.at(0).text()).toEqual('filter.add-tag -');
   });
 
-  it('adds extra text `– Tag` as a span inside button if `isRemovableTag: true`', () => {
-    wrapper.setProps({
+  it('adds extra text `– Tag` as a span inside button if `isRemovableTag: true`', async () => {
+    await wrapper.setProps({
       isRemovableTag: true,
     });
     const span = wrapper.findAll('span.visuallyhidden');
@@ -142,7 +144,7 @@ describe('Tag', () => {
   });
 
   describe('copy/cut', () => {
-    const setData = jest.fn();
+    const setData = vi.fn();
     const clipboardData = {
       setData,
     };
@@ -163,8 +165,8 @@ describe('Tag', () => {
       window.Event = Event;
     });
     it('adds and removes event listeners on mounted and destroyed', () => {
-      const addEventListenerSpy = jest.spyOn(document, 'addEventListener');
-      const removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
+      const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
+      const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
       wrapper = shallowMount(Tag, { propsData });
       // assert `copy` and `cut` are added
       expect(addEventListenerSpy).toHaveBeenCalledTimes(3);
@@ -184,7 +186,7 @@ describe('Tag', () => {
     it('handles a global copy command, only when tag is focused', async () => {
       expect(setData).not.toHaveBeenCalled();
 
-      wrapper.setProps({
+      await wrapper.setProps({
         isFocused: true,
       });
       await wrapper.vm.$nextTick();
@@ -201,7 +203,7 @@ describe('Tag', () => {
 
       expect(setData).not.toHaveBeenCalled();
 
-      wrapper.setProps({
+      await wrapper.setProps({
         isFocused: true,
       });
       await wrapper.vm.$nextTick();
@@ -210,7 +212,7 @@ describe('Tag', () => {
 
       expect(setData).not.toHaveBeenCalled();
 
-      wrapper.setProps({
+      await wrapper.setProps({
         isFocused: true,
         isRemovableTag: true,
       });
@@ -226,12 +228,12 @@ describe('Tag', () => {
     });
 
     it('handles copying a tag directly on the button', async () => {
-      wrapper.setProps({
+      await wrapper.setProps({
         isFocused: true,
       });
       await wrapper.vm.$nextTick();
 
-      wrapper.find({ ref: 'button' }).trigger('copy', { clipboardData });
+      await wrapper.find({ ref: 'button' }).trigger('copy', { clipboardData });
       expect(clipboardData.setData).toHaveBeenCalledTimes(2);
       expect(clipboardData.setData)
         .toHaveBeenCalledWith('text/html', prepareDataForHTMLClipboard({ tags: [propsData.name] }));
@@ -245,8 +247,8 @@ describe('Tag', () => {
       expect(wrapper.emitted('delete-tag')).toBeFalsy();
     });
 
-    it('on paste, does nothing if tag is focused but not removable', () => {
-      wrapper.setProps({
+    it('on paste, does nothing if tag is focused but not removable', async () => {
+      await wrapper.setProps({
         isFocused: true,
       });
 
@@ -256,8 +258,8 @@ describe('Tag', () => {
       expect(wrapper.emitted('delete-tag')).toBeFalsy();
     });
 
-    it('on paste, does nothing if tag is not focused, but removable', () => {
-      wrapper.setProps({
+    it('on paste, does nothing if tag is not focused, but removable', async () => {
+      await wrapper.setProps({
         isRemovableTag: true,
       });
 
@@ -268,7 +270,7 @@ describe('Tag', () => {
     });
 
     it('on paste, deletes the current tag and emits up the event body, if focused and removable', async () => {
-      wrapper.setProps({
+      await wrapper.setProps({
         isFocused: true,
         isRemovableTag: true,
       });

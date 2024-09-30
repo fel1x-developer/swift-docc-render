@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import {
   shallowMount,
   RouterLinkStub,
@@ -25,8 +27,8 @@ describe('RelationshipsList', () => {
   let wrapper;
 
   const store = {
-    reset: jest.fn(),
-    setAPIChanges: jest.fn(),
+    reset: vi.fn(),
+    setAPIChanges: vi.fn(),
     state: {
       onThisPageSections: [],
       apiChanges: null,
@@ -121,8 +123,8 @@ describe('RelationshipsList', () => {
   });
 
   describe('with 3 or fewer symbols', () => {
-    beforeEach(() => {
-      wrapper.setProps({
+    beforeEach(async () => {
+      await wrapper.setProps({
         symbols: [
           propsData.symbols[0],
           propsData.symbols[1],
@@ -147,8 +149,8 @@ describe('RelationshipsList', () => {
         ],
       };
 
-      beforeEach(() => {
-        wrapper.setProps({
+      beforeEach(async () => {
+        await wrapper.setProps({
           symbols: [
             propsData.symbols[0],
             {
@@ -176,8 +178,10 @@ describe('RelationshipsList', () => {
   });
 
   describe('when a symbol has API Changes', () => {
-    const assertChange = (change, expectedChange, type = propsData.type, relationship = {}) => {
-      wrapper.setProps({ type });
+    const assertChange = async (
+      change, expectedChange, type = propsData.type, relationship = {},
+    ) => {
+      await wrapper.setProps({ type });
 
       store.state.apiChanges = {
         [provide.identifier]: {

@@ -8,11 +8,13 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 let Settings;
 
 describe('Settings', () => {
-  const getItem = jest.fn();
-  const setItem = jest.fn();
+  const getItem = vi.fn();
+  const setItem = vi.fn();
 
   beforeEach(() => {
     Object.defineProperty(window, 'localStorage', {

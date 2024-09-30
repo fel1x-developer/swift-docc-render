@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import {
   baseNavHeight,
   baseNavHeightSmallBreakpoint,
@@ -21,14 +23,14 @@ import {
 } from 'docc-render/utils/router-utils';
 import { EXTRA_DOCUMENTATION_OFFSET } from '@/utils/scroll-offset';
 
-const appTarget = process.env.VUE_APP_TARGET;
+const appTarget = import.meta.env.VITE_APP_TARGET;
 
 const sessionStorage = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
+  getItem: vi.fn(),
+  setItem: vi.fn(),
 };
-const scrollToSpy = jest.fn();
-const mockLocation = jest.fn().mockReturnValue({
+const scrollToSpy = vi.fn();
+const mockLocation = vi.fn().mockReturnValue({
   pathname: '/foo',
   search: '?bar',
   hash: '#baz',
@@ -45,11 +47,11 @@ Object.defineProperty(window, 'location', {
 
 describe('router-utils', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('scrollBehavior', () => {
-    const mockApp = { app: { $nextTick: jest.fn().mockResolvedValue({}) } };
+    const mockApp = { app: { $nextTick: vi.fn().mockResolvedValue({}) } };
     const scrollBehavior = originalScrollBehavior.bind(mockApp);
 
     const createRoute = (name, query, hash, meta) => ({
@@ -59,7 +61,7 @@ describe('router-utils', () => {
     const routeBar = createRoute('bar', {}, 'bar');
 
     beforeEach(() => {
-      process.env.VUE_APP_TARGET = appTarget;
+      import.meta.env.VITE_APP_TARGET = appTarget;
     });
 
     it('resolves with the saved position', async () => {
@@ -81,7 +83,7 @@ describe('router-utils', () => {
     });
 
     it('resolves with a selector and `y:0` offset if passed `hash` but in IDE target', async () => {
-      process.env.VUE_APP_TARGET = 'ide';
+      import.meta.env.VITE_APP_TARGET = 'ide';
       const resolved = await scrollBehavior(routeFoo, routeBar);
       expect(resolved).toEqual({ selector: routeFoo.hash, offset: { x: 0, y: 0 } });
     });
@@ -141,7 +143,7 @@ describe('router-utils', () => {
     });
 
     it('fails silently if the stored value is invalid', async () => {
-      const errorSpy = jest.spyOn(console, 'error');
+      const errorSpy = vi.spyOn(console, 'error');
       errorSpy.mockImplementationOnce(() => {});
       sessionStorage.getItem.mockReturnValueOnce('not json');
       await restoreScrollOnReload();

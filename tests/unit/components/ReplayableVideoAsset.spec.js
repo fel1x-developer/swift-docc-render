@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import ReplayableVideoAsset from 'docc-render/components/ReplayableVideoAsset.vue';
 import VideoAsset from 'docc-render/components/VideoAsset.vue';
@@ -38,8 +40,8 @@ describe('ReplayableVideoAsset', () => {
     },
   });
 
-  const playMock = jest.fn().mockResolvedValue(undefined);
-  const pauseMock = jest.fn().mockResolvedValue(undefined);
+  const playMock = vi.fn().mockResolvedValue(undefined);
+  const pauseMock = vi.fn().mockResolvedValue(undefined);
 
   beforeAll(() => {
     window.matchMedia = () => ({ matches: false });
@@ -57,7 +59,7 @@ describe('ReplayableVideoAsset', () => {
     });
   });
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('passes the `url` prop to `VideoAsset`', () => {
@@ -179,7 +181,7 @@ describe('ReplayableVideoAsset', () => {
     const video = wrapper.find({ ref: 'asset' });
     const control = wrapper.find('.control-button');
     expect(control.text()).toBe('video.play');
-    control.trigger('click');
+    await control.trigger('click');
     video.vm.$emit('playing');
     await flushPromises();
     // text is changed

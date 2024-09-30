@@ -125,11 +125,11 @@ describe('Hero', () => {
     });
   });
 
-  it('displays the call-to-action modal when the link is clicked', () => {
+  it('displays the call-to-action modal when the link is clicked', async () => {
     const wrapper = mountWithProps();
     const link = wrapper.find('a.call-to-action');
     expect(wrapper.find(Asset).isVisible()).toBe(false);
-    link.trigger('click');
+    await link.trigger('click');
     expect(wrapper.find(Asset).isVisible()).toBe(true);
     const modal = wrapper.find(GenericModal);
     expect(modal.props()).toHaveProperty('visible', true);
@@ -151,7 +151,7 @@ describe('Hero', () => {
     let wrapper;
 
     beforeEach(() => {
-      pauseMock = jest.fn();
+      pauseMock = vi.fn();
       wrapper = mountWithProps();
     });
 
@@ -172,10 +172,10 @@ describe('Hero', () => {
       global.Element.prototype.querySelector = querySelector;
     };
 
-    it('does not pause if play returned undefined', (done) => {
+    it('does not pause if play returned undefined', () => new Promise((done) => {
       withPlayReturning(undefined, async () => {
         const link = wrapper.find('a.call-to-action');
-        link.trigger('click');
+        await link.trigger('click');
         expect(wrapper.find(Asset).isVisible()).toBe(true);
 
         const asset = wrapper.find(Asset);
@@ -188,6 +188,6 @@ describe('Hero', () => {
 
         done();
       });
-    });
+    }));
   });
 });

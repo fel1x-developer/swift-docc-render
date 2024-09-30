@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import Assessments from 'docc-render/components/Tutorial/Assessments.vue';
 import Hero from 'docc-render/components/Tutorial/Hero.vue';
@@ -89,9 +91,9 @@ const hierarchy = {
 
 const mocks = {
   $bridge: {
-    on: jest.fn(),
-    off: jest.fn(),
-    send: jest.fn(),
+    on: vi.fn(),
+    off: vi.fn(),
+    send: vi.fn(),
   },
   $route: {},
 };
@@ -227,7 +229,7 @@ describe('Tutorial', () => {
   });
 
   it('renders a BreakpointEmitter and updates the breakpoint in the store', () => {
-    const spy = jest.spyOn(wrapper.vm.store, 'updateBreakpoint');
+    const spy = vi.spyOn(wrapper.vm.store, 'updateBreakpoint');
     const emitter = wrapper.find(BreakpointEmitter);
     expect(emitter.exists()).toBe(true);
     emitter.vm.$emit('change', 'foo');

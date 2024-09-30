@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { shallowMount } from '@vue/test-utils';
 import onIntersectViewport from 'docc-render/mixins/onIntersectViewport';
 
@@ -17,8 +19,8 @@ describe('onIntersectViewport', () => {
   beforeEach(() => (
     import('intersection-observer').then(() => {
       // mock methods that can fail in jsdom
-      IntersectionObserver.prototype.disconnect = jest.fn();
-      IntersectionObserver.prototype.observe = jest.fn();
+      IntersectionObserver.prototype.disconnect = vi.fn();
+      IntersectionObserver.prototype.observe = vi.fn();
 
       wrapper = shallowMount({
         name: 'TestComponentForOnIntersectViewportCenter',
@@ -54,7 +56,7 @@ describe('onIntersectViewport', () => {
   });
 
   it('calls the `onIntersectViewport callback when appropriate`', () => {
-    wrapper.vm.onIntersectViewport = jest.fn();
+    wrapper.vm.onIntersectViewport = vi.fn();
     wrapper.vm.onIntersect({ isIntersecting: true });
     expect(wrapper.vm.onIntersectViewport.mock.calls.length)
       .toBe(1);

@@ -44,7 +44,7 @@ describe('BaseNavigatorCard', () => {
     document.body.appendChild(btn);
     const wrapper = createWrapper();
     const button = wrapper.find('.close-card');
-    button.trigger('click');
+    await button.trigger('click');
     await flushPromises();
     expect(button.attributes('aria-label')).toBe('navigator.close-navigator');
     expect(wrapper.emitted('close')).toHaveLength(1);

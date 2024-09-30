@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { RouterLinkStub, shallowMount } from '@vue/test-utils';
 import Language from 'docc-render/constants/Language';
 import LanguageToggle
@@ -15,11 +17,11 @@ import LanguageToggle
 import InlineChevronDownIcon from 'theme/components/Icons/InlineChevronDownIcon.vue';
 import { createEvent, flushPromises } from '../../../../../test-utils';
 
-jest.mock('docc-render/utils/loading');
+vi.mock('docc-render/utils/loading');
 
 const { NavMenuItemBase } = LanguageToggle.components;
 
-const closeNav = jest.fn().mockResolvedValue('');
+const closeNav = vi.fn().mockResolvedValue('');
 
 describe('LanguageToggle', () => {
   let wrapper;
@@ -37,13 +39,13 @@ describe('LanguageToggle', () => {
       path: '/documentation/foo',
     },
     $router: {
-      push: jest.fn(),
+      push: vi.fn(),
     },
   };
 
   const provide = {
     store: {
-      setPreferredLanguage: jest.fn(),
+      setPreferredLanguage: vi.fn(),
     },
   };
 
@@ -63,7 +65,7 @@ describe('LanguageToggle', () => {
 
   beforeEach(() => {
     wrapper = createWrapper();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders `NavMenuItemBase` at the root', () => {
@@ -138,16 +140,16 @@ describe('LanguageToggle', () => {
     expect(toggle.attributes()).toHaveProperty('style', 'width: 28px;');
   });
 
-  it('does not render the chevron if it has no languages', () => {
-    wrapper.setProps({
+  it('does not render the chevron if it has no languages', async () => {
+    await wrapper.setProps({
       objcPath: '',
       swiftPath: '',
     });
     expect(wrapper.find('.language-toggle-container > .toggle-icon').exists()).toBe(false);
   });
 
-  it('renders a span.nav-menu-toggle-none.current-language with only one variant', () => {
-    wrapper.setProps({ objcPath: undefined });
+  it('renders a span.nav-menu-toggle-none.current-language with only one variant', async () => {
+    await wrapper.setProps({ objcPath: undefined });
     expect(wrapper.find('#language-toggle').exists()).toBe(false);
 
     const current = wrapper.find('span.nav-menu-toggle-none.current-language');
@@ -171,7 +173,7 @@ describe('LanguageToggle', () => {
     expect(wrapper.find('.current-language').text()).toBe(Language.swift.name);
 
     wrapper.findAll('#language-toggle option').at(1).element.selected = true;
-    wrapper.find('#language-toggle').trigger('change');
+    await wrapper.find('#language-toggle').trigger('change');
 
     expect(wrapper.find('.current-language').text()).toBe(Language.objectiveC.name);
     expect(closeNav).toHaveBeenCalledTimes(1);
@@ -185,8 +187,8 @@ describe('LanguageToggle', () => {
     expect(listContainer.exists()).toBe(true);
   });
 
-  it('does not render `language-list-container` if page has only one language', () => {
-    wrapper.setProps({ objcPath: undefined });
+  it('does not render `language-list-container` if page has only one language', async () => {
+    await wrapper.setProps({ objcPath: undefined });
 
     const listContainer = wrapper.find('.language-list-container');
     expect(listContainer.exists()).toBe(false);
@@ -217,7 +219,7 @@ describe('LanguageToggle', () => {
     const link = wrapper.find('.language-list-container').find('a.nav-menu-link');
     expect(link.exists()).toBe(true);
     expect(link.text()).toBe(Language.objectiveC.name);
-    link.trigger('click');
+    await link.trigger('click');
     expect(closeNav).toHaveBeenCalledTimes(1);
     await flushPromises();
     expect(mocks.$router.push)
@@ -228,10 +230,10 @@ describe('LanguageToggle', () => {
   });
 
   it('clears out the language query if language is Swift', async () => {
-    wrapper.setData({ languageModel: Language.objectiveC.key.api });
+    await wrapper.setData({ languageModel: Language.objectiveC.key.api });
 
     const link = wrapper.find('.language-list-container').find('a.nav-menu-link');
-    link.trigger('click');
+    await link.trigger('click');
     expect(closeNav).toHaveBeenCalledTimes(1);
     await flushPromises();
     expect(mocks.$router.push)
@@ -258,7 +260,7 @@ describe('LanguageToggle', () => {
     wrapper = createWrapper(undefined, mocksWithQuery);
 
     const link = wrapper.find('.language-list-container').find('a.nav-menu-link');
-    link.trigger('click');
+    await link.trigger('click');
     expect(closeNav).toHaveBeenCalledTimes(1);
     await flushPromises();
     expect(mocks.$router.push)
@@ -273,7 +275,7 @@ describe('LanguageToggle', () => {
     wrapper = createWrapper({ ...propsData, objcPath: 'documentation/bar' });
 
     const link = wrapper.find('.language-list-container').find('a.nav-menu-link');
-    link.trigger('click');
+    await link.trigger('click');
     expect(closeNav).toHaveBeenCalledTimes(1);
     await flushPromises();
     expect(mocks.$router.push)
@@ -287,7 +289,7 @@ describe('LanguageToggle', () => {
     // assert proper language name is shown
     expect(wrapper.find('.current-language').text()).toBe(Language.swift.name);
     // change the language from outside
-    wrapper.setProps({
+    await wrapper.setProps({
       interfaceLanguage: Language.objectiveC.key.api,
     });
     await wrapper.vm.$nextTick();

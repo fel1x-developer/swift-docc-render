@@ -20,8 +20,8 @@ describe('SwiftDocCRenderPlugin', () => {
       prototype: {
         $bridge: null,
       },
-      directive: jest.fn(),
-      use: jest.fn(),
+      directive: vi.fn(),
+      use: vi.fn(),
       config: {
         productionTip: false,
         performance: false,
@@ -53,7 +53,7 @@ describe('SwiftDocCRenderPlugin', () => {
   it('attaches the communication bridge and passes the configs to it', () => {
     SwiftDocCRenderPlugin(mockVue, { performanceMetrics: true });
     expect(mockVue.use).toHaveBeenCalledWith(CommunicationBridge, {
-      appTarget: process.env.VUE_APP_TARGET,
+      appTarget: import.meta.env.VITE_APP_TARGET,
       performanceMetricsEnabled: true,
     });
   });

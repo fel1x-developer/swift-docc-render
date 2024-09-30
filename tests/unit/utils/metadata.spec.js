@@ -8,10 +8,12 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { vi } from 'vitest';
+
 import { addOrUpdateMetadata, updateLangTag } from 'docc-render/utils/metadata';
 import { defaultLocale } from 'theme/lang/index';
 
-jest.mock('theme/lang/locales.json', () => (
+vi.mock('theme/lang/locales.json', () => (
   [
     {
       code: 'en-US',
@@ -49,18 +51,18 @@ const pageWithTitleAndDescription = {
 
 const pageWithoutTitleOrDescription = {
   name: 'Page without title and description',
-  title: process.env.VUE_APP_TITLE,
+  title: import.meta.env.VITE_APP_TITLE,
   params: {
     currentLocale: defaultLocale,
   },
 };
 
-jest.mock('docc-render/utils/theme-settings', () => ({
-  getSetting: jest.fn((_, fallback) => fallback),
+vi.mock('docc-render/utils/theme-settings', () => ({
+  getSetting: vi.fn((_, fallback) => fallback),
 }));
 
-jest.mock('docc-render/utils/assets', () => ({
-  normalizePath: jest.fn(name => mockBaseUrl + name),
+vi.mock('docc-render/utils/assets', () => ({
+  normalizePath: vi.fn(name => mockBaseUrl + name),
 }));
 
 document.documentElement.innerHTML = html.toString();
@@ -68,7 +70,7 @@ document.documentElement.innerHTML = html.toString();
 const assertMetadata = ({
   name, title: rawTitle, description: expectedDescription, params,
 }) => {
-  const expectedTitle = [...new Set([rawTitle, process.env.VUE_APP_TITLE])].filter(Boolean).join(' | ');
+  const expectedTitle = [...new Set([rawTitle, import.meta.env.VITE_APP_TITLE])].filter(Boolean).join(' | ');
   describe(name, () => {
     beforeEach(() => {
       addOrUpdateMetadata({ ...params, url: pageURL });
@@ -93,7 +95,7 @@ const assertMetadata = ({
         expect(document.querySelector('meta[property="og:description"]')).toBeFalsy();
       }
       expect(document.querySelector('meta[property="og:locale"]').content).toBe(defaultLocale);
-      expect(document.querySelector('meta[property="og:site_name"]').content).toBe(process.env.VUE_APP_TITLE);
+      expect(document.querySelector('meta[property="og:site_name"]').content).toBe(import.meta.env.VITE_APP_TITLE);
       expect(document.querySelector('meta[property="og:type"]').content).toBe('website');
       expect(document.querySelector('meta[property="og:image"]').content).toBe('http://localhost/developer/developer-og.jpg');
 

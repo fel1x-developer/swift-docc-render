@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@unhead/vue": "^1.11.7",
+    "@vue/compat": "^3.5.10",
     "@vue/eslint-config-airbnb-with-typescript": "^8.0.0",
     "autoprefixer": "^10.4.20",
     "css.escape": "^1.5.1",

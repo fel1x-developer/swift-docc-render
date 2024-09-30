@@ -17,6 +17,9 @@ export default defineConfig(() => ({
       template: {
         compilerOptions: {
           isCustomElement: tag => tag.startsWith('custom-'),
+          compatConfig: {
+            MODE: 2,
+          },
         },
       },
     }),
@@ -31,6 +34,7 @@ export default defineConfig(() => ({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       'docc-render': fileURLToPath(new URL('./src', import.meta.url)),
       theme: fileURLToPath(new URL('./src', import.meta.url)),
+      vue: '@vue/compat'
     },
   },
   css: {

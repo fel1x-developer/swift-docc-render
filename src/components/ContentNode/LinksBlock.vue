@@ -28,13 +28,14 @@
 import TopicsLinkCardGrid from 'theme/components/DocumentationTopic/TopicsLinkCardGrid.vue';
 import { TopicSectionsStyle } from 'docc-render/constants/TopicSectionsStyle';
 import referencesProvider from 'docc-render/mixins/referencesProvider';
+import { defineAsyncComponent } from 'vue';
 
 export default {
   name: 'LinksBlock',
   mixins: [referencesProvider],
   components: {
     // async import to overcome potential infinite loops from importing ContentNode inside.
-    TopicsLinkBlock: () => import('docc-render/components/DocumentationTopic/TopicsLinkBlock.vue'),
+    TopicsLinkBlock: defineAsyncComponent(() => import('docc-render/components/DocumentationTopic/TopicsLinkBlock.vue')),
     TopicsLinkCardGrid,
   },
   props: {

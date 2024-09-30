@@ -26,4 +26,4 @@ app.use(SwiftDocCRenderRouter);
 app.use(SwiftDocCRenderi18n);
 app.use(head);
 
-app.mount('#app');
+SwiftDocCRenderRouter.isReady().then(() => app.mount('#app'));

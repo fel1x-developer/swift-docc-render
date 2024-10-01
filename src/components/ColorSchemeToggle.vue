@@ -21,7 +21,7 @@
       <input
         type="radio"
         @input="setPreferredColorScheme"
-        :checked="option == preferredColorScheme"
+        :checked="option === preferredColorScheme"
         :value="option"
       />
       <div class="text">{{ $t(`color-scheme.${option}`) }}</div>

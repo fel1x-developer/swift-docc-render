@@ -9,11 +9,15 @@
 */
 
 import { createHead } from '@unhead/vue';
-import { createApp } from 'vue';
+import { createApp, configureCompat } from 'vue';
 import App from '@/App.vue';
 import SwiftDocCRenderPlugin from '@/setup-utils/SwiftDocCRenderPlugin';
 import SwiftDocCRenderRouter from '@/setup-utils/SwiftDocCRenderRouter';
 import SwiftDocCRenderi18n from '@/setup-utils/SwiftDocCRenderi18n';
+
+configureCompat({
+  ATTR_FALSE_VALUE: false,
+});
 
 // eslint-disable-next-line import/prefer-default-export
 export const app = createApp(App);

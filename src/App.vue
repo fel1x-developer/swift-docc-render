@@ -53,6 +53,23 @@ import SuggestLang from 'docc-render/components/SuggestLang.vue';
 import LocaleSelector from 'docc-render/components/LocaleSelector.vue';
 
 export default {
+  head() {
+    return {
+      title: this.title,
+      htmlAttrs: {
+        lang: 'en-US',
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+        { name: 'viewport', content: 'width=device-width,initial-scale=1.0,viewport-fit=cover' },
+      ],
+      link: [
+        { rel: 'icon', href: `${this.baseURL}/favicon.ico` },
+        { rel: 'mask-icon', href: `${this.baseURL}/favicon.svg`, color: '#333333' },
+      ],
+    };
+  },
   name: 'CoreApp',
   components: {
     Footer,
@@ -68,6 +85,8 @@ export default {
   },
   data() {
     return {
+      title: import.meta.env.VITE_APP_TITLE,
+      baseURL: import.meta.env.BASE_URL,
       AppTopID,
       appState: AppStore.state,
       fromKeyboard: false,

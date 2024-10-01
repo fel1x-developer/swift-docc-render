@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { createHead } from '@unhead/vue';
+import { createHead, VueHeadMixin } from '@unhead/vue'
 import { createApp, configureCompat } from 'vue';
 import App from '@/App.vue';
 import SwiftDocCRenderPlugin from '@/setup-utils/SwiftDocCRenderPlugin';
@@ -29,5 +29,6 @@ app.use(SwiftDocCRenderPlugin);
 app.use(SwiftDocCRenderRouter);
 app.use(SwiftDocCRenderi18n);
 app.use(head);
+app.mixin(VueHeadMixin);
 
 SwiftDocCRenderRouter.isReady().then(() => app.mount('#app'));

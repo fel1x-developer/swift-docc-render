@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import onIntersectViewport, { intersectionMargins } from 'docc-render/mixins/onIntersectViewport';
+import onIntersectViewport, { intersectionMargins } from 'docc-render/composables/onIntersectViewport';
 
 import VolumeName from 'docc-render/components/TutorialsOverview/VolumeName.vue';
 import ResourcesTileGroup from './ResourcesTileGroup.vue';

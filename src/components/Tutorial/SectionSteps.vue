@@ -65,7 +65,7 @@ import ContentNode from 'docc-render/components/ContentNode.vue';
 import Asset from 'docc-render/components/Asset.vue';
 import CodePreview from 'docc-render/components/Tutorial/CodePreview.vue';
 import { waitFrames } from 'docc-render/utils/loading';
-import onIntersect from 'docc-render/mixins/onIntersect';
+import onIntersect from 'docc-render/composables/onIntersect';
 import BreakpointEmitter from 'docc-render/components/BreakpointEmitter.vue';
 import BackgroundTheme from './BackgroundTheme.vue';
 import Step from './Step.vue';

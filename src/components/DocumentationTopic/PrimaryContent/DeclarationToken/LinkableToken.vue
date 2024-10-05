@@ -11,7 +11,7 @@
 <script>
 // This component renders token text as a link to a given type.
 import Reference from 'docc-render/components/ContentNode/Reference.vue';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 import { h } from 'vue';
 
 export default {

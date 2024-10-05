@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import onIntersect from 'docc-render/mixins/onIntersect';
+import onIntersect from 'docc-render/composables/onIntersect';
 
 export default {
   name: 'LinkableElement',

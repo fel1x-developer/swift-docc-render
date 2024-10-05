@@ -96,7 +96,7 @@ import ContentNode from 'docc-render/components/DocumentationTopic/ContentNode.v
 import LinkableHeading from 'docc-render/components/ContentNode/LinkableHeading.vue';
 
 import WordBreak from 'docc-render/components/WordBreak.vue';
-import apiChangesProvider from 'docc-render/mixins/apiChangesProvider';
+import apiChangesProvider from 'docc-render/composables/apiChangesProvider';
 import ParametersTable from './ParametersTable.vue';
 import ParameterAttributes from './ParameterAttributes.vue';
 import PossiblyChangedType from './PossiblyChangedType.vue';

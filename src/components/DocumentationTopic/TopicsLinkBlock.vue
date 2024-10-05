@@ -68,8 +68,8 @@ import RequirementMetadata
 
   from 'docc-render/components/DocumentationTopic/Description/RequirementMetadata.vue';
 
-import { getAPIChanges, APIChangesMultipleLines } from 'docc-render/mixins/apiChangesHelpers';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import { getAPIChanges, APIChangesMultipleLines } from 'docc-render/composables/apiChangesHelpers';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 
 const TopicKind = {
   article: 'article',

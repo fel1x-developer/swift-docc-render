@@ -9,7 +9,7 @@
 */
 
 import { shallowMount } from '@vue/test-utils';
-import keyboardNavigation from 'docc-render/mixins/keyboardNavigation';
+import keyboardNavigation from 'docc-render/composables/keyboardNavigation';
 
 const totalItemsToNavigate = 10;
 const createWrapper = () => (

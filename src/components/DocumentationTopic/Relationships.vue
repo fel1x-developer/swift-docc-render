@@ -27,7 +27,7 @@
 
 <script>
 import { MainContentSectionAnchors } from 'docc-render/constants/ContentSectionAnchors';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 import ContentTable from './ContentTable.vue';
 import ContentTableSection from './ContentTableSection.vue';
 import RelationshipsList from './RelationshipsList.vue';

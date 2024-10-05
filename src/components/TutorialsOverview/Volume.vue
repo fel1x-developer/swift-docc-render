@@ -27,7 +27,7 @@
 
 <script>
 import VolumeName from 'docc-render/components/TutorialsOverview/VolumeName.vue';
-import onIntersectViewport, { intersectionMargins } from 'docc-render/mixins/onIntersectViewport';
+import onIntersectViewport, { intersectionMargins } from 'docc-render/composables/onIntersectViewport';
 
 import Chapter from './Chapter.vue';
 

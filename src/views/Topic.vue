@@ -30,8 +30,8 @@ import TopicStore from 'docc-render/stores/TopicStore';
 import Article from 'docc-render/components/Article.vue';
 import Tutorial from 'docc-render/components/Tutorial.vue';
 
-import communicationBridgeUtils from 'docc-render/mixins/communicationBridgeUtils';
-import onPageLoadScrollToFragment from 'docc-render/mixins/onPageLoadScrollToFragment';
+import communicationBridgeUtils from 'docc-render/composables/communicationBridgeUtils';
+import onPageLoadScrollToFragment from 'docc-render/composables/onPageLoadScrollToFragment';
 
 const TopicKind = {
   article: 'article',

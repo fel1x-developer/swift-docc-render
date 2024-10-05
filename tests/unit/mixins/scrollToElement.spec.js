@@ -11,7 +11,7 @@
 import { vi } from 'vitest';
 
 import { shallowMount } from '@vue/test-utils';
-import scrollToElement from 'docc-render/mixins/scrollToElement';
+import scrollToElement from 'docc-render/composables/scrollToElement';
 import * as loading from 'docc-render/utils/loading';
 
 const framesWait = vi.spyOn(loading, 'waitFrames');

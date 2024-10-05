@@ -58,8 +58,8 @@
 <script>
 import ChevronIcon from 'theme/components/Icons/ChevronIcon.vue';
 import ReferenceUrlProvider from 'docc-render/components/ReferenceUrlProvider.vue';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
-import scrollToElement from 'docc-render/mixins/scrollToElement';
+import referencesProvider from 'docc-render/composables/referencesProvider';
+import scrollToElement from 'docc-render/composables/scrollToElement';
 import NavBase from 'docc-render/components/NavBase.vue';
 import NavTitleContainer from 'docc-render/components/NavTitleContainer.vue';
 import MobileDropdown from './NavigationBar/MobileDropdown.vue';

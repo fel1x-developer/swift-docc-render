@@ -21,7 +21,7 @@
 
 <script>
 import { anchorize } from 'docc-render/utils/strings';
-import scrollToElement from 'docc-render/mixins/scrollToElement';
+import scrollToElement from 'docc-render/composables/scrollToElement';
 
 export default {
   name: 'TutorialsNavigationLink',

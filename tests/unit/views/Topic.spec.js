@@ -15,10 +15,10 @@ import Article from 'docc-render/components/Article.vue';
 import Topic from 'docc-render/views/Topic.vue';
 import TopicStore from 'docc-render/stores/TopicStore';
 import Tutorial from 'docc-render/components/Tutorial.vue';
-import onPageLoadScrollToFragment from 'docc-render/mixins/onPageLoadScrollToFragment';
+import onPageLoadScrollToFragment from 'docc-render/composables/onPageLoadScrollToFragment';
 import { fetchDataForRouteEnter } from '@/utils/data';
 
-vi.mock('docc-render/mixins/onPageLoadScrollToFragment');
+vi.mock('docc-render/composables/onPageLoadScrollToFragment');
 vi.mock('@/utils/data');
 
 fetchDataForRouteEnter.mockResolvedValue({});

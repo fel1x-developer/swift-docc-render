@@ -11,7 +11,7 @@
 import { vi } from 'vitest';
 
 import { shallowMount } from '@vue/test-utils';
-import onIntersect from 'docc-render/mixins/onIntersect';
+import onIntersect from 'docc-render/composables/onIntersect';
 
 vi.mock('intersection-observer', () => ({}));
 

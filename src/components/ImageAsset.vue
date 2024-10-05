@@ -60,7 +60,7 @@
 
 <script>
 // Creates image attributes given variants of the same image.
-import imageAsset from 'docc-render/mixins/imageAsset';
+import imageAsset from 'docc-render/composables/imageAsset';
 import AppStore from 'docc-render/stores/AppStore';
 import ColorScheme from 'docc-render/constants/ColorScheme';
 import noImage from 'theme/assets/img/no-image@2x.png';

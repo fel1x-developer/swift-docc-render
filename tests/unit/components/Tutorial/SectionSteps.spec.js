@@ -22,7 +22,7 @@ import BackgroundTheme from 'docc-render/components/Tutorial/BackgroundTheme.vue
 import TopicStore from 'docc-render/stores/TopicStore';
 
 // mock out the intersection observer
-vi.mock('docc-render/mixins/onIntersect', () => ({
+vi.mock('docc-render/composables/onIntersect', () => ({
   default: {
     constants: {
       IntersectionDirections: {
@@ -34,7 +34,7 @@ vi.mock('docc-render/mixins/onIntersect', () => ({
 }));
 vi.mock('docc-render/utils/loading', () => ({ waitFrames: vi.fn() }));
 
-const onIntersect = await vi.importActual('docc-render/mixins/onIntersect');
+const onIntersect = await vi.importActual('docc-render/composables/onIntersect');
 const { constants: { IntersectionDirections } } = onIntersect.default;
 const { IntersectionMargins } = SectionSteps.constants;
 

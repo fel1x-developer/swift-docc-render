@@ -27,7 +27,7 @@
 <script>
 import TopicsLinkCardGrid from 'theme/components/DocumentationTopic/TopicsLinkCardGrid.vue';
 import { TopicSectionsStyle } from 'docc-render/constants/TopicSectionsStyle';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 import { defineAsyncComponent } from 'vue';
 
 export default {

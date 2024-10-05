@@ -19,7 +19,7 @@ import ImageAsset from 'docc-render/components/ImageAsset.vue';
 import VideoAsset from 'docc-render/components/VideoAsset.vue';
 import ReplayableVideoAsset from 'docc-render/components/ReplayableVideoAsset.vue';
 
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 
 const AssetTypes = {
   video: 'video',

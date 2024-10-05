@@ -27,7 +27,7 @@
 <script>
 import DeclarationSource from 'docc-render/components/DocumentationTopic/PrimaryContent/DeclarationSource.vue';
 import Language from 'docc-render/constants/Language';
-import { APIChangesMultipleLines } from 'docc-render/mixins/apiChangesHelpers';
+import { APIChangesMultipleLines } from 'docc-render/composables/apiChangesHelpers';
 
 /**
  * Renders a code source with an optional caption.

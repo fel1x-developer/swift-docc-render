@@ -62,7 +62,7 @@
 import { buildUrl } from 'docc-render/utils/url-helper';
 import NavMenuItems from 'docc-render/components/NavMenuItems.vue';
 import Badge from 'docc-render/components/Badge.vue';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 import { BreakpointAttributes } from 'docc-render/utils/breakpoints';
 import HierarchyCollapsedItems from './HierarchyCollapsedItems.vue';
 import HierarchyItem from './HierarchyItem.vue';

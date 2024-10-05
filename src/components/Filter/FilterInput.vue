@@ -127,8 +127,8 @@
 
 <script>
 import ClearRoundedIcon from 'theme/components/Icons/ClearRoundedIcon.vue';
-import multipleSelection from 'docc-render/mixins/multipleSelection';
-import handleScrollbar from 'docc-render/mixins/handleScrollbar';
+import multipleSelection from 'docc-render/composables/multipleSelection';
+import handleScrollbar from 'docc-render/composables/handleScrollbar';
 import FilterIcon from 'theme/components/Icons/FilterIcon.vue';
 import TagList from './TagList.vue';
 

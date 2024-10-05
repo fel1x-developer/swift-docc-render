@@ -10,7 +10,7 @@
 
 <script>
 import { buildUrl } from 'docc-render/utils/url-helper';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 
 export default {
   name: 'ReferenceUrlProvider',

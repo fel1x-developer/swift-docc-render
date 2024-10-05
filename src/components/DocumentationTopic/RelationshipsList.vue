@@ -34,7 +34,7 @@
 
 <script>
 import WordBreak from 'docc-render/components/WordBreak.vue';
-import { getAPIChanges, APIChangesMultipleLines } from 'docc-render/mixins/apiChangesHelpers';
+import { getAPIChanges, APIChangesMultipleLines } from 'docc-render/composables/apiChangesHelpers';
 import { ChangeTypes } from 'docc-render/constants/Changes';
 import Reference from 'docc-render/components/ContentNode/Reference.vue';
 import ConditionalConstraints from './ConditionalConstraints.vue';

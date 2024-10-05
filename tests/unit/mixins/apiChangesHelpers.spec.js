@@ -11,7 +11,7 @@
 import { vi } from 'vitest';
 
 import { shallowMount } from '@vue/test-utils';
-import { APIChangesMultipleLines } from 'docc-render/mixins/apiChangesHelpers';
+import { APIChangesMultipleLines } from 'docc-render/composables/apiChangesHelpers';
 
 const createWrapper = (change = 'added') => shallowMount({
   name: 'ComponentWithAPIChanges',

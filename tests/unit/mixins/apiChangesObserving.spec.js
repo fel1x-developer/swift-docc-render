@@ -11,7 +11,7 @@
 import { vi } from 'vitest';
 
 import { shallowMount, createLocalVue } from '@vue/test-utils';
-import apiChangesObserving from 'docc-render/mixins/apiChangesObserving';
+import apiChangesObserving from 'docc-render/composables/apiChangesObserving';
 import VueRouter from 'vue-router';
 import { fetchAPIChangesForRoute } from 'docc-render/utils/data';
 import { flushPromises } from '../../../test-utils';

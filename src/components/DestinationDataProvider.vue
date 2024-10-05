@@ -9,7 +9,7 @@
 -->
 
 <script>
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 
 const DestinationType = {
   link: 'link',

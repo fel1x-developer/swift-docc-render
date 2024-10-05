@@ -10,13 +10,13 @@
 
 import { vi } from 'vitest';
 
-import onPageLoadScrollToFragment from 'docc-render/mixins/onPageLoadScrollToFragment';
+import onPageLoadScrollToFragment from 'docc-render/composables/onPageLoadScrollToFragment';
 import { shallowMount } from '@vue/test-utils';
-import scrollToElement from 'docc-render/mixins/scrollToElement';
+import scrollToElement from 'docc-render/composables/scrollToElement';
 import { flushPromises } from '../../../test-utils';
 
 vi.mock('docc-render/utils/loading', () => ({ waitFrames: () => {} }));
-vi.mock('docc-render/mixins/scrollToElement', () => ({
+vi.mock('docc-render/composables/scrollToElement', () => ({
   default: {
     methods: { scrollToElement: vi.fn() },
   },

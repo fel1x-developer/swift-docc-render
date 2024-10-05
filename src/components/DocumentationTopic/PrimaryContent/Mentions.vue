@@ -27,7 +27,7 @@
 <script>
 import LinkableHeading from 'docc-render/components/ContentNode/LinkableHeading.vue';
 import Mention from 'docc-render/components/DocumentationTopic/PrimaryContent/Mention.vue';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 
 export default {
   name: 'MentionedIn',

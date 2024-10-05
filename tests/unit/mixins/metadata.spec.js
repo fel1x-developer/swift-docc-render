@@ -13,7 +13,7 @@ import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import { addOrUpdateMetadata } from 'docc-render/utils/metadata';
 import { defaultLocale } from 'theme/lang/index';
-import metadata from 'docc-render/mixins/metadata';
+import metadata from 'docc-render/composables/metadata';
 
 vi.mock('docc-render/utils/metadata', () => ({
   addOrUpdateMetadata: vi.fn(),

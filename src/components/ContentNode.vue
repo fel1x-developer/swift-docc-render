@@ -9,7 +9,7 @@
 -->
 
 <script>
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 import { h } from 'vue';
 import Aside from './ContentNode/Aside.vue';
 import CodeListing from './ContentNode/CodeListing.vue';

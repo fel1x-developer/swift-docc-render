@@ -58,7 +58,7 @@ import WordBreak from 'docc-render/components/WordBreak.vue';
 import { TopicSectionsStyle } from 'docc-render/constants/TopicSectionsStyle';
 import TopicsLinkCardGrid from 'docc-render/components/DocumentationTopic/TopicsLinkCardGrid.vue';
 import LinkableHeading from 'docc-render/components/ContentNode/LinkableHeading.vue';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 import ContentTable from './ContentTable.vue';
 import ContentTableSection from './ContentTableSection.vue';
 import TopicsLinkBlock from './TopicsLinkBlock.vue';

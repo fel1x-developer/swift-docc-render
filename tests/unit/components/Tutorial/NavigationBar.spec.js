@@ -16,10 +16,10 @@ import {
 } from '@vue/test-utils';
 import NavigationBar from 'docc-render/components/Tutorial/NavigationBar.vue';
 import TopicStore from 'docc-render/stores/TopicStore';
-import scrollToElement from 'docc-render/mixins/scrollToElement';
+import scrollToElement from 'docc-render/composables/scrollToElement';
 import { flushPromises } from '../../../../test-utils';
 
-vi.mock('docc-render/mixins/scrollToElement');
+vi.mock('docc-render/composables/scrollToElement');
 
 scrollToElement.methods.handleFocusAndScroll.mockResolvedValue(true);
 

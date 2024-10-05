@@ -16,9 +16,9 @@ import {
 } from '@vue/test-utils';
 import TutorialsNavigationLink
   from 'docc-render/components/TutorialsOverview/TutorialsNavigationLink.vue';
-import scrollToElement from 'docc-render/mixins/scrollToElement';
+import scrollToElement from 'docc-render/composables/scrollToElement';
 
-vi.mock('docc-render/mixins/scrollToElement', () => ({
+vi.mock('docc-render/composables/scrollToElement', () => ({
   default: {
     methods: { handleFocusAndScroll: vi.fn() },
   },

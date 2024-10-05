@@ -24,7 +24,7 @@
 <script>
 import Reference from 'docc-render/components/ContentNode/Reference.vue';
 import TopicLinkBlockIcon from 'docc-render/components/DocumentationTopic/TopicLinkBlockIcon.vue';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 
 export default {
   components: {

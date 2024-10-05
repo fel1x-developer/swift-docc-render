@@ -13,7 +13,7 @@ import { vi } from 'vitest';
 import * as dataUtils from 'docc-render/utils/data';
 import { shallowMount } from '@vue/test-utils';
 import DocumentationTopicStore from 'docc-render/stores/DocumentationTopicStore';
-import onPageLoadScrollToFragment from 'docc-render/mixins/onPageLoadScrollToFragment';
+import onPageLoadScrollToFragment from 'docc-render/composables/onPageLoadScrollToFragment';
 import DocumentationNav from 'docc-render/components/DocumentationTopic/DocumentationNav.vue';
 import NavBase from 'docc-render/components/NavBase.vue';
 import AdjustableSidebarWidth from '@/components/AdjustableSidebarWidth.vue';
@@ -26,7 +26,7 @@ import DocumentationLayout from 'docc-render/components/DocumentationLayout.vue'
 import { getSetting } from 'docc-render/utils/theme-settings';
 import { flushPromises } from '../../../test-utils';
 
-vi.mock('docc-render/mixins/onPageLoadScrollToFragment');
+vi.mock('docc-render/composables/onPageLoadScrollToFragment');
 vi.mock('docc-render/utils/FocusTrap');
 vi.mock('docc-render/utils/scroll-lock');
 vi.mock('docc-render/utils/storage');

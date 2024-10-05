@@ -58,7 +58,7 @@ import { anchorize } from 'docc-render/utils/strings';
 import LinkableHeading from 'docc-render/components/ContentNode/LinkableHeading.vue';
 import ContentNode from 'docc-render/components/DocumentationTopic/ContentNode.vue';
 
-import apiChangesProvider from 'docc-render/mixins/apiChangesProvider';
+import apiChangesProvider from 'docc-render/composables/apiChangesProvider';
 import ParametersTable from './ParametersTable.vue';
 import PossiblyChangedType from './PossiblyChangedType.vue';
 import PossiblyChangedMimetype from './PossiblyChangedMimetype.vue';

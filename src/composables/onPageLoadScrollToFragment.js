@@ -10,7 +10,7 @@
 
 import AppStore from 'docc-render/stores/AppStore';
 import ImageLoadingStrategy from 'docc-render/constants/ImageLoadingStrategy';
-import scrollToElement from 'docc-render/mixins/scrollToElement';
+import scrollToElement from 'docc-render/composables/scrollToElement';
 
 function waitForImageToLoad(img) {
   return new Promise((resolve, reject) => {

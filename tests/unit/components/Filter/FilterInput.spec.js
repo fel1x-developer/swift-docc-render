@@ -19,8 +19,8 @@ import {
 } from '@/utils/input-helper';
 import debounce from 'docc-render/utils/debounce';
 import FilterIcon from 'docc-render/components/Icons/FilterIcon.vue';
-import multipleSelection from '@/mixins/multipleSelection';
-import keyboardNavigation from '@/mixins/keyboardNavigation';
+import multipleSelection from '@/composables/multipleSelection';
+import keyboardNavigation from '@/composables/keyboardNavigation';
 import { flushPromises } from '../../../../test-utils';
 
 // TODO: Remove this Event caching, once we update VTU, as there is a bug now,

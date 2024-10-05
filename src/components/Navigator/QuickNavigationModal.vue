@@ -141,7 +141,7 @@ import MagnifierIcon from 'theme/components/Icons/MagnifierIcon.vue';
 import Reference from 'docc-render/components/ContentNode/Reference.vue';
 import QuickNavigationPreview from 'docc-render/components/Navigator/QuickNavigationPreview.vue';
 import debounce from 'docc-render/utils/debounce';
-import keyboardNavigation from 'docc-render/mixins/keyboardNavigation';
+import keyboardNavigation from 'docc-render/composables/keyboardNavigation';
 import LRUMap from 'docc-render/utils/lru-map';
 import { convertChildrenArrayToObject, getParents } from 'docc-render/utils/navigatorData';
 import { fetchDataForPreview } from 'docc-render/utils/data';

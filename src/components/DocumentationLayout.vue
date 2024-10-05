@@ -82,7 +82,7 @@ import QuickNavigationButton from 'docc-render/components/Navigator/QuickNavigat
 import QuickNavigationModal from 'docc-render/components/Navigator/QuickNavigationModal.vue';
 import AdjustableSidebarWidth from 'docc-render/components/AdjustableSidebarWidth.vue';
 import Navigator from 'docc-render/components/Navigator.vue';
-import onPageLoadScrollToFragment from 'docc-render/mixins/onPageLoadScrollToFragment';
+import onPageLoadScrollToFragment from 'docc-render/composables/onPageLoadScrollToFragment';
 import { BreakpointName } from 'docc-render/utils/breakpoints';
 import { storage } from 'docc-render/utils/storage';
 import { getSetting } from 'docc-render/utils/theme-settings';

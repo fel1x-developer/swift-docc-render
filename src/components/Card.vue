@@ -61,7 +61,7 @@ import InlineChevronRightIcon from 'theme/components/Icons/InlineChevronRightIco
 import DiagonalArrowIcon from 'theme/components/Icons/DiagonalArrowIcon.vue';
 import Reference from 'docc-render/components/ContentNode/Reference.vue';
 import CardSize from 'docc-render/constants/CardSize';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 import CardCover from './CardCover.vue';
 
 export default {

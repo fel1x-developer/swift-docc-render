@@ -59,8 +59,8 @@
 </template>
 <script>
 import { isSingleCharacter } from 'docc-render/utils/input-helper';
-import handleScrollbar from 'docc-render/mixins/handleScrollbar';
-import keyboardNavigation from 'docc-render/mixins/keyboardNavigation';
+import handleScrollbar from 'docc-render/composables/handleScrollbar';
+import keyboardNavigation from 'docc-render/composables/keyboardNavigation';
 import Tag from './Tag.vue';
 
 export default {

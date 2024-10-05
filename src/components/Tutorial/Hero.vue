@@ -74,7 +74,7 @@ import LinkableElement from 'docc-render/components/LinkableElement.vue';
 import GenericModal from 'docc-render/components/GenericModal.vue';
 import PlayIcon from 'theme/components/Icons/PlayIcon.vue';
 import { normalizePath, toCSSUrl } from 'docc-render/utils/assets';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 import { h } from 'vue';
 import HeroMetadata from './HeroMetadata.vue';
 

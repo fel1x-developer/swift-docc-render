@@ -11,7 +11,7 @@
 import { vi } from 'vitest';
 
 import { shallowMount } from '@vue/test-utils';
-import handleScrollbar from 'docc-render/mixins/handleScrollbar';
+import handleScrollbar from 'docc-render/composables/handleScrollbar';
 
 const { ScrollingDebounceDelay } = handleScrollbar.constants;
 

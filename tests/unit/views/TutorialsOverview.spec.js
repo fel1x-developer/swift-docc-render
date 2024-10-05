@@ -12,9 +12,9 @@ import { vi } from 'vitest';
 
 import { shallowMount } from '@vue/test-utils';
 import TutorialsOverview from 'docc-render/views/TutorialsOverview.vue';
-import onPageLoadScrollToFragment from 'docc-render/mixins/onPageLoadScrollToFragment';
+import onPageLoadScrollToFragment from 'docc-render/composables/onPageLoadScrollToFragment';
 
-vi.mock('docc-render/mixins/onPageLoadScrollToFragment');
+vi.mock('docc-render/composables/onPageLoadScrollToFragment');
 const { Overview } = TutorialsOverview.components;
 
 describe('TutorialsOverview', () => {

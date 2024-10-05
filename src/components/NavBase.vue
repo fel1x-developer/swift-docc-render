@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import onIntersect from 'docc-render/mixins/onIntersect';
+import onIntersect from 'docc-render/composables/onIntersect';
 import NavMenuItems from 'docc-render/components/NavMenuItems.vue';
 import BreakpointEmitter from 'docc-render/components/BreakpointEmitter.vue';
 

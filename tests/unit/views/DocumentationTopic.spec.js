@@ -17,11 +17,11 @@ import DocumentationNav from 'docc-render/components/DocumentationTopic/Document
 import NavBase from 'docc-render/components/NavBase.vue';
 import { TopicSectionsStyle } from '@/constants/TopicSectionsStyle';
 import DocumentationLayout from 'docc-render/components/DocumentationLayout.vue';
-import onThisPageRegistrator from '@/mixins/onThisPageRegistrator';
+import onThisPageRegistrator from '@/composables/onThisPageRegistrator';
 import { getSetting } from 'docc-render/utils/theme-settings';
 import { flushPromises } from '../../../test-utils';
 
-vi.mock('docc-render/mixins/onThisPageRegistrator');
+vi.mock('docc-render/composables/onThisPageRegistrator');
 vi.mock('docc-render/utils/theme-settings');
 
 const defaultLocale = 'en-US';

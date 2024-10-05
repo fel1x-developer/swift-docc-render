@@ -38,7 +38,7 @@
 import AppStore from 'docc-render/stores/AppStore';
 import TutorialsOverviewStore from 'docc-render/stores/TutorialsOverviewStore';
 import Nav from 'theme/components/TutorialsOverview/Nav.vue';
-import metadata from 'theme/mixins/metadata';
+import metadata from 'theme/composables/metadata';
 import Hero from './TutorialsOverview/Hero.vue';
 import LearningPath from './TutorialsOverview/LearningPath.vue';
 

@@ -55,10 +55,10 @@ import DocumentationTopic from 'theme/components/DocumentationTopic.vue';
 import DocumentationLayout from 'docc-render/components/DocumentationLayout.vue';
 import DocumentationTopicStore from 'docc-render/stores/DocumentationTopicStore';
 import Language from 'docc-render/constants/Language';
-import OnThisPageRegistrator from 'docc-render/mixins/onThisPageRegistrator';
+import OnThisPageRegistrator from 'docc-render/composables/onThisPageRegistrator';
 import { updateLocale } from 'theme/utils/i18n-utils';
 import { compareVersions, combineVersions } from 'docc-render/utils/schema-version-check';
-import communicationBridgeUtils from 'docc-render/mixins/communicationBridgeUtils';
+import communicationBridgeUtils from 'docc-render/composables/communicationBridgeUtils';
 import CodeTheme from 'docc-render/components/Tutorial/CodeTheme.vue';
 import CodeThemeStore from 'docc-render/stores/CodeThemeStore';
 

@@ -11,7 +11,7 @@
 import { vi } from 'vitest';
 
 import { shallowMount } from '@vue/test-utils';
-import onIntersectViewport from 'docc-render/mixins/onIntersectViewport';
+import onIntersectViewport from 'docc-render/composables/onIntersectViewport';
 
 describe('onIntersectViewport', () => {
   let wrapper;

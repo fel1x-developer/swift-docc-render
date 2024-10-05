@@ -179,7 +179,7 @@
 <script>
 import Language from 'docc-render/constants/Language';
 import SymbolKind from 'docc-render/constants/SymbolKind';
-import metadata from 'theme/mixins/metadata';
+import metadata from 'theme/composables/metadata';
 import { buildUrl } from 'docc-render/utils/url-helper';
 import { normalizeRelativePath } from 'docc-render/utils/assets';
 import { last } from 'docc-render/utils/arrays';

@@ -36,7 +36,7 @@ import { PortalTarget } from 'portal-vue';
 
 import AppStore from 'docc-render/stores/AppStore';
 import NavigationBar from 'theme/components/Tutorial/NavigationBar.vue';
-import metadata from 'theme/mixins/metadata';
+import metadata from 'theme/composables/metadata';
 import Body from './Article/Body.vue';
 import CallToAction from './Article/CallToAction.vue';
 import Hero from './Article/Hero.vue';

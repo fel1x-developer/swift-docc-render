@@ -70,7 +70,7 @@ import LinkableHeading from 'docc-render/components/ContentNode/LinkableHeading.
 import WordBreak from 'docc-render/components/WordBreak.vue';
 import ContentNode from 'docc-render/components/DocumentationTopic/ContentNode.vue';
 
-import apiChangesProvider from 'docc-render/mixins/apiChangesProvider';
+import apiChangesProvider from 'docc-render/composables/apiChangesProvider';
 import Badge from 'docc-render/components/Badge.vue';
 import ParametersTable from './ParametersTable.vue';
 import ParameterAttributes from './ParameterAttributes.vue';

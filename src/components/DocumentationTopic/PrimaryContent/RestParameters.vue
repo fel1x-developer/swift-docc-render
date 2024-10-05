@@ -65,7 +65,7 @@ import ContentNode from 'docc-render/components/DocumentationTopic/ContentNode.v
 import LinkableHeading from 'docc-render/components/ContentNode/LinkableHeading.vue';
 
 import WordBreak from 'docc-render/components/WordBreak.vue';
-import apiChangesProvider from 'docc-render/mixins/apiChangesProvider';
+import apiChangesProvider from 'docc-render/composables/apiChangesProvider';
 import Badge from 'docc-render/components/Badge.vue';
 import ParametersTable from './ParametersTable.vue';
 import ParameterAttributes from './ParameterAttributes.vue';

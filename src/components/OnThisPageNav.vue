@@ -32,7 +32,7 @@
 <script>
 import throttle from 'docc-render/utils/throttle';
 import { waitFrames } from 'docc-render/utils/loading';
-import ScrollToElement from 'docc-render/mixins/scrollToElement';
+import ScrollToElement from 'docc-render/composables/scrollToElement';
 import { buildUrl } from 'docc-render/utils/url-helper';
 import WordBreak from 'docc-render/components/WordBreak.vue';
 

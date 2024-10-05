@@ -17,9 +17,9 @@ import {
   fetchDataForRouteEnter,
   shouldFetchDataForRouteUpdate,
 } from 'docc-render/utils/data';
-import communicationBridgeUtils from 'docc-render/mixins/communicationBridgeUtils';
+import communicationBridgeUtils from 'docc-render/composables/communicationBridgeUtils';
 import TutorialsOverview from 'theme/components/TutorialsOverview.vue';
-import onPageLoadScrollToFragment from 'docc-render/mixins/onPageLoadScrollToFragment';
+import onPageLoadScrollToFragment from 'docc-render/composables/onPageLoadScrollToFragment';
 
 export default {
   name: 'TutorialsOverview',

@@ -39,7 +39,7 @@
 <script>
 import Badge from 'docc-render/components/Badge.vue';
 import { ChangeTypes } from 'docc-render/constants/Changes';
-import { getAPIChanges } from 'docc-render/mixins/apiChangesHelpers';
+import { getAPIChanges } from 'docc-render/composables/apiChangesHelpers';
 import TechnologyIcon from 'theme/components/Icons/TechnologyIcon.vue';
 import AvailabilityRange from './AvailabilityRange.vue';
 import Section from './Section.vue';

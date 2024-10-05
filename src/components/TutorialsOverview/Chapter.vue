@@ -32,7 +32,7 @@
 
 <script>
 import { anchorize } from 'docc-render/utils/strings';
-import onIntersectViewport, { intersectionMargins } from 'docc-render/mixins/onIntersectViewport';
+import onIntersectViewport, { intersectionMargins } from 'docc-render/composables/onIntersectViewport';
 
 import Asset from 'docc-render/components/Asset.vue';
 import ContentNode from 'docc-render/components/ContentNode.vue';

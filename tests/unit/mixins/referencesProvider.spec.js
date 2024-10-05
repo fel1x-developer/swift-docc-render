@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 import { shallowMount } from '@vue/test-utils';
-import referencesProvider from 'docc-render/mixins/referencesProvider';
+import referencesProvider from 'docc-render/composables/referencesProvider';
 
 const FakeComponentInner = {
   name: 'FakeComponentInner',

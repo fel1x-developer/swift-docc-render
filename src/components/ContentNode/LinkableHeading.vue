@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import scrollToElement from 'docc-render/mixins/scrollToElement';
+import scrollToElement from 'docc-render/composables/scrollToElement';
 import LinkIcon from 'theme/components/Icons/LinkIcon.vue';
 
 export default {

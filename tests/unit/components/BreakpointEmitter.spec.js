@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { shallowMount } from '@vue/test-utils';
 import BreakpointEmitter, { createMediaQueryString } from 'docc-render/components/BreakpointEmitter.vue';

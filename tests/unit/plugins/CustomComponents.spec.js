@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import CustomComponents from 'docc-render/plugins/CustomComponents';
 import { createLocalVue } from '@vue/test-utils';
@@ -37,9 +37,9 @@ describe('CustomComponents', () => {
   });
 
   it('utilizes `customElements.define` to register custom elements when templates exist', () => {
-    const customHeader = document.h('template');
+    const customHeader = document.createElement('template');
     customHeader.id = 'custom-header';
-    const customFooter = document.h('template');
+    const customFooter = document.createElement('template');
     customFooter.id = 'custom-footer';
     document.body.appendChild(customHeader);
     document.body.appendChild(customFooter);

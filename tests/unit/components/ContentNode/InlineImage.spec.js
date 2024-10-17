@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import InlineImage from 'docc-render/components/ContentNode/InlineImage.vue';
 import ImageAsset from 'docc-render/components/ImageAsset.vue';

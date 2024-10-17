@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import HighlightMatches from '@/components/Navigator/HighlightMatches.vue';
 import { shallowMount } from '@vue/test-utils';
 

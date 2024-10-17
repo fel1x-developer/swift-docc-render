@@ -8,8 +8,6 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 import GenericModal from 'docc-render/components/GenericModal.vue';
 import { shallowMount } from '@vue/test-utils';
 import scrollLock from 'docc-render/utils/scroll-lock';
@@ -18,29 +16,23 @@ import changeElementVOVisibility from 'docc-render/utils/changeElementVOVisibili
 import { Portal } from 'portal-vue';
 import { createEvent as createBaseEvent, flushPromises } from '../../../test-utils';
 
-vi.mock('docc-render/utils/changeElementVOVisibility', () => ({
-  default: {
-    hide: vi.fn(),
-    show: vi.fn(),
-  },
+jest.mock('docc-render/utils/changeElementVOVisibility', () => ({
+  hide: jest.fn(),
+  show: jest.fn(),
 }));
 
 const mockFocusTrap = {
-  start: vi.fn(),
-  stop: vi.fn(),
-  destroy: vi.fn(),
-  updateFocusContainer: vi.fn(),
+  start: jest.fn(),
+  stop: jest.fn(),
+  destroy: jest.fn(),
+  updateFocusContainer: jest.fn(),
 };
 
-vi.mock('docc-render/utils/FocusTrap', () => ({
-  default: vi.fn(() => (mockFocusTrap)),
-}));
+jest.mock('docc-render/utils/FocusTrap', () => jest.fn(() => (mockFocusTrap)));
 
-vi.mock('docc-render/utils/scroll-lock', () => ({
-  default: {
-    lockScroll: vi.fn(),
-    unlockScroll: vi.fn(),
-  },
+jest.mock('docc-render/utils/scroll-lock', () => ({
+  lockScroll: jest.fn(),
+  unlockScroll: jest.fn(),
 }));
 
 const VisibleChangeEvent = 'update:visible';
@@ -61,14 +53,14 @@ const createEvent = (key = 'Escape') => createBaseEvent('keydown', { key });
 
 const matchMedia = {
   matches: false,
-  addListener: vi.fn(),
-  removeListener: vi.fn(),
+  addListener: jest.fn(),
+  removeListener: jest.fn(),
 };
 
 describe('GenericModal', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
-    window.matchMedia = vi.fn().mockReturnValue(matchMedia);
+    jest.clearAllMocks();
+    window.matchMedia = jest.fn().mockReturnValue(matchMedia);
   });
 
   it('wraps the modal in a PortalSource component', () => {
@@ -105,14 +97,14 @@ describe('GenericModal', () => {
     expect(modal.attributes()).toHaveProperty('role', 'dialog');
   });
 
-  it('closes modal when clicking on backdrop, if enabled', async () => {
+  it('closes modal when clicking on backdrop, if enabled', () => {
     const wrapper = createWrapper({ propsData: { visible: true, closeOnClickOut: true } });
-    await wrapper.find('.backdrop').trigger('click');
+    wrapper.find('.backdrop').trigger('click');
     // make sure its emitted only once
     expect(wrapper.emitted(VisibleChangeEvent)).toEqual([[false]]);
   });
 
-  it('generates a close button', async () => {
+  it('generates a close button', () => {
     const wrapper = createWrapper({ propsData: { visible: true } });
     const close = wrapper.find('.close');
     expect(close.exists()).toBe(true);
@@ -120,7 +112,7 @@ describe('GenericModal', () => {
     expect(close.is('button')).toBe(true);
     expect(close.attributes()).toHaveProperty('aria-label', 'verbs.close');
     // assert clicking closes modal
-    await close.trigger('click');
+    close.trigger('click');
     expect(wrapper.emitted(VisibleChangeEvent)).toEqual([[false]]);
   });
 
@@ -211,12 +203,12 @@ describe('GenericModal', () => {
     });
   });
 
-  it('allows rendering fullscreen', async () => {
+  it('allows rendering fullscreen', () => {
     const wrapper = createWrapper({ propsData: { isFullscreen: true } });
     const modal = wrapper.find('.generic-modal');
 
     expect(modal.classes()).toContain('modal-fullscreen');
-    await wrapper.setProps({ isFullscreen: false });
+    wrapper.setProps({ isFullscreen: false });
     expect(modal.classes()).not.toContain('modal-fullscreen');
   });
 
@@ -239,8 +231,8 @@ describe('GenericModal', () => {
   });
 
   it('selects content when cmd+a or ctrl+a are typed', () => {
-    const selectAllChildren = vi.fn();
-    const preventDefault = vi.fn();
+    const selectAllChildren = jest.fn();
+    const preventDefault = jest.fn();
     window.getSelection = () => ({
       selectAllChildren,
     });
@@ -255,13 +247,13 @@ describe('GenericModal', () => {
     // assert that content is selected
     expect(selectAllChildren).toHaveBeenCalledWith(wrapper.vm.$refs.content);
     expect(preventDefault).toHaveBeenCalled();
-    vi.clearAllMocks();
+    jest.clearAllMocks();
     // type a
     type({ key: 'a' });
     // assert that content is not selected
     expect(selectAllChildren).not.toHaveBeenCalledWith(wrapper.vm.$refs.content);
     expect(preventDefault).not.toHaveBeenCalled();
-    vi.clearAllMocks();
+    jest.clearAllMocks();
     // type ctrl+a
     type({ key: 'a', ctrlKey: true });
     // assert that content is selected
@@ -272,14 +264,14 @@ describe('GenericModal', () => {
   it('locks scrolling on `show`, and unlocks scrolling on `hide`', async () => {
     const wrapper = createWrapper();
     expect(scrollLock.lockScroll).not.toHaveBeenCalled();
-    await wrapper.setProps({
+    wrapper.setProps({
       visible: true,
     });
     await flushPromises();
     expect(scrollLock.lockScroll).toHaveBeenCalledWith(wrapper.vm.$refs.container);
     expect(scrollLock.unlockScroll).not.toHaveBeenCalled();
 
-    await wrapper.setProps({
+    wrapper.setProps({
       visible: false,
     });
     await flushPromises();
@@ -293,7 +285,7 @@ describe('GenericModal', () => {
       },
     });
     // simulate showing the modal
-    await wrapper.setProps({
+    wrapper.setProps({
       visible: true,
     });
 
@@ -303,7 +295,7 @@ describe('GenericModal', () => {
     expect(changeElementVOVisibility.hide).toHaveBeenCalledTimes(1);
     expect(changeElementVOVisibility.hide).toHaveBeenCalledWith(container);
 
-    await wrapper.setProps({
+    wrapper.setProps({
       visible: false,
     });
     expect(changeElementVOVisibility.show).toHaveBeenCalledTimes(1);
@@ -311,7 +303,7 @@ describe('GenericModal', () => {
   });
 
   it('focuses the `close` button on `open`, and reverts back to last focus target, on close', async () => {
-    const button = document.h('button');
+    const button = document.createElement('button');
     document.body.appendChild(button);
 
     const wrapper = createWrapper({
@@ -321,7 +313,7 @@ describe('GenericModal', () => {
     });
 
     button.focus();
-    await wrapper.setProps({
+    wrapper.setProps({
       visible: true,
     });
 
@@ -330,7 +322,7 @@ describe('GenericModal', () => {
     expect(document.activeElement).toEqual(wrapper.find('.close').element);
     expect(wrapper.emitted('open')).toBeTruthy();
 
-    await wrapper.setProps({
+    wrapper.setProps({
       visible: false,
     });
     expect(document.activeElement).toEqual(button);
@@ -338,7 +330,7 @@ describe('GenericModal', () => {
   });
 
   it('does not throw if the close button is hidden, while opening', async () => {
-    const button = document.h('button');
+    const button = document.createElement('button');
     document.body.appendChild(button);
 
     const wrapper = createWrapper({
@@ -349,7 +341,7 @@ describe('GenericModal', () => {
     });
 
     button.focus();
-    await wrapper.setProps({
+    wrapper.setProps({
       visible: true,
     });
 
@@ -358,7 +350,7 @@ describe('GenericModal', () => {
     expect(document.activeElement).toEqual(button);
     expect(wrapper.emitted('open')).toBeTruthy();
 
-    await wrapper.setProps({
+    wrapper.setProps({
       visible: false,
     });
     expect(document.activeElement).toEqual(button);
@@ -388,14 +380,14 @@ describe('GenericModal', () => {
     expect(FocusTrap).toHaveBeenCalledTimes(1);
     expect(FocusTrap).toHaveBeenCalledWith();
     // assert it starts on show
-    await wrapper.setProps({
+    wrapper.setProps({
       visible: true,
     });
     // await the watcher
     await flushPromises();
     expect(mockFocusTrap.start).toHaveBeenCalledTimes(1);
     // assert it stops on hide
-    await wrapper.setProps({
+    wrapper.setProps({
       visible: false,
     });
     expect(mockFocusTrap.stop).toHaveBeenCalledTimes(1);
@@ -404,14 +396,14 @@ describe('GenericModal', () => {
     expect(mockFocusTrap.destroy).toHaveBeenCalledTimes(1);
   });
 
-  it('allows hiding the close button', async () => {
+  it('allows hiding the close button', () => {
     const wrapper = createWrapper({
       propsData: {
         showClose: false,
       },
     });
     expect(wrapper.find('.close').exists()).toBe(false);
-    await wrapper.setProps({
+    wrapper.setProps({
       showClose: true,
     });
     expect(wrapper.find('.close').exists()).toBe(true);

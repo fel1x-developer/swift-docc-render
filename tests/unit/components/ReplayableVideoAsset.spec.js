@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { shallowMount } from '@vue/test-utils';
 import ReplayableVideoAsset from 'docc-render/components/ReplayableVideoAsset.vue';
@@ -181,7 +181,7 @@ describe('ReplayableVideoAsset', () => {
     const video = wrapper.find({ ref: 'asset' });
     const control = wrapper.find('.control-button');
     expect(control.text()).toBe('video.play');
-    await control.trigger('click');
+    control.trigger('click');
     video.vm.$emit('playing');
     await flushPromises();
     // text is changed

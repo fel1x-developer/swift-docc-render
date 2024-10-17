@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Title from 'docc-render/components/DocumentationTopic/Summary/Title.vue';
 
@@ -26,6 +28,6 @@ describe('Title', () => {
 
   it('renders slot content', () => {
     const content = wrapper.find('span');
-    expect(content.html()).toContain('Foo');
+    expect(content.html()).toBe(slots.default);
   });
 });

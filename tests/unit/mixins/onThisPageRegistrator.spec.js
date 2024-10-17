@@ -8,7 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import onThisPageRegistrator from '@/composables/onThisPageRegistrator';
+import { beforeEach, describe, expect, it } from "vitest";
+
+import onThisPageRegistrator from '@/mixins/onThisPageRegistrator';
 import { shallowMount } from '@vue/test-utils';
 import { SectionKind } from '@/constants/PrimaryContentSection';
 import onThisPageSectionsStoreBase from '@/stores/OnThisPageSectionsStoreBase';
@@ -109,7 +111,7 @@ describe('OnThisPageRegistrator', () => {
       data: () => ({ topicData: null }),
     });
     await flushPromises();
-    await wrapper.setData({
+    wrapper.setData({
       topicData: {
         metadata: { title: 'Foo' },
         kind: 'symbol',
@@ -157,7 +159,7 @@ describe('OnThisPageRegistrator', () => {
       data: () => ({ topicData: null }),
     });
     await flushPromises();
-    await wrapper.setData({
+    wrapper.setData({
       topicData: {
         metadata: { title: 'Foo' },
         primaryContentSections: [

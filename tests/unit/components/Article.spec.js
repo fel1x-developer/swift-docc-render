@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Article from 'docc-render/components/Article.vue';
 import Assessments from 'docc-render/components/Tutorial/Assessments.vue';
@@ -150,8 +152,8 @@ describe('Article', () => {
   });
 
   describe('without hero section', () => {
-    beforeEach(async () => {
-      await wrapper.setProps({ sections: [] });
+    beforeEach(() => {
+      wrapper.setProps({ sections: [] });
     });
 
     it('does not provide a page title', () => {

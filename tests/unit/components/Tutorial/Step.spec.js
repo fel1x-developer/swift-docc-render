@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Step from 'docc-render/components/Tutorial/Step.vue';
 
@@ -74,14 +76,14 @@ describe('Step', () => {
       expect(wrapper.is('div.step-container')).toBe(true);
     });
 
-    it('adds a `focused` class if `isActive`', async () => {
+    it('adds a `focused` class if `isActive`', () => {
       expect(wrapper.find('.step').classes()).not.toContain('focused');
-      await wrapper.setProps({ currentIndex: 0 });
+      wrapper.setProps({ currentIndex: 0 });
       expect(wrapper.find('.step').classes()).toContain('focused');
     });
 
-    it('adds a data-index property to the `step`', async () => {
-      await wrapper.setProps({ index: 1 });
+    it('adds a data-index property to the `step`', () => {
+      wrapper.setProps({ index: 1 });
       expect(wrapper.find('.step').attributes('data-index')).toBe('1');
     });
 
@@ -116,8 +118,8 @@ describe('Step', () => {
     describe('with a caption', () => {
       const caption = [paragraph('bar')];
 
-      beforeEach(async () => {
-        await wrapper.setProps({ caption });
+      beforeEach(() => {
+        wrapper.setProps({ caption });
       });
 
       it('renders a `ContentNode` for the caption', () => {

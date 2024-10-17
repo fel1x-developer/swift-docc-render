@@ -8,8 +8,6 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 import {
   config, mount, shallowMount, TransitionStub,
 } from '@vue/test-utils';
@@ -22,19 +20,17 @@ import BackgroundTheme from 'docc-render/components/Tutorial/BackgroundTheme.vue
 import TopicStore from 'docc-render/stores/TopicStore';
 
 // mock out the intersection observer
-vi.mock('docc-render/composables/onIntersect', () => ({
-  default: {
-    constants: {
-      IntersectionDirections: {
-        up: 'up',
-        down: 'down',
-      },
+jest.mock('docc-render/mixins/onIntersect', () => ({
+  constants: {
+    IntersectionDirections: {
+      up: 'up',
+      down: 'down',
     },
   },
 }));
-vi.mock('docc-render/utils/loading', () => ({ waitFrames: vi.fn() }));
+jest.mock('docc-render/utils/loading', () => ({ waitFrames: jest.fn() }));
 
-const onIntersect = await vi.importActual('docc-render/composables/onIntersect');
+const onIntersect = jest.requireActual('docc-render/mixins/onIntersect');
 const { constants: { IntersectionDirections } } = onIntersect.default;
 const { IntersectionMargins } = SectionSteps.constants;
 
@@ -199,7 +195,7 @@ describe('SectionSteps', () => {
 
   it('on mount, finds the closest step and assigns it as an active one.', async () => {
     wrapper.destroy();
-    const getBoundingClientRect = vi.fn();
+    const getBoundingClientRect = jest.fn();
     window.HTMLElement.prototype.getBoundingClientRect = getBoundingClientRect;
     getBoundingClientRect.mockReturnValue({ top: 500, bottom: 700 });
     getBoundingClientRect.mockReturnValueOnce({ top: 20, bottom: 100 });
@@ -242,7 +238,7 @@ describe('SectionSteps', () => {
       let playMock;
 
       beforeEach(() => {
-        playMock = vi.fn(() => new Promise(vi.fn));
+        playMock = jest.fn(() => new Promise(jest.fn));
         window.HTMLMediaElement.prototype.play = playMock;
       });
 
@@ -297,7 +293,7 @@ describe('SectionSteps', () => {
         // Last step is code.
         await assertNotPlaying(1);
         // Last step has an image asset.
-        await wrapper.setProps({
+        wrapper.setProps({
           content: [
             exampleParagraph,
             exampleStepWithMedia,
@@ -305,7 +301,7 @@ describe('SectionSteps', () => {
         });
         await assertNotPlaying(1);
         // Last step has no asset nor code.
-        await wrapper.setProps({
+        wrapper.setProps({
           content: [
             exampleParagraph,
             exampleStepWithNoMediaNorCode,

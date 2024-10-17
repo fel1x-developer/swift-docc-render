@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import ContentTable from 'docc-render/components/DocumentationTopic/ContentTable.vue';
 
@@ -46,11 +48,11 @@ describe('ContentTable', () => {
     expect(p.html()).toBe(slots.default);
   });
 
-  it('renders `minimized-container` class if in minimized mode', async () => {
+  it('renders `minimized-container` class if in minimized mode', () => {
     const container = wrapper.find('.container');
     expect(container.classes()).not.toContain('minimized-container');
 
-    await wrapper.setProps({ enableMinimized: true });
+    wrapper.setProps({ enableMinimized: true });
     expect(container.classes()).toContain('minimized-container');
   });
 });

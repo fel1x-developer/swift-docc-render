@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Hierarchy from 'docc-render/components/DocumentationTopic/Hero/Hierarchy.vue';
 import Badge from 'docc-render/components/Badge.vue';
@@ -344,9 +346,9 @@ describe('Hierarchy', () => {
     });
 
     describe('with tags', () => {
-      it('renders a list with `root + 2 collapsed + max 2 items`, with tags above 1200px', async () => {
+      it('renders a list with `root + 2 collapsed + max 2 items`, with tags above 1200px', () => {
         changeSize(1250);
-        await wrapper.setProps({
+        wrapper.setProps({
           isSymbolBeta: true,
         });
         const list = wrapper.find(NavMenuItems);
@@ -396,9 +398,9 @@ describe('Hierarchy', () => {
         ]);
       });
 
-      it('renders a list with `root + 3 collapsed + max 1 item`, with tags, between 1000 and 1200px', async () => {
+      it('renders a list with `root + 3 collapsed + max 1 item`, with tags, between 1000 and 1200px', () => {
         changeSize(1200);
-        await wrapper.setProps({
+        wrapper.setProps({
           isSymbolBeta: true,
         });
 
@@ -447,9 +449,9 @@ describe('Hierarchy', () => {
         ]);
       });
 
-      it('renders a list with `5 collapsed and no external`, with tags, between 735 and 1000px', async () => {
+      it('renders a list with `5 collapsed and no external`, with tags, between 735 and 1000px', () => {
         changeSize(900);
-        await wrapper.setProps({
+        wrapper.setProps({
           isSymbolBeta: true,
         });
 
@@ -503,9 +505,9 @@ describe('Hierarchy', () => {
         ]);
       });
 
-      it('renders a list with `5 collapsed and no external`,with tags below 735', async () => {
+      it('renders a list with `5 collapsed and no external`,with tags below 735', () => {
         changeSize(700);
-        await wrapper.setProps({
+        wrapper.setProps({
           isSymbolBeta: true,
         });
 

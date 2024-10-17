@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import TopicsTable from 'docc-render/components/DocumentationTopic/TopicsTable.vue';
 import { TopicSectionsStyle } from '@/constants/TopicSectionsStyle';
@@ -92,8 +94,8 @@ describe('TopicsTable', () => {
     expect(sections.at(1).props('anchor')).toBe(null);
   });
 
-  it('renders a `ContentTableSection` for sections without a title', async () => {
-    await wrapper.setProps({
+  it('renders a `ContentTableSection` for sections without a title', () => {
+    wrapper.setProps({
       sections: [
         {
           ...propsData.sections[0],
@@ -132,8 +134,8 @@ describe('TopicsTable', () => {
     });
   });
 
-  it('renders a `TopicsLinkCardGrid` if `topicStyle` is not `list`', async () => {
-    await wrapper.setProps({ topicStyle: TopicSectionsStyle.compactGrid });
+  it('renders a `TopicsLinkCardGrid` if `topicStyle` is not `list`', () => {
+    wrapper.setProps({ topicStyle: TopicSectionsStyle.compactGrid });
     expect(wrapper.findAll(TopicsLinkBlock)).toHaveLength(0);
     const sections = wrapper.findAll(ContentTableSection);
 
@@ -154,8 +156,8 @@ describe('TopicsTable', () => {
     });
   });
 
-  it('can be passed `title` and `anchor` overrides', async () => {
-    await wrapper.setProps({
+  it('can be passed `title` and `anchor` overrides', () => {
+    wrapper.setProps({
       anchor: 'foo-bar',
       title: 'Foo Bar',
     });
@@ -187,11 +189,11 @@ describe('TopicsTable', () => {
     ).toEqual(propsData.sections[0].discussion.content);
   });
 
-  it('renders a title wrapped in WordBreak, if `wrapTitle: true`', async () => {
+  it('renders a title wrapped in WordBreak, if `wrapTitle: true`', () => {
     let wordBreak = wrapper.find(WordBreak);
     expect(wordBreak.exists()).toBe(false);
 
-    await wrapper.setProps({ wrapTitle: true });
+    wrapper.setProps({ wrapTitle: true });
     const linkableHeading = wrapper.find(LinkableHeading);
     wordBreak = wrapper.find(WordBreak);
     expect(wordBreak.text()).toEqual(propsData.sections[0].title);

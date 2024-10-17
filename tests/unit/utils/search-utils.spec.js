@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { safeHighlightPattern } from '@/utils/search-utils';
 
 describe('search-utils', () => {

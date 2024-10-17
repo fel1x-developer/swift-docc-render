@@ -8,13 +8,15 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Assessments from 'docc-render/components/Tutorial/Assessments.vue';
 
 const { LinkableSection } = Assessments.components;
 const { SuccessMessage } = Assessments.constants;
 
-// Stub scrolling APIs not implemented in vi.
+// Stub scrolling APIs not implemented in Jest.
 window.HTMLElement.prototype.scrollIntoView = () => {};
 window.scrollBy = () => {};
 
@@ -260,11 +262,11 @@ describe('success slot for completed assessment', () => {
     },
   };
 
-  it('renders a default "success" message', async () => {
+  it('renders a default "success" message', () => {
     const wrapper = shallowMount(Assessments, {
       ...options,
     });
-    await wrapper.setData({ completed: true });
+    wrapper.setData({ completed: true });
 
     const success = wrapper.find('.success');
     expect(success.exists()).toBe(true);
@@ -274,7 +276,7 @@ describe('success slot for completed assessment', () => {
     expect(message.text()).toBe(SuccessMessage);
   });
 
-  it('renders a default "success" message on aria live element for AX', async () => {
+  it('renders a default "success" message on aria live element for AX', () => {
     const wrapper = shallowMount(Assessments, {
       ...options,
     });
@@ -283,19 +285,19 @@ describe('success slot for completed assessment', () => {
     // assert that aria-live's slot is empty
     expect(ariaLive.isEmpty()).toBe(true);
 
-    await wrapper.setData({ completed: true });
+    wrapper.setData({ completed: true });
     // assert that aria-live's slot has been updated
     expect(ariaLive.text()).toBe(SuccessMessage);
   });
 
-  it('renders a "success" slot and slot message when provided', async () => {
+  it('renders a "success" slot and slot message when provided', () => {
     const wrapper = shallowMount(Assessments, {
       ...options,
       slots: {
         success: '<marquee>Success Slot</marquee>',
       },
     });
-    await wrapper.setData({ completed: true });
+    wrapper.setData({ completed: true });
 
     const success = wrapper.find('.success');
     expect(success.exists()).toBe(true);

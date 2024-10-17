@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { mount } from '@vue/test-utils';
 import RestResponses from 'docc-render/components/DocumentationTopic/PrimaryContent/RestResponses.vue';
 import { ChangeTypes } from 'docc-render/constants/Changes';

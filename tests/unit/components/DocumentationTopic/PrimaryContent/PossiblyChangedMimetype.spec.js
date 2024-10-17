@@ -8,8 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import PossiblyChangedMimetype
-  from 'docc-render/components/DocumentationTopic/PrimaryContent/PossiblyChangedMimetype.vue';
+import { describe, expect, it } from "vitest";
+
+import PossiblyChangedMimetype from 'docc-render/components/DocumentationTopic/PrimaryContent/PossiblyChangedMimetype.vue';
 import { shallowMount } from '@vue/test-utils';
 import { ChangeTypes } from 'docc-render/constants/Changes';
 

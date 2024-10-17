@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { shallowMount } from '@vue/test-utils';
 import Volume from 'docc-render/components/TutorialsOverview/Volume.vue';
@@ -142,8 +142,8 @@ describe('Volume', () => {
     expect(provide.store.setActiveVolume).toBeCalledWith(propsData.name);
   });
 
-  it('renders a volume without a name', async () => {
-    await wrapper.setProps({ name: undefined });
+  it('renders a volume without a name', () => {
+    wrapper.setProps({ name: undefined });
     expect(wrapper.find(VolumeName).exists()).toBe(false);
     expect(wrapper.find(Chapter).props('volumeHasName')).toBe(false);
   });

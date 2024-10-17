@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Aside from 'docc-render/components/ContentNode/Aside.vue';
 
@@ -23,7 +25,7 @@ describe('Aside', () => {
     expect(wrapper.attributes('aria-label')).toBe('note');
   });
 
-  it('renders a label', async () => {
+  it('renders a label', () => {
     const wrapper = shallowMount(Aside, {
       propsData: {
         kind: 'experiment',
@@ -33,27 +35,27 @@ describe('Aside', () => {
     expect(label.exists()).toBe(true);
     expect(label.text()).toBe('aside-kind.experiment');
 
-    await wrapper.setProps({ kind: 'important' });
+    wrapper.setProps({ kind: 'important' });
     label = wrapper.find('.label');
     expect(label.exists()).toBe(true);
     expect(label.text()).toBe('aside-kind.important');
 
-    await wrapper.setProps({ kind: 'note' });
+    wrapper.setProps({ kind: 'note' });
     label = wrapper.find('.label');
     expect(label.exists()).toBe(true);
     expect(label.text()).toBe('aside-kind.note');
 
-    await wrapper.setProps({ kind: 'tip' });
+    wrapper.setProps({ kind: 'tip' });
     label = wrapper.find('.label');
     expect(label.exists()).toBe(true);
     expect(label.text()).toBe('aside-kind.tip');
 
-    await wrapper.setProps({ kind: 'warning' });
+    wrapper.setProps({ kind: 'warning' });
     label = wrapper.find('.label');
     expect(label.exists()).toBe(true);
     expect(label.text()).toBe('aside-kind.warning');
 
-    await wrapper.setProps({ kind: 'note', name: 'Custom Name' });
+    wrapper.setProps({ kind: 'note', name: 'Custom Name' });
     label = wrapper.find('.label');
     expect(label.exists()).toBe(true);
     expect(label.text()).toBe('Custom Name');

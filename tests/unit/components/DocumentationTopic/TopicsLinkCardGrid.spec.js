@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import Pager from 'docc-render/components/Pager.vue';
 import TopicsLinkCardGrid from '@/components/DocumentationTopic/TopicsLinkCardGrid.vue';
 import { shallowMount } from '@vue/test-utils';
@@ -43,7 +45,7 @@ describe('TopicsLinkCardGrid', () => {
   });
 
   describe('compactGrid with pages', () => {
-    it('renders a pager with right number of pages per breakpoint', async () => {
+    it('renders a pager with right number of pages per breakpoint', () => {
       const wrapper = createWrapper({
         propsData: {
           topicStyle: TopicSectionsStyle.compactGrid,
@@ -57,13 +59,13 @@ describe('TopicsLinkCardGrid', () => {
       expect(pager.props('pages').length).toBe(2);
 
       // 10 items => 2 pages at medium breakpoint (6 links per page)
-      await wrapper.setData({ breakpoint: BreakpointName.medium });
+      wrapper.setData({ breakpoint: BreakpointName.medium });
       pager = wrapper.find(Pager);
       expect(pager.exists()).toBe(true);
       expect(pager.props('pages').length).toBe(2);
 
       // 10 items => 10 pages at small breakpoint (1 links per page)
-      await wrapper.setData({ breakpoint: BreakpointName.small });
+      wrapper.setData({ breakpoint: BreakpointName.small });
       pager = wrapper.find(Pager);
       expect(pager.exists()).toBe(true);
       expect(pager.props('pages').length).toBe(10);
@@ -71,7 +73,7 @@ describe('TopicsLinkCardGrid', () => {
   });
 
   describe('detailedGrid with pages', () => {
-    it('renders a pager with the right number of pages per breakpoint', async () => {
+    it('renders a pager with the right number of pages per breakpoint', () => {
       const wrapper = createWrapper({
         propsData: {
           topicStyle: TopicSectionsStyle.detailedGrid,
@@ -86,13 +88,13 @@ describe('TopicsLinkCardGrid', () => {
       expect(pager.props('pages').length).toBe(3);
 
       // 10 items => 5 pages at medium breakpoint (2 links per page)
-      await wrapper.setData({ breakpoint: BreakpointName.medium });
+      wrapper.setData({ breakpoint: BreakpointName.medium });
       pager = wrapper.find(Pager);
       expect(pager.exists()).toBe(true);
       expect(pager.props('pages').length).toBe(5);
 
       // 10 items => 10 pages at small breakpoint (1 links per page)
-      await wrapper.setData({ breakpoint: BreakpointName.small });
+      wrapper.setData({ breakpoint: BreakpointName.small });
       pager = wrapper.find(Pager);
       expect(pager.exists()).toBe(true);
       expect(pager.props('pages').length).toBe(10);

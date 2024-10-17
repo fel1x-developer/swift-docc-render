@@ -8,12 +8,13 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import emitWarningForSchemaVersionMismatch, {
   CURRENT_SUPPORTED_SCHEMA,
   combineVersions,
-  CURRENT_SCHEMA_STRING, compareVersions,
+  CURRENT_SCHEMA_STRING,
+  compareVersions,
 } from 'docc-render/utils/schema-version-check';
 
 const warnSpy = vi.spyOn(console, 'warn').mockReturnValue('');

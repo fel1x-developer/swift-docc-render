@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { RouterLinkStub, shallowMount } from '@vue/test-utils';
 import HierarchyItem
   from 'docc-render/components/DocumentationTopic/Hero/HierarchyItem.vue';

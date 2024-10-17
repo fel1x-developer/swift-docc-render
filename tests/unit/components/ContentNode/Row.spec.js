@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import Row from '@/components/ContentNode/Row.vue';
 import { shallowMount } from '@vue/test-utils';
 
@@ -26,7 +28,7 @@ describe('Row', () => {
     expect(wrapper.text()).toContain('Slot Content');
   });
 
-  it('renders with columns in mind', async () => {
+  it('renders with columns in mind', () => {
     const wrapper = createWrapper({
       propsData: {
         columns: { large: 4 },
@@ -36,7 +38,7 @@ describe('Row', () => {
     expect(wrapper.vm.style).toHaveProperty('--col-count-large', 4);
     expect(wrapper.vm.style).toHaveProperty('--col-count-medium', undefined);
     expect(wrapper.vm.style).toHaveProperty('--col-count-small', 1);
-    await wrapper.setProps({
+    wrapper.setProps({
       columns: {
         large: 3,
         medium: 5,

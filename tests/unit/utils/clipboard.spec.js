@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { parseDataFromClipboard, prepareDataForHTMLClipboard } from 'docc-render/utils/clipboard';
 
 const payload = { foo: 'foo' };

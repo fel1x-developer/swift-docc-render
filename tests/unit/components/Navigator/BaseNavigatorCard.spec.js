@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import BaseNavigatorCard from '@/components/Navigator/BaseNavigatorCard.vue';
 import { shallowMount } from '@vue/test-utils';
 import { baseNavOpenSidenavButtonId } from 'docc-render/constants/nav';
@@ -39,12 +41,12 @@ describe('BaseNavigatorCard', () => {
   });
 
   it('emits a `close` event, and focuses the open toggle', async () => {
-    const btn = document.h('BUTTON');
+    const btn = document.createElement('BUTTON');
     btn.id = baseNavOpenSidenavButtonId;
     document.body.appendChild(btn);
     const wrapper = createWrapper();
     const button = wrapper.find('.close-card');
-    await button.trigger('click');
+    button.trigger('click');
     await flushPromises();
     expect(button.attributes('aria-label')).toBe('navigator.close-navigator');
     expect(wrapper.emitted('close')).toHaveLength(1);

@@ -8,10 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import {
-  RouterLinkStub,
-  shallowMount,
-} from '@vue/test-utils';
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { RouterLinkStub, shallowMount } from '@vue/test-utils';
 import Nav from 'docc-render/components/TutorialsOverview/Nav.vue';
 import TutorialsNavigation from 'docc-render/components/TutorialsOverview/TutorialsNavigation.vue';
 import NavMenuItemBase from '@/components/NavMenuItemBase.vue';

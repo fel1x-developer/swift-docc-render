@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import ReferenceUrlProvider from 'docc-render/components/ReferenceUrlProvider.vue';
 import { shallowMount } from '@vue/test-utils';
 

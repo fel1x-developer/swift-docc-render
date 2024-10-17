@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import DocumentationHero from '@/components/DocumentationTopic/Hero/DocumentationHero.vue';
 import { shallowMount } from '@vue/test-utils';
 import { TopicTypes, TopicTypeAliases } from '@/constants/TopicTypes';
@@ -71,35 +73,35 @@ describe('DocumentationHero', () => {
     });
   });
 
-  it('renders the right classes based on `shortHero` prop', async () => {
+  it('renders the right classes based on `shortHero` prop', () => {
     const wrapper = createWrapper();
     expect(wrapper.find('.short-hero').exists()).toBe(true);
 
-    await wrapper.setProps({
+    wrapper.setProps({
       shortHero: false,
     });
     expect(wrapper.find('.short-hero').exists()).toBe(false);
   });
 
-  it('renders the right classes based on `shouldShowLanguageSwitcher` prop', async () => {
+  it('renders the right classes based on `shouldShowLanguageSwitcher` prop', () => {
     const wrapper = createWrapper();
     const content = wrapper.find('.documentation-hero__content');
 
     expect(content.classes()).toContain('extra-bottom-padding');
 
-    await wrapper.setProps({
+    wrapper.setProps({
       shouldShowLanguageSwitcher: false,
     });
     expect(content.classes()).not.toContain('extra-bottom-padding');
   });
 
-  it('renders the right classes based on `enableMininized` prop', async () => {
+  it('renders the right classes based on `enableMininized` prop', () => {
     const wrapper = createWrapper();
     const content = wrapper.find('.documentation-hero__content');
 
     expect(content.classes()).not.toContain('minimized-hero');
 
-    await wrapper.setProps({
+    wrapper.setProps({
       enableMinimized: true,
     });
     expect(content.classes()).toContain('minimized-hero');
@@ -138,9 +140,9 @@ describe('DocumentationHero', () => {
       .toBe('var(--color-documentation-intro-accent, var(--color-type-icon-sky))');
   });
 
-  it('renders the DocumentationHero, disabled', async () => {
+  it('renders the DocumentationHero, disabled', () => {
     const wrapper = createWrapper();
-    await wrapper.setProps({
+    wrapper.setProps({
       enhanceBackground: false,
     });
     // assert no icon

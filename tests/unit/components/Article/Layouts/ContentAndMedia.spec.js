@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Asset from 'docc-render/components/Asset.vue';
 import ContentAndMedia from 'docc-render/components/Article/Layouts/ContentAndMedia.vue';
@@ -36,14 +38,14 @@ describe('ContentAndMedia', () => {
     expect(wrapper.is('div.content-and-media')).toBe(true);
   });
 
-  it('renders the `mediaPosition` classname', async () => {
+  it('renders the `mediaPosition` classname', () => {
     expect(wrapper.is('.content-and-media.media-trailing')).toBe(true);
 
-    await wrapper.setProps({ mediaPosition: MediaPosition.leading });
+    wrapper.setProps({ mediaPosition: MediaPosition.leading });
     expect(wrapper.classes('media-leading')).toBe(true);
     expect(wrapper.classes('media-trailing')).toBe(false);
 
-    await wrapper.setProps({ mediaPosition: MediaPosition.trailing });
+    wrapper.setProps({ mediaPosition: MediaPosition.trailing });
     expect(wrapper.classes('media-leading')).toBe(false);
     expect(wrapper.classes('media-trailing')).toBe(true);
   });

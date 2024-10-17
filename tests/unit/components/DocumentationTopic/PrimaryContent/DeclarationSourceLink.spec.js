@@ -8,8 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import DeclarationSourceLink
-  from '@/components/DocumentationTopic/PrimaryContent/DeclarationSourceLink.vue';
+import { describe, expect, it } from "vitest";
+
+import DeclarationSourceLink from '@/components/DocumentationTopic/PrimaryContent/DeclarationSourceLink.vue';
 import { shallowMount } from '@vue/test-utils';
 import SwiftFileIcon from '@/components/Icons/SwiftFileIcon.vue';
 import WordBreak from '@/components/WordBreak.vue';

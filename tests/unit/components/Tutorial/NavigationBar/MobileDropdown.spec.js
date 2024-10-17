@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { RouterLinkStub, shallowMount } from '@vue/test-utils';
 import MobileDropdown from 'docc-render/components/Tutorial/NavigationBar/MobileDropdown.vue';
 import ReferenceUrlProvider from 'docc-render/components/ReferenceUrlProvider.vue';

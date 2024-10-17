@@ -8,10 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import {
-  shallowMount,
-  RouterLinkStub,
-} from '@vue/test-utils';
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import ChapterTopicList from 'docc-render/components/TutorialsOverview/ChapterTopicList.vue';
 
 const {
@@ -88,8 +87,8 @@ describe('ChapterTopicList', () => {
     });
   });
 
-  it('renders aria labels even if no `estimatedTime` on a topic', async () => {
-    await wrapper.setProps({
+  it('renders aria labels even if no `estimatedTime` on a topic', () => {
+    wrapper.setProps({
       topics: [
         {
           kind: TopicKind.tutorial,

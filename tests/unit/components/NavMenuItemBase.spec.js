@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import NavMenuItemBase from 'docc-render/components/NavMenuItemBase.vue';
 
@@ -22,10 +24,10 @@ describe('NavMenuItemBase', () => {
     expect(wrapper.text()).toEqual('Foo');
   });
 
-  it('adds the animated class if by default, and removes it via `animate` prop', async () => {
+  it('adds the animated class if by default, and removes it via `animate` prop', () => {
     const wrapper = shallowMount(NavMenuItemBase);
     expect(wrapper.classes()).toContain('nav-menu-item--animated');
-    await wrapper.setProps({
+    wrapper.setProps({
       animate: false,
     });
     expect(wrapper.classes()).not.toContain('nav-menu-item--animated');

@@ -8,9 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import {
-  isSingleCharacter,
-} from 'docc-render/utils/input-helper';
+import { describe, expect, it } from "vitest";
+
+import { isSingleCharacter } from 'docc-render/utils/input-helper';
 
 describe('isSingleCharacter', () => {
   it('detects single characters', () => {

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { RouterLinkStub, shallowMount } from '@vue/test-utils';
 import SectionIntro from 'docc-render/components/Tutorial/SectionIntro.vue';
 
@@ -132,8 +134,8 @@ describe('SectionIntro', () => {
       },
     ];
 
-    beforeEach(async () => {
-      await wrapper.setProps({ expandedSections });
+    beforeEach(() => {
+      wrapper.setProps({ expandedSections });
     });
 
     it('renders an `ExpandedIntro`', () => {

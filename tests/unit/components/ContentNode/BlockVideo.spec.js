@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import BlockVideo from '@/components/ContentNode/BlockVideo.vue';
 import { shallowMount } from '@vue/test-utils';
 import Asset from '@/components/Asset.vue';

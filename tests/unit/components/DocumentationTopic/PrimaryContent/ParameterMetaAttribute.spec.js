@@ -8,8 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import ParameterMetaAttribute
-  from 'docc-render/components/DocumentationTopic/PrimaryContent/ParameterMetaAttribute.vue';
+import { beforeEach, describe, expect, it } from "vitest";
+
+import ParameterMetaAttribute from 'docc-render/components/DocumentationTopic/PrimaryContent/ParameterMetaAttribute.vue';
 import { shallowMount } from '@vue/test-utils';
 
 const { RenderChanged } = ParameterMetaAttribute.components;

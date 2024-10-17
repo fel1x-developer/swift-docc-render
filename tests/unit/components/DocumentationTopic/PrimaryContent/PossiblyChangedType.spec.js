@@ -8,8 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import PossiblyChangedType
-  from 'docc-render/components/DocumentationTopic/PrimaryContent/PossiblyChangedType.vue';
+import { describe, expect, it } from "vitest";
+
+import PossiblyChangedType from 'docc-render/components/DocumentationTopic/PrimaryContent/PossiblyChangedType.vue';
 import { shallowMount } from '@vue/test-utils';
 
 const { RenderChanged, DeclarationTokenGroup } = PossiblyChangedType.components;

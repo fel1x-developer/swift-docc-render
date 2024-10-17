@@ -7,15 +7,9 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
+import { describe, expect, it, vi } from "vitest";
 
-import { vi } from 'vitest';
-
-import {
-  Orientation,
-  pathJoin,
-  normalizeRelativePath,
-  getOrientation,
-} from 'docc-render/utils/assets';
+import { Orientation, pathJoin, normalizeRelativePath, getOrientation } from 'docc-render/utils/assets';
 
 let normalizePath;
 const absoluteBaseUrl = 'https://foo.com';

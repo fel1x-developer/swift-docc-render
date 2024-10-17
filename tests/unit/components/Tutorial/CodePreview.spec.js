@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import CodePreview from 'docc-render/components/Tutorial/CodePreview.vue';
 import CodeListing from 'docc-render/components/ContentNode/CodeListing.vue';
@@ -106,22 +108,22 @@ describe('CodePreview', () => {
     });
   });
 
-  it('hides/shows the media preview when the hide button is clicked', async () => {
+  it('hides/shows the media preview when the hide button is clicked', () => {
     // Because preview asset is hidden by CSS, we check if the show/hide span exists
     const hideButton = wrapper.find('.header');
 
     expect(hideButton.attributes('title')).toBeFalsy();
 
-    await hideButton.trigger('click');
+    hideButton.trigger('click');
     expect(wrapper.emitted()['runtime-preview-toggle'][0]).toEqual([false]);
     let icon = wrapper.find('.preview-icon');
     expect(icon.is(DiagonalArrowIcon)).toBe(true);
     expect(icon.classes()).toContain('preview-hide');
     expect(icon.classes()).not.toContain('preview-show');
 
-    await wrapper.setProps({ isRuntimePreviewVisible: false });
+    wrapper.setProps({ isRuntimePreviewVisible: false });
 
-    await hideButton.trigger('click');
+    hideButton.trigger('click');
     expect(wrapper.emitted()['runtime-preview-toggle'][1]).toEqual([true]);
 
     icon = wrapper.find('.preview-icon');
@@ -320,8 +322,8 @@ describe('CodePreview', () => {
   });
 
   describe('without a runtime preview', () => {
-    beforeEach(async () => {
-      await wrapper.setProps({ preview: undefined });
+    beforeEach(() => {
+      wrapper.setProps({ preview: undefined });
     });
 
     it('renders the preview with a disabled state', () => {
@@ -337,9 +339,9 @@ describe('CodePreview', () => {
       expect(wrapper.contains('.preview-show')).toBe(true);
     });
 
-    it('does not emit `runtime-preview-toggle` events', async () => {
+    it('does not emit `runtime-preview-toggle` events', () => {
       const button = wrapper.find('button');
-      await button.trigger('click');
+      button.trigger('click');
       expect(wrapper.emitted()['runtime-preview-toggle']).toBeUndefined();
     });
   });

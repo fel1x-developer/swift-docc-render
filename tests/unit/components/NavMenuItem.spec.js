@@ -8,9 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import {
-  shallowMount,
-} from '@vue/test-utils';
+import { describe, expect, it } from "vitest";
+
+import { shallowMount } from '@vue/test-utils';
 import NavMenuItem from 'docc-render/components/NavMenuItem.vue';
 import NavMenuItemBase from 'docc-render/components/NavMenuItemBase.vue';
 import NavMenuLink from 'docc-render/components/NavMenuLink.vue';

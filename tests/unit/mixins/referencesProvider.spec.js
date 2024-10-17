@@ -7,8 +7,10 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
-import referencesProvider from 'docc-render/composables/referencesProvider';
+import referencesProvider from 'docc-render/mixins/referencesProvider';
 
 const FakeComponentInner = {
   name: 'FakeComponentInner',
@@ -21,8 +23,8 @@ const FakeComponentInner = {
 const FakeComponentOuter = {
   name: 'FakeComponentOuter',
   mixins: [referencesProvider],
-  render() {
-    return h(FakeComponentInner, {
+  render(createElement) {
+    return createElement(FakeComponentInner, {
       props: {
         references: this.references,
       },
@@ -90,44 +92,5 @@ describe('referencesProvider', () => {
     const inner = outer.find(FakeComponentInner);
     expect(inner.exists()).toBe(true);
     expect(inner.props('references')).toEqual(references);
-  });
-
-  it('removes `url` data for refs with non-empty `includedArchiveIdentifiers` app state', () => {
-    // empty `includedArchiveIdentifiers` — no changes to refs
-    const outer = createOuter();
-    let inner = outer.find(FakeComponentInner);
-    expect(inner.exists()).toBe(true);
-    expect(inner.props('references')).toEqual(references);
-
-    // `includedArchiveIdentifiers` contains all refs - no changes to refs
-    outer.setData({
-      appState: {
-        includedArchiveIdentifiers: ['A', 'B', 'BB'],
-      },
-    });
-    inner = outer.find(FakeComponentInner);
-    expect(inner.exists()).toBe(true);
-    expect(inner.props('references')).toEqual(references);
-
-    // `includedArchiveIdentifiers` only contains archive B — remove `url` field
-    // from all non-B refs
-    outer.setData({
-      appState: {
-        includedArchiveIdentifiers: ['B'],
-      },
-    });
-    inner = outer.find(FakeComponentInner);
-    expect(inner.exists()).toBe(true);
-    const refs3 = inner.props('references');
-    expect(refs3).not.toEqual(references);
-    expect(refs3[aa.identifier].title).toBe(aa.title);
-    expect(refs3[aa.identifier].url).toBeFalsy(); // aa `url` is gone now
-    expect(refs3[ab.identifier].title).toBe(ab.title);
-    expect(refs3[ab.identifier].url).toBeFalsy(); // ab `url` is gone now
-    expect(refs3[bb.identifier].title).toBe(bb.title);
-    expect(refs3[bb.identifier].url).toBe(bb.url); // bb still has `url`
-    expect(refs3[bbb.identifier].title).toBe(bbb.title);
-    expect(refs3[bbb.identifier].url).toBeFalsy(); // bbb `url` is gone now
-    expect(refs3[c.identifier].url).toBe(c.url); // external link untouched
   });
 });

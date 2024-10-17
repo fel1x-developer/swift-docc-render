@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import CodeThemeStore from 'docc-render/stores/CodeThemeStore';
 import BackgroundTheme from 'docc-render/components/Tutorial/BackgroundTheme.vue';

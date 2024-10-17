@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import LRUMap from 'docc-render/utils/lru-map';
 
 describe('LRUMap', () => {

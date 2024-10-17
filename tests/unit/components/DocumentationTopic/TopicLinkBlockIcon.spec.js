@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import TopicLinkBlockIcon from '@/components/DocumentationTopic/TopicLinkBlockIcon.vue';
 import { mount } from '@vue/test-utils';
 import { TopicRole } from '@/constants/roles';

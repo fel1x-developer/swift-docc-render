@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import ResourcesTileGroup from 'docc-render/components/TutorialsOverview/ResourcesTileGroup.vue';
 
@@ -39,10 +41,10 @@ describe('ResourcesTileGroup', () => {
     expect(wrapper.is('.tile-group'));
   });
 
-  it('renders a "count-{n}" class for the number of tiles', async () => {
+  it('renders a "count-{n}" class for the number of tiles', () => {
     expect(wrapper.classes('count-2')).toBe(true);
 
-    await wrapper.setProps({ tiles: [...propsData.tiles, propsData.tiles[0]] });
+    wrapper.setProps({ tiles: [...propsData.tiles, propsData.tiles[0]] });
     expect(wrapper.classes('count-2')).toBe(false);
     expect(wrapper.classes('count-3')).toBe(true);
   });

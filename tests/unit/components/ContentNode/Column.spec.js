@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import Column from '@/components/ContentNode/Column.vue';
 import { shallowMount } from '@vue/test-utils';
 
@@ -19,12 +21,12 @@ const createWrapper = props => shallowMount(Column, {
 });
 
 describe('Column', () => {
-  it('renders the Column', async () => {
+  it('renders the Column', () => {
     const wrapper = createWrapper();
     expect(wrapper.classes()).toContain('column');
     expect(wrapper.text()).toBe('Default Content');
     expect(wrapper.vm.style).toHaveProperty('--col-span', null);
-    await wrapper.setProps({
+    wrapper.setProps({
       span: 5,
     });
     expect(wrapper.vm.style).toHaveProperty('--col-span', 5);

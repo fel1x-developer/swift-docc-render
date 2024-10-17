@@ -8,8 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import PossiblyChangedTextAttribute
-  from 'docc-render/components/DocumentationTopic/PrimaryContent/PossiblyChangedTextAttribute.vue';
+import { describe, expect, it } from "vitest";
+
+import PossiblyChangedTextAttribute from 'docc-render/components/DocumentationTopic/PrimaryContent/PossiblyChangedTextAttribute.vue';
 import { shallowMount } from '@vue/test-utils';
 
 const { RenderChanged } = PossiblyChangedTextAttribute.components;

@@ -8,11 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import {
-  isEqual,
-  last,
-  page,
-} from '@/utils/arrays';
+import { describe, expect, it } from "vitest";
+
+import { isEqual, last, page } from '@/utils/arrays';
 
 describe('arrays', () => {
   describe('last', () => {

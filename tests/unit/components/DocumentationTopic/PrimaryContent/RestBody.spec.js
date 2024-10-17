@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import RestBody from 'docc-render/components/DocumentationTopic/PrimaryContent/RestBody.vue';
 import { ChangeTypes } from 'docc-render/constants/Changes';
@@ -115,8 +117,8 @@ describe('RestBody', () => {
       .toEqual(propsData.bodyContentType);
   });
 
-  it('displays the `PossiblyChangedType` in the `param-symbol` if no content exists', async () => {
-    await wrapper.setProps({
+  it('displays the `PossiblyChangedType` in the `param-symbol` if no content exists', () => {
+    wrapper.setProps({
       content: [],
     });
     expect(wrapper.find('.param .param-symbol').contains(PossiblyChangedType))
@@ -215,7 +217,7 @@ describe('RestBody', () => {
       },
     ];
 
-    beforeEach(async () => wrapper.setProps({ parts }));
+    beforeEach(() => wrapper.setProps({ parts }));
 
     it('renders an h3 for "Parts"', () => {
       const h3 = wrapper.find('h3');
@@ -247,7 +249,7 @@ describe('RestBody', () => {
     });
 
     it('displays the PossiblyChangedType in the `param-content` if no content exists', async () => {
-      await wrapper.setProps({
+      wrapper.setProps({
         parts: [
           {
             name: 'Any Key',
@@ -279,7 +281,7 @@ describe('RestBody', () => {
         value: '10',
       }];
 
-      await wrapper.setProps({
+      wrapper.setProps({
         parts: [
           {
             name: 'Any Key',

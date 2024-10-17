@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import CodeThemeStore from 'docc-render/stores/CodeThemeStore';
 import CodeTheme from 'docc-render/components/Tutorial/CodeTheme.vue';
@@ -65,8 +67,8 @@ describe('CodeTheme', () => {
   });
 
   describe('internal param name color', () => {
-    it('is 25% lighter than the text color for light backgrounds', async () => {
-      await wrapper.setData({
+    it('is 25% lighter than the text color for light backgrounds', () => {
+      wrapper.setData({
         codeThemeState: {
           codeColors: {
             background: 'rgba(255, 255, 255, 1)',
@@ -78,8 +80,8 @@ describe('CodeTheme', () => {
         .toBe('rgba(64, 64, 64, 1)');
     });
 
-    it('is 25% darker than the text color for dark backgrounds', async () => {
-      await wrapper.setData({
+    it('is 25% darker than the text color for dark backgrounds', () => {
+      wrapper.setData({
         codeThemeState: {
           codeColors: {
             background: 'rgba(0, 0, 0, 1)',
@@ -91,8 +93,8 @@ describe('CodeTheme', () => {
         .toBe('rgba(191, 191, 191, 1)');
     });
 
-    it('falls back to the text color if any calculation crashes', async () => {
-      await wrapper.setData({
+    it('falls back to the text color if any calculation crashes', () => {
+      wrapper.setData({
         codeThemeState: {
           codeColors: {
             background: 'rgba(0, 0, 0, 1)',

@@ -8,10 +8,12 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { indentDeclaration } from 'docc-render/utils/indentation';
 
 const prepare = (originalCode) => {
-  const decl = document.h('div');
+  const decl = document.createElement('div');
   decl.classList.add('declaration');
   decl.classList.add('code-listing');
   decl.innerHTML = `<pre><code>${originalCode}</code></pre>`;

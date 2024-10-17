@@ -8,20 +8,18 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 import { shallowMount } from '@vue/test-utils';
 import ImageAsset from 'docc-render/components/ImageAsset.vue';
 
 import ImageLoadingStrategy from '@/constants/ImageLoadingStrategy';
 import { flushPromises } from '../../../test-utils';
 
-vi.mock('docc-render/stores/AppStore', () => ({
+jest.mock('docc-render/stores/AppStore', () => ({
   state: {
     imageLoadingStrategy: 'lazy',
     preferredColorScheme: 'auto',
     supportsAutoColorScheme: true,
-    setPreferredColorScheme: vi.fn(),
+    setPreferredColorScheme: jest.fn(),
   },
 }));
 
@@ -245,7 +243,7 @@ describe('ImageAsset', () => {
     expect(image.attributes('height')).toBe('auto');
   });
 
-  it('renders a fallback image if the specified one does not load', async () => {
+  it('renders a fallback image if the specified one does not load', () => {
     const url = 'https://www.example.com/image.png';
     const alt = 'This is alt text.';
     const wrapper = shallowMount(ImageAsset, {
@@ -274,7 +272,7 @@ describe('ImageAsset', () => {
     expect(img.classes('fallback')).toBe(false);
 
     // simulate an error loading the real image
-    await img.trigger('error');
+    img.trigger('error');
 
     expect(wrapper.find('picture').exists()).toBe(false);
     const fallbackImg = wrapper.find('img');
@@ -330,7 +328,7 @@ describe('ImageAsset', () => {
     expect(img.attributes('width')).toBeFalsy();
     expect(img.attributes('height')).toBeFalsy();
 
-    await img.trigger('load');
+    img.trigger('load');
     await flushPromises();
     expect(img.attributes('width')).toBe(`${optimalDisplayWidth}`);
     expect(img.attributes('height')).toBe('auto');
@@ -354,7 +352,7 @@ describe('ImageAsset', () => {
       },
     });
 
-    const calculateOptimalDimensionsSpy = vi.spyOn(wrapper.vm, 'calculateOptimalDimensions')
+    const calculateOptimalDimensionsSpy = jest.spyOn(wrapper.vm, 'calculateOptimalDimensions')
       .mockReturnValue({ width: 99 });
     const img = wrapper.find('img');
 
@@ -362,7 +360,7 @@ describe('ImageAsset', () => {
     expect(img.attributes('height')).toBeFalsy();
 
     wrapper.destroy();
-    await img.trigger('load');
+    img.trigger('load');
     await flushPromises();
     expect(img.attributes('width')).toBeFalsy();
     expect(img.attributes('height')).toBeFalsy();
@@ -384,7 +382,7 @@ describe('ImageAsset', () => {
       },
     });
     const img = wrapper.find('img');
-    await img.trigger('load');
+    img.trigger('load');
     await flushPromises();
     expect(img.attributes('width')).toBeFalsy();
   });
@@ -407,7 +405,7 @@ describe('ImageAsset', () => {
       },
     });
 
-    const consoleSpy = vi
+    const consoleSpy = jest
       .spyOn(console, 'error')
       .mockImplementation(() => {});
 
@@ -428,7 +426,7 @@ describe('ImageAsset', () => {
     expect(img.attributes('width')).toBeFalsy();
     expect(img.attributes('height')).toBeFalsy();
 
-    await img.trigger('load');
+    img.trigger('load');
     await flushPromises();
     expect(img.attributes('width')).toBeFalsy();
     expect(img.attributes('height')).toBeFalsy();

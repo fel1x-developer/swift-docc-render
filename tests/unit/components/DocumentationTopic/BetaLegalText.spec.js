@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import BetaLegalText from 'docc-render/components/DocumentationTopic/BetaLegalText.vue';
 import { shallowMount } from '@vue/test-utils';
 import GridRow from 'docc-render/components/GridRow.vue';

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import CodeThemeStore from 'docc-render/stores/CodeThemeStore';
 
 describe('CodeThemeStore', () => {

@@ -8,18 +8,14 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
-import onPageLoadScrollToFragment from 'docc-render/composables/onPageLoadScrollToFragment';
+import onPageLoadScrollToFragment from 'docc-render/mixins/onPageLoadScrollToFragment';
 import { shallowMount } from '@vue/test-utils';
-import scrollToElement from 'docc-render/composables/scrollToElement';
+import scrollToElement from 'docc-render/mixins/scrollToElement';
 import { flushPromises } from '../../../test-utils';
 
-vi.mock('docc-render/utils/loading', () => ({ waitFrames: () => {} }));
-vi.mock('docc-render/composables/scrollToElement', () => ({
-  default: {
-    methods: { scrollToElement: vi.fn() },
-  },
+jest.mock('docc-render/utils/loading', () => ({ waitFrames: () => {} }));
+jest.mock('docc-render/mixins/scrollToElement', () => ({
+  methods: { scrollToElement: jest.fn() },
 }));
 
 const Component = {
@@ -43,7 +39,7 @@ const createWrapper = ({ mocks } = {}) => {
 
 describe('onPageLoadScrollToFragment', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('calls scrollToElement on mounted/updated if route has a hash', async () => {

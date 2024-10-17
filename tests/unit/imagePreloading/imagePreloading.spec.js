@@ -8,13 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { describe, it, vi } from "vitest";
 
-import {
-  createLocalVue,
-  mount,
-  RouterLinkStub,
-} from '@vue/test-utils';
+import { createLocalVue, mount, RouterLinkStub } from '@vue/test-utils';
 import fs from 'fs';
 import path from 'path';
 import Router from 'vue-router';
@@ -22,7 +18,7 @@ import Router from 'vue-router';
 import hide from 'docc-render/directives/hide';
 
 import Topic from 'docc-render/views/Topic.vue';
-import createRouterInstance from '@/setup-utils/SwiftDocCRenderRouter';
+import createRouterInstance from 'docc-render/setup-utils/SwiftDocCRenderRouter';
 
 const router = createRouterInstance();
 
@@ -100,7 +96,7 @@ describe('image preloading', () => {
 
   it('has all the images in the DOM on load in tutorial pages', async () => {
     const wrapper = mount(Topic, mountOptions);
-    await wrapper.setData({ topicData });
+    wrapper.setData({ topicData });
     await assertHasAllImages(wrapper, topicData.references);
   });
 });

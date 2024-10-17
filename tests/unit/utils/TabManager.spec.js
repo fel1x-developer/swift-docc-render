@@ -10,6 +10,8 @@
 
 /* eslint-disable */
 
+import { describe, expect, it } from "vitest";
+
 import TabManager from "docc-render/utils/TabManager";
 import { parseHTMLString } from "../../../test-utils";
 

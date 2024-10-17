@@ -8,12 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-  baseNavHeight,
-  baseNavHeightSmallBreakpoint,
-} from 'docc-render/constants/nav';
+import { baseNavHeight, baseNavHeightSmallBreakpoint } from 'docc-render/constants/nav';
 import { documentationTopicName } from 'docc-render/constants/router';
 import {
   scrollBehavior as originalScrollBehavior,
@@ -23,7 +20,7 @@ import {
 } from 'docc-render/utils/router-utils';
 import { EXTRA_DOCUMENTATION_OFFSET } from '@/utils/scroll-offset';
 
-const appTarget = import.meta.env.VITE_APP_TARGET;
+const appTarget = process.env.VUE_APP_TARGET;
 
 const sessionStorage = {
   getItem: vi.fn(),
@@ -61,7 +58,7 @@ describe('router-utils', () => {
     const routeBar = createRoute('bar', {}, 'bar');
 
     beforeEach(() => {
-      import.meta.env.VITE_APP_TARGET = appTarget;
+      process.env.VUE_APP_TARGET = appTarget;
     });
 
     it('resolves with the saved position', async () => {
@@ -83,7 +80,7 @@ describe('router-utils', () => {
     });
 
     it('resolves with a selector and `y:0` offset if passed `hash` but in IDE target', async () => {
-      import.meta.env.VITE_APP_TARGET = 'ide';
+      process.env.VUE_APP_TARGET = 'ide';
       const resolved = await scrollBehavior(routeFoo, routeBar);
       expect(resolved).toEqual({ selector: routeFoo.hash, offset: { x: 0, y: 0 } });
     });

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { mount } from '@vue/test-utils';
 import Card from '@/components/Card.vue';
 import { TopicRole } from '@/constants/roles';
@@ -147,7 +149,7 @@ describe('TopicsLinkCardGridItem', () => {
     expect(wrapper.find(ContentNode).props('content')).toBe(defaultProps.item.abstract);
   });
 
-  it('renders different text for diff roles', async () => {
+  it('renders different text for diff roles', () => {
     const wrapper = createWrapper({
       propsData: {
         ...defaultProps,
@@ -159,16 +161,16 @@ describe('TopicsLinkCardGridItem', () => {
     const card = wrapper.find(Card);
     expect(card.props('linkText')).toBe(ROLE_LINK_TEXT[TopicRole.overview]);
     // collection
-    await wrapper.setProps({ item: { ...defaultProps.item, role: TopicRole.collection } });
+    wrapper.setProps({ item: { ...defaultProps.item, role: TopicRole.collection } });
     expect(card.props('linkText')).toBe(ROLE_LINK_TEXT[TopicRole.collection]);
     // symbol
-    await wrapper.setProps({ item: { ...defaultProps.item, role: TopicRole.symbol } });
+    wrapper.setProps({ item: { ...defaultProps.item, role: TopicRole.symbol } });
     expect(card.props('linkText')).toBe(ROLE_LINK_TEXT[TopicRole.symbol]);
     // sampleCode
-    await wrapper.setProps({ item: { ...defaultProps.item, role: TopicRole.sampleCode } });
+    wrapper.setProps({ item: { ...defaultProps.item, role: TopicRole.sampleCode } });
     expect(card.props('linkText')).toBe(ROLE_LINK_TEXT[TopicRole.sampleCode]);
     // other
-    await wrapper.setProps({ item: { ...defaultProps.item, role: TopicRole.link } });
+    wrapper.setProps({ item: { ...defaultProps.item, role: TopicRole.link } });
     expect(card.props('linkText')).toBe('documentation.card.learn-more');
   });
 });

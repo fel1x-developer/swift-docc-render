@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import MobileCodePreview from 'docc-render/components/Tutorial/MobileCodePreview.vue';
 import CodeListing from 'docc-render/components/ContentNode/CodeListing.vue';

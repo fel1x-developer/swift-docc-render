@@ -8,12 +8,12 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import * as dataUtils from 'docc-render/utils/data';
 import { shallowMount } from '@vue/test-utils';
 import DocumentationTopicStore from 'docc-render/stores/DocumentationTopicStore';
-import onPageLoadScrollToFragment from 'docc-render/composables/onPageLoadScrollToFragment';
+import onPageLoadScrollToFragment from 'docc-render/mixins/onPageLoadScrollToFragment';
 import DocumentationNav from 'docc-render/components/DocumentationTopic/DocumentationNav.vue';
 import NavBase from 'docc-render/components/NavBase.vue';
 import AdjustableSidebarWidth from '@/components/AdjustableSidebarWidth.vue';
@@ -26,7 +26,7 @@ import DocumentationLayout from 'docc-render/components/DocumentationLayout.vue'
 import { getSetting } from 'docc-render/utils/theme-settings';
 import { flushPromises } from '../../../test-utils';
 
-vi.mock('docc-render/composables/onPageLoadScrollToFragment');
+vi.mock('docc-render/mixins/onPageLoadScrollToFragment');
 vi.mock('docc-render/utils/FocusTrap');
 vi.mock('docc-render/utils/scroll-lock');
 vi.mock('docc-render/utils/storage');
@@ -149,7 +149,7 @@ describe('DocumentationLayout', () => {
   });
 
   it('renders the Navigator and AdjustableSidebarWidth when enabled', async () => {
-    await wrapper.setProps({
+    wrapper.setProps({
       enableNavigator: true,
     });
 
@@ -207,7 +207,7 @@ describe('DocumentationLayout', () => {
     expect(nav.props('displaySidenav')).toBe(true);
   });
 
-  it('renders QuickNavigation if enableQuickNavigation is true', async () => {
+  it('renders QuickNavigation if enableQuickNavigation is true', () => {
     getSetting.mockReturnValueOnce(true);
     wrapper = createWrapper({
       stubs: {
@@ -217,7 +217,7 @@ describe('DocumentationLayout', () => {
       },
     });
 
-    await wrapper.setProps({
+    wrapper.setProps({
       enableNavigator: true,
     });
 
@@ -225,7 +225,7 @@ describe('DocumentationLayout', () => {
     expect(quickNavigationModalComponent.exists()).toBe(true);
   });
 
-  it('does not render QuickNavigation if enableQuickNavigation is false', async () => {
+  it('does not render QuickNavigation if enableQuickNavigation is false', () => {
     wrapper = createWrapper({
       stubs: {
         ...stubs,
@@ -234,7 +234,7 @@ describe('DocumentationLayout', () => {
       },
     });
 
-    await wrapper.setProps({
+    wrapper.setProps({
       enableNavigator: true,
     });
 
@@ -256,7 +256,7 @@ describe('DocumentationLayout', () => {
     expect(quickNavigationModalComponent.exists()).toBe(false);
   });
 
-  it('does not render QuickNavigation if enableQuickNavigation is true but IDE is being targeted', async () => {
+  it('does not render QuickNavigation if enableQuickNavigation is true but IDE is being targeted', () => {
     getSetting.mockReturnValueOnce(true);
     wrapper = createWrapper({
       provide: { ...provide, isTargetIDE: true },
@@ -267,7 +267,7 @@ describe('DocumentationLayout', () => {
       },
     });
 
-    await wrapper.setProps({
+    wrapper.setProps({
       enableNavigator: true,
     });
 
@@ -287,7 +287,7 @@ describe('DocumentationLayout', () => {
 
     it('applies display none to Navigator if is closed', async () => {
       // renders a closed navigator
-      await wrapper.setProps({
+      wrapper.setProps({
         enableNavigator: true,
       });
       await wrapper.vm.$nextTick();
@@ -297,7 +297,7 @@ describe('DocumentationLayout', () => {
 
     it('reverses the filter position of the navigator', async () => {
       // renders a closed navigator
-      await wrapper.setProps({
+      wrapper.setProps({
         enableNavigator: true,
       });
       await wrapper.vm.$nextTick();
@@ -307,10 +307,10 @@ describe('DocumentationLayout', () => {
 
     it('does not apply display none to Navigator if is open', async () => {
       // renders an open navigator
-      await wrapper.setData({
+      wrapper.setData({
         sidenavVisibleOnMobile: true,
       });
-      await wrapper.setProps({
+      wrapper.setProps({
         enableNavigator: true,
       });
       await wrapper.vm.$nextTick();
@@ -319,8 +319,8 @@ describe('DocumentationLayout', () => {
     });
   });
 
-  it('provides the selected api changes, to the NavigatorDataProvider', async () => {
-    await wrapper.setProps({
+  it('provides the selected api changes, to the NavigatorDataProvider', () => {
+    wrapper.setProps({
       enableNavigator: true,
       selectedAPIChangesVersion: 'latest_major',
     });
@@ -328,7 +328,7 @@ describe('DocumentationLayout', () => {
     expect(dataProvider.props('apiChangesVersion')).toEqual('latest_major');
   });
 
-  it('renders the Navigator with data when no reference is found for a top-level item', async () => {
+  it('renders the Navigator with data when no reference is found for a top-level item', () => {
     const technologies = {
       id: 'topic://not-existing',
       title: 'Technologies',
@@ -336,7 +336,7 @@ describe('DocumentationLayout', () => {
       kind: 'technologies',
     };
 
-    await wrapper.setProps({
+    wrapper.setProps({
       enableNavigator: true,
       parentTopicIdentifiers: [
         technologies.id,
@@ -353,7 +353,7 @@ describe('DocumentationLayout', () => {
     });
   });
 
-  it('renders the Navigator with data when no reference is found, even when there is a reference data error', async () => {
+  it('renders the Navigator with data when no reference is found, even when there is a reference data error', () => {
     const technologies = {
       id: 'topic://not-existing',
       title: 'Technologies',
@@ -361,7 +361,7 @@ describe('DocumentationLayout', () => {
       kind: 'technologies',
     };
 
-    await wrapper.setProps({
+    wrapper.setProps({
       enableNavigator: true,
       parentTopicIdentifiers: [
         technologies.id,
@@ -380,8 +380,8 @@ describe('DocumentationLayout', () => {
     });
   });
 
-  it('renders the Navigator with data when no hierarchy and reference is found for the current page', async () => {
-    await wrapper.setProps({
+  it('renders the Navigator with data when no hierarchy and reference is found for the current page', () => {
+    wrapper.setProps({
       enableNavigator: true,
       parentTopicIdentifiers: [],
       references: {},
@@ -425,7 +425,7 @@ describe('DocumentationLayout', () => {
   });
 
   it('handles the `@close`, on Navigator, for Mobile breakpoints', async () => {
-    await wrapper.setProps({
+    wrapper.setProps({
       enableNavigator: true,
     });
     await flushPromises();
@@ -452,7 +452,7 @@ describe('DocumentationLayout', () => {
   });
 
   it('handles the `@close`, on Navigator, for `Large` breakpoints', async () => {
-    await wrapper.setProps({
+    wrapper.setProps({
       enableNavigator: true,
     });
     await flushPromises();
@@ -473,7 +473,7 @@ describe('DocumentationLayout', () => {
     // assert that the storage was called to get the navigator closed state from LS
     expect(storage.get).toHaveBeenCalledWith(NAVIGATOR_HIDDEN_ON_LARGE_KEY, false);
 
-    await wrapper.setProps({
+    wrapper.setProps({
       enableNavigator: true,
     });
     await flushPromises();

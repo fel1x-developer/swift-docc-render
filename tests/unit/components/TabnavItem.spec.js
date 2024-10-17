@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it, vi } from "vitest";
+
 import TabnavItem from 'docc-render/components/TabnavItem.vue';
 import { shallowMount } from '@vue/test-utils';
 
@@ -47,19 +49,19 @@ describe('TabnavItem', () => {
     expect(wrapper.find('a.tabnav-link').exists()).toBe(true);
   });
 
-  it('updates the active link on link click', async () => {
+  it('updates the active link on link click', () => {
     const { wrapper, config } = createWrapper();
-    await wrapper.find('a.tabnav-link').trigger('click');
+    wrapper.find('a.tabnav-link').trigger('click');
     expect(config.provide.tabnavData.selectTab).toHaveBeenCalledTimes(1);
     expect(config.provide.tabnavData.selectTab).toHaveBeenCalledWith(config.propsData.value);
   });
 
-  it('adds the `active` class if a tab is selected', async () => {
+  it('adds the `active` class if a tab is selected', () => {
     const { wrapper, config } = createWrapper();
     const link = wrapper.find('a.tabnav-link');
     expect(link.classes()).not.toContain('active');
     expect(link.attributes('aria-current')).toBe('false');
-    await wrapper.setProps({
+    wrapper.setProps({
       value: config.provide.tabnavData.activeTab,
     });
     expect(link.classes()).toContain('active');

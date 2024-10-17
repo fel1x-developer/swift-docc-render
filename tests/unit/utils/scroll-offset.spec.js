@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import getExtraScrollOffset, { EXTRA_DOCUMENTATION_OFFSET } from 'docc-render/utils/scroll-offset';
 import { documentationTopicName } from 'docc-render/constants/router';
 

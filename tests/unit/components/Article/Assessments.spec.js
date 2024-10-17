@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 // eslint-disable-next-line import/no-named-default
 import { default as TutorialAssessments } from 'docc-render/components/Tutorial/Assessments.vue';

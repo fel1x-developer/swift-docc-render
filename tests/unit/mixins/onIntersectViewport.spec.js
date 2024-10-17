@@ -8,10 +8,10 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { shallowMount } from '@vue/test-utils';
-import onIntersectViewport from 'docc-render/composables/onIntersectViewport';
+import onIntersectViewport from 'docc-render/mixins/onIntersectViewport';
 
 describe('onIntersectViewport', () => {
   let wrapper;

@@ -10,6 +10,8 @@
 
 /* eslint-disable */
 
+import { describe, expect, it } from "vitest";
+
 import Tabnav from "docc-render/components/Tabnav.vue";
 import { shallowMount } from "@vue/test-utils";
 import TabnavItem from "docc-render/components/TabnavItem.vue";
@@ -67,18 +69,19 @@ describe("Tabnav", () => {
     expect(wrapper.emitted("input")).toEqual([["bar"]]);
   });
 
-  it("works with `TabnavItem`", async () => {
+  it("works with `TabnavItem`", () => {
     const wrapper = shallowMount(Tabnav, {
       propsData,
-      stubs: {TabnavItem},
+      stubs: { TabnavItem },
       slots: {
         default:
           '<TabnavItem value="one">One</TabnavItem>' + '<TabnavItem value="two">Two</TabnavItem>'
       }
     });
-    await wrapper
+    wrapper
       .findAll(".tabnav-link")
-      .at(1).trigger("click");
+      .at(1)
+      .trigger("click");
     expect(wrapper.emitted("input")).toEqual([["two"]]);
   });
 

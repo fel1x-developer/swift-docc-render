@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Footer from 'docc-render/components/Footer.vue';
 
@@ -34,7 +36,7 @@ describe('Footer', () => {
       scopedSlots: {
         default(props) {
           slotProps = props;
-          return this.$h('div', { class: 'slot-class' }, 'Slot Content');
+          return this.$createElement('div', { class: 'slot-class' }, 'Slot Content');
         },
       },
     });

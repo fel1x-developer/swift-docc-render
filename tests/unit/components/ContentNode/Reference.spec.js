@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it, vi } from "vitest";
+
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Reference from 'docc-render/components/ContentNode/Reference.vue';
 import ReferenceExternalSymbol
@@ -17,7 +19,7 @@ import ReferenceInternalSymbol
   from 'docc-render/components/ContentNode/ReferenceInternalSymbol.vue';
 import ReferenceInternal from 'docc-render/components/ContentNode/ReferenceInternal.vue';
 import Router from 'vue-router';
-import createRouterInstance from '@/setup-utils/SwiftDocCRenderRouter';
+import createRouterInstance from 'docc-render/setup-utils/SwiftDocCRenderRouter';
 import { TopicRole } from '@/constants/roles';
 
 const router = createRouterInstance();

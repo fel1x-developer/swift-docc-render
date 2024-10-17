@@ -8,20 +8,16 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 import {
   shallowMount,
   RouterLinkStub,
 } from '@vue/test-utils';
 import TutorialsNavigationLink
   from 'docc-render/components/TutorialsOverview/TutorialsNavigationLink.vue';
-import scrollToElement from 'docc-render/composables/scrollToElement';
+import scrollToElement from 'docc-render/mixins/scrollToElement';
 
-vi.mock('docc-render/composables/scrollToElement', () => ({
-  default: {
-    methods: { handleFocusAndScroll: vi.fn() },
-  },
+jest.mock('docc-render/mixins/scrollToElement', () => ({
+  methods: { handleFocusAndScroll: jest.fn() },
 }));
 
 describe('TutorialsNavigationLink', () => {
@@ -84,7 +80,7 @@ describe('TutorialsNavigationLink', () => {
 
   it('focuses the element when clicked, used for AX', async () => {
     const link = wrapper.find(RouterLinkStub);
-    await link.trigger('click');
+    link.trigger('click');
     await wrapper.vm.$nextTick();
     expect(scrollToElement.methods.handleFocusAndScroll).toHaveBeenCalledWith('hello-world');
   });

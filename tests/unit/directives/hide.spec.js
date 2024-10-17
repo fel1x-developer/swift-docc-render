@@ -8,13 +8,15 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import hide from 'docc-render/directives/hide';
 
 describe('hide', () => {
   let element;
 
   beforeEach(() => {
-    element = document.h('div');
+    element = document.createElement('div');
   });
 
   describe('when binding value is `true`', () => {

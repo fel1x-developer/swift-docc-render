@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import AvailabilityRange from 'docc-render/components/DocumentationTopic/Summary/AvailabilityRange.vue';
 
@@ -29,13 +31,13 @@ describe('AvailabilityRange', () => {
     expect(wrapper.is('span[role="text"]')).toBe(true);
   });
 
-  it('renders the range in text form', async () => {
+  it('renders the range in text form', () => {
     expect(wrapper.text()).toBe('fooOS 1.0+');
 
-    await wrapper.setProps({ deprecatedAt });
+    wrapper.setProps({ deprecatedAt });
     expect(wrapper.text()).toBe('fooOS 1.0\u20132.0');
 
-    await wrapper.setProps({
+    wrapper.setProps({
       ...propsData,
       deprecatedAt: null,
       introducedAt: null,
@@ -43,15 +45,15 @@ describe('AvailabilityRange', () => {
     expect(wrapper.text()).toBe('fooOS');
   });
 
-  it('renders a descriptive title attribute', async () => {
+  it('renders a descriptive title attribute', () => {
     expect(wrapper.attributes('title'))
       .toBe('availability.available-on-platform-version fooOS 1.0');
 
-    await wrapper.setProps({ deprecatedAt });
+    wrapper.setProps({ deprecatedAt });
     expect(wrapper.attributes('title'))
       .toBe('availability.introduced-and-deprecated fooOS 1.0 2.0');
 
-    await wrapper.setProps({
+    wrapper.setProps({
       ...propsData,
       deprecatedAt: null,
       introducedAt: null,
@@ -59,15 +61,15 @@ describe('AvailabilityRange', () => {
     expect(wrapper.attributes('title')).toBe('availability.available-on-platform fooOS');
   });
 
-  it('renders an aria label with the description (prepended with short text)', async () => {
+  it('renders an aria label with the description (prepended with short text)', () => {
     expect(wrapper.attributes('aria-label'))
       .toBe('fooOS 1.0+, availability.available-on-platform-version fooOS 1.0');
 
-    await wrapper.setProps({ deprecatedAt });
+    wrapper.setProps({ deprecatedAt });
     expect(wrapper.attributes('aria-label'))
       .toBe('fooOS 1.0\u20132.0, change-type.deprecated, availability.introduced-and-deprecated fooOS 1.0 2.0');
 
-    await wrapper.setProps({
+    wrapper.setProps({
       ...propsData,
       deprecatedAt: null,
       introducedAt: null,

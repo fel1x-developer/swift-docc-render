@@ -8,8 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import ParameterAttributes
-  from 'docc-render/components/DocumentationTopic/PrimaryContent/ParameterAttributes.vue';
+import { describe, expect, it } from "vitest";
+
+import ParameterAttributes from 'docc-render/components/DocumentationTopic/PrimaryContent/ParameterAttributes.vue';
 import { mount } from '@vue/test-utils';
 
 const { AttributeKind } = ParameterAttributes.constants;

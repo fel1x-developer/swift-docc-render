@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 
 import LinkableElement from 'docc-render/components/LinkableElement.vue';
@@ -36,8 +38,8 @@ describe('LinkableElement', () => {
     expect(wrapper.is('div#foo')).toBe(true);
   });
 
-  it('renders with an optionally provided top level tag', async () => {
-    await wrapper.setProps({ tag: 'h2' });
+  it('renders with an optionally provided top level tag', () => {
+    wrapper.setProps({ tag: 'h2' });
     expect(wrapper.is('h2#foo')).toBe(true);
   });
 

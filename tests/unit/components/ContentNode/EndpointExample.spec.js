@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import EndpointExample from 'docc-render/components/ContentNode/EndpointExample.vue';
 
@@ -85,19 +87,19 @@ describe('EndpointExample', () => {
     expect(wrapper.find('.controls').exists()).toBe(false);
   });
 
-  it('expands/collapses the CollapsibleCodeListing when the more/less toggle is clicked', async () => {
+  it('expands/collapses the CollapsibleCodeListing when the more/less toggle is clicked', () => {
     // show the response, as it is collapsible
     wrapper.find(Tabnav).vm.$emit('input', Tab.response);
 
     const codeListing = wrapper.find(CollapsibleCodeListing);
 
-    await wrapper.find('.toggle').trigger('click');
+    wrapper.find('.toggle').trigger('click');
 
     expect(codeListing.props('collapsed')).toBe(false);
     expect(wrapper.find('.toggle').text()).toBe('less');
     expect(wrapper.find(InlineMinusCircleSolidIcon).exists()).toBe(true);
 
-    await wrapper.find('.toggle').trigger('click');
+    wrapper.find('.toggle').trigger('click');
 
     expect(codeListing.props('collapsed')).toBe(true);
     expect(wrapper.find('.toggle').text()).toBe('more');

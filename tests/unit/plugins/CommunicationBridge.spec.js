@@ -8,10 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import {
-  CommunicationBridge,
-  WebKitBackend,
-} from 'docc-render/plugins/CommunicationBridge';
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { CommunicationBridge, WebKitBackend } from 'docc-render/plugins/CommunicationBridge';
 
 describe('CommunicationBridge', () => {
   let bridge;

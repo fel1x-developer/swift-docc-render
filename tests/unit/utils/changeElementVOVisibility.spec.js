@@ -10,6 +10,8 @@
 
 /* eslint-disable */
 
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+
 import changeElementVOVisibility from "docc-render/utils/changeElementVOVisibility";
 import { parseHTMLString } from "../../../test-utils";
 

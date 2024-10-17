@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import LinkableHeading from 'docc-render/components/ContentNode/LinkableHeading.vue';
 

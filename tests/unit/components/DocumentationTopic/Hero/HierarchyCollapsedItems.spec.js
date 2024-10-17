@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import HierarchyCollapsedItems
   from 'docc-render/components/DocumentationTopic/Hero/HierarchyCollapsedItems.vue';
@@ -79,9 +81,9 @@ describe('HierarchyCollapsedItems', () => {
   describe('when the toggle is clicked', () => {
     let toggle;
 
-    beforeEach(async () => {
+    beforeEach(() => {
       toggle = wrapper.find('.toggle');
-      await toggle.trigger('click');
+      toggle.trigger('click');
     });
 
     it('focuses the toggle', () => {

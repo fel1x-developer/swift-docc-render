@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import LinksBlock from '@/components/ContentNode/LinksBlock.vue';
 import { shallowMount } from '@vue/test-utils';
 import { TopicSectionsStyle } from '@/constants/TopicSectionsStyle';

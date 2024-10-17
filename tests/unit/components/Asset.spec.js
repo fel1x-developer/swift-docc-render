@@ -8,9 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 /* eslint-disable no-useless-escape */
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Asset from 'docc-render/components/Asset.vue';
 import ImageAsset from 'docc-render/components/ImageAsset.vue';
@@ -114,11 +114,11 @@ describe('Asset', () => {
     expect(videoAsset.props('alt')).toBe(video.alt);
   });
 
-  it('passes down `deviceFrame` to `ReplayableVideoAsset`', async () => {
+  it('passes down `deviceFrame` to `ReplayableVideoAsset`', () => {
     const wrapper = mountAsset('video', { video });
     let videoAsset = wrapper.find(ReplayableVideoAsset);
     expect(videoAsset.props('deviceFrame')).toBeFalsy();
-    await wrapper.setProps({
+    wrapper.setProps({
       deviceFrame: 'phone',
     });
     videoAsset = wrapper.find(ReplayableVideoAsset);

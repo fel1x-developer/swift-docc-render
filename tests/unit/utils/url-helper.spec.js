@@ -8,24 +8,22 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 import TechnologiesQueryParams from 'docc-render/constants/TechnologiesQueryParams';
 
 let areEquivalentLocations;
 let buildUrl;
 let resolveAbsoluteUrl;
 
-const normalizePathMock = vi.fn().mockImplementation(n => n);
+const normalizePathMock = jest.fn().mockImplementation(n => n);
 
 const mockAssets = {
   normalizePath: normalizePathMock,
 };
 
-vi.mock('docc-render/utils/assets', () => (mockAssets));
+jest.mock('docc-render/utils/assets', () => (mockAssets));
 
 function importDeps() {
-  vi.resetModules();
+  jest.resetModules();
   // eslint-disable-next-line global-require
   ({
     areEquivalentLocations,
@@ -38,7 +36,7 @@ function importDeps() {
 describe('areEquivalentLocations', () => {
   beforeEach(() => {
     importDeps();
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('returns false for the same route with a different path', () => {

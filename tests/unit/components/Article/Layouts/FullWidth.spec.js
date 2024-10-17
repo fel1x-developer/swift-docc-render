@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import FullWidth from 'docc-render/components/Article/Layouts/FullWidth.vue';
 
@@ -81,8 +83,8 @@ describe('FullWidth', () => {
       },
     ];
 
-    beforeEach(async () => {
-      await wrapper.setProps({ content });
+    beforeEach(() => {
+      wrapper.setProps({ content });
     });
 
     it('groups headings and subsequent content with `LinkableElement`', () => {

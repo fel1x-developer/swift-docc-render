@@ -7,8 +7,7 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
-
-import { vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import throttle from 'docc-render/utils/throttle';
 
@@ -22,7 +21,7 @@ describe('throttle', () => {
     nowSpy.mockReturnValue(1664227837751);
   });
 
-  // newer version of vi handle `Date.now()` but this version does not yet,
+  // newer version of Jest handle `Date.now()` but this version does not yet,
   // so we need to carefully advance it in the same manner that the timeouts
   // are since `throttle` relies on both APIs in its implementation
   const advanceTime = (duration) => {

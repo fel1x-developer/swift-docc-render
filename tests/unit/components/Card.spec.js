@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Card from 'docc-render/components/Card.vue';
 import CardSize from 'docc-render/constants/CardSize';

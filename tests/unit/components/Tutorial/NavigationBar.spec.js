@@ -8,18 +8,15 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-  RouterLinkStub,
-  shallowMount,
-} from '@vue/test-utils';
+import { RouterLinkStub, shallowMount } from '@vue/test-utils';
 import NavigationBar from 'docc-render/components/Tutorial/NavigationBar.vue';
 import TopicStore from 'docc-render/stores/TopicStore';
-import scrollToElement from 'docc-render/composables/scrollToElement';
+import scrollToElement from 'docc-render/mixins/scrollToElement';
 import { flushPromises } from '../../../../test-utils';
 
-vi.mock('docc-render/composables/scrollToElement');
+vi.mock('docc-render/mixins/scrollToElement');
 
 scrollToElement.methods.handleFocusAndScroll.mockResolvedValue(true);
 

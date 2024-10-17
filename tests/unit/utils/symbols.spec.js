@@ -7,6 +7,8 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
+import { describe, expect, it } from "vitest";
+
 import { isParentSymbolKind } from 'docc-render/utils/symbols';
 import SymbolKind from 'docc-render/constants/SymbolKind';
 

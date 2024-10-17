@@ -8,8 +8,6 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 import { prepareDataForHTMLClipboard } from '@/utils/clipboard';
 import { shallowMount } from '@vue/test-utils';
 import FilterInput from '@/components/Filter/FilterInput.vue';
@@ -19,23 +17,21 @@ import {
 } from '@/utils/input-helper';
 import debounce from 'docc-render/utils/debounce';
 import FilterIcon from 'docc-render/components/Icons/FilterIcon.vue';
-import multipleSelection from '@/composables/multipleSelection';
-import keyboardNavigation from '@/composables/keyboardNavigation';
+import multipleSelection from '@/mixins/multipleSelection';
+import keyboardNavigation from '@/mixins/keyboardNavigation';
 import { flushPromises } from '../../../../test-utils';
 
 // TODO: Remove this Event caching, once we update VTU, as there is a bug now,
 //  that prevents you from setting extra parameters
 window.Event = null;
 
-vi.mock('docc-render/utils/debounce', () => ({
-  default: vi.fn(fn => fn),
-}));
+jest.mock('docc-render/utils/debounce', () => jest.fn(fn => fn));
 
-vi.mock('@/utils/input-helper', () => ({
-  getSelectionText: vi.fn(),
-  moveCursorToEnd: vi.fn(),
-  moveCursorToStart: vi.fn(),
-  isSingleCharacter: vi.fn(),
+jest.mock('@/utils/input-helper', () => ({
+  getSelectionText: jest.fn(),
+  moveCursorToEnd: jest.fn(),
+  moveCursorToStart: jest.fn(),
+  isSingleCharacter: jest.fn(),
 }));
 
 const {
@@ -75,11 +71,11 @@ describe('FilterInput', () => {
   }
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
 
     window.visualViewport = {
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
     };
 
     wrapper = shallowMount(FilterInput, {
@@ -108,21 +104,21 @@ describe('FilterInput', () => {
     expect(filterLabel.attributes('for')).toBe(FilterInputId);
   });
 
-  it('renders focus class if showSuggestedTags is true and border style is not prevented', async () => {
-    await wrapper.setData({ showSuggestedTags: true });
-    await wrapper.setProps({ preventBorderStyle: false });
+  it('renders focus class if showSuggestedTags is true and border style is not prevented', () => {
+    wrapper.setData({ showSuggestedTags: true });
+    wrapper.setProps({ preventBorderStyle: false });
 
     expect(wrapper.find('.filter.focus').exists()).toBe(true);
   });
 
-  it('does not render focus class if border style is not prevented', async () => {
-    await wrapper.setProps({ preventBorderStyle: true });
+  it('does not render focus class if border style is not prevented', () => {
+    wrapper.setProps({ preventBorderStyle: true });
 
     expect(wrapper.find('.filter.focus').exists()).toBe(false);
   });
 
-  it('does not render focus class if showSuggestedTags is false', async () => {
-    await wrapper.setData({ showSuggestedTags: false });
+  it('does not render focus class if showSuggestedTags is false', () => {
+    wrapper.setData({ showSuggestedTags: false });
 
     expect(wrapper.find('.filter.focus').exists()).toBe(false);
   });
@@ -130,7 +126,7 @@ describe('FilterInput', () => {
   it('renders an `input` element', async () => {
     expect(input.exists()).toBe(true);
     expect(input.attributes('placeholder')).toBe(propsData.placeholder);
-    await wrapper.setProps({
+    wrapper.setProps({
       placeholder: 'Foo',
     });
     expect(input.attributes('placeholder')).toBe('Foo');
@@ -138,15 +134,15 @@ describe('FilterInput', () => {
     input.setValue(inputValue);
     expect(wrapper.emitted('input')).toEqual([[inputValue]]);
     // make sure the input is bound
-    await wrapper.setProps({
+    wrapper.setProps({
       value: 'new-value',
     });
     await wrapper.vm.$nextTick();
     expect(input.element.value).toEqual('new-value');
   });
 
-  it('renders an filter label element that has a input-value attrib to resize the input', async () => {
-    await wrapper.setProps({ value: inputValue });
+  it('renders an filter label element that has a input-value attrib to resize the input', () => {
+    wrapper.setProps({ value: inputValue });
     const filterLabel = wrapper.find('#filter-label');
     // check input-value attrib for filter label contains the input value
     expect(filterLabel.attributes('data-value')).toBe(inputValue);
@@ -154,28 +150,28 @@ describe('FilterInput', () => {
     expect(filterLabel.classes('filter__input-label')).toBe(true);
   });
 
-  it('renders a `scrolling` class inside the input box wrapper if `isScrolling` is true', async () => {
+  it('renders a `scrolling` class inside the input box wrapper if `isScrolling` is true', () => {
     const inputBoxWrapper = wrapper.find('.filter__input-box-wrapper');
 
     expect(inputBoxWrapper.classes('scrolling')).toBe(false);
 
     // simulate the `handleScrollbar` mixin triggering ON
-    await wrapper.setData({ isScrolling: true });
+    wrapper.setData({ isScrolling: true });
 
     expect(inputBoxWrapper.classes('scrolling')).toBe(true);
   });
 
-  it('renders a disabled attr on input if it is disabled', async () => {
+  it('renders a disabled attr on input if it is disabled', () => {
     // input is not disabled
     expect(input.attributes('disabled')).toBeFalsy();
     // set disabled prop to true
-    await wrapper.setProps({ disabled: true });
+    wrapper.setProps({ disabled: true });
     // input is disabled
     expect(input.attributes('disabled')).toBe('disabled');
   });
 
   it('emits `show-suggested-tags` if filter button is clicked', async () => {
-    await wrapper.find('.filter__filter-button').trigger('click');
+    wrapper.find('.filter__filter-button').trigger('click');
     await wrapper.vm.$nextTick();
     expect(wrapper.emitted()['show-suggested-tags']).toBeTruthy();
     expect(wrapper.emitted('focus')).toBeTruthy();
@@ -193,16 +189,16 @@ describe('FilterInput', () => {
   });
 
   it('renders a filter button with blue color if input has any value', async () => {
-    await wrapper.setProps({ value: 'Foo' });
+    wrapper.setProps({ value: 'Foo' });
     await flushPromises();
     expect(wrapper.find('.filter__filter-button').classes('blue')).toBe(true);
   });
 
   it('blurs the input if hitting enter', async () => {
-    await wrapper.setProps({ value: inputValue, selectedTags: ['Tag1'] });
+    wrapper.setProps({ value: inputValue, selectedTags: ['Tag1'] });
     await wrapper.vm.focusInput();
     expect(document.activeElement).toBe(input.element);
-    await input.trigger('keydown', {
+    input.trigger('keydown', {
       key: 'Enter',
     });
     // await for the ticks to end
@@ -211,7 +207,7 @@ describe('FilterInput', () => {
   });
 
   it('focuses the input if `focusInputWhenCreated` is on and input has content when component is created', async () => {
-    await wrapper.setProps({ value: 'It changes' });
+    wrapper.setProps({ value: 'It changes' });
     // Wait for the nextTick inside the input watcher
     await wrapper.vm.$nextTick();
     expect(document.activeElement).not.toBe(input.element);
@@ -256,8 +252,8 @@ describe('FilterInput', () => {
       },
     });
     input = wrapper.find('input');
-    vi.spyOn(wrapper.vm, 'selectInputAndTags').mockImplementation();
-    await input.trigger('focus');
+    jest.spyOn(wrapper.vm, 'selectInputAndTags').mockImplementation();
+    input.trigger('focus');
     expect(wrapper.vm.selectInputAndTags).toHaveBeenCalledTimes(1);
     expect(wrapper.vm.inputIsSelected()).toBeTruthy();
   });
@@ -267,8 +263,8 @@ describe('FilterInput', () => {
 
     beforeEach(() => {
       clipboardData = {
-        setData: vi.fn(),
-        getData: vi.fn((param) => {
+        setData: jest.fn(),
+        getData: jest.fn((param) => {
           if (param === 'text/plain') return 'baz';
           return prepareDataForHTMLClipboard({
             input: 'baz',
@@ -277,22 +273,22 @@ describe('FilterInput', () => {
         }),
         types: ['text/plain'],
       };
-      vi.clearAllMocks();
+      jest.clearAllMocks();
       clipboardData.types = ['text/plain'];
     });
 
-    it('copies the search query in both plain text and HTML', async () => {
-      await wrapper.setProps({
+    it('copies the search query in both plain text and HTML', () => {
+      wrapper.setProps({
         value: inputValue,
         selectedTags: tags,
       });
       // select all the text
-      await input.trigger('keydown', {
+      input.trigger('keydown', {
         metaKey: true,
         key: 'a',
       });
       // copy
-      await input.trigger('copy', { clipboardData });
+      input.trigger('copy', { clipboardData });
       // assert the copy payload
       expect(clipboardData.setData).toHaveBeenCalledTimes(2);
       // in HTML
@@ -306,54 +302,54 @@ describe('FilterInput', () => {
         .toHaveBeenNthCalledWith(2, 'text/plain', 'Tag1 Tag2 Foo');
     });
 
-    it('does not copy tags, if they are not selected', async () => {
+    it('does not copy tags, if they are not selected', () => {
       // getSelectionText is mocked to be the input value
-      await wrapper.setProps({
+      wrapper.setProps({
         value: inputValue,
         selectedTags: tags,
       });
       // copy
-      await input.trigger('copy', { clipboardData });
+      input.trigger('copy', { clipboardData });
       expect(clipboardData.setData)
         .toHaveBeenNthCalledWith(2, 'text/plain', 'Foo');
     });
 
-    it('does not copy, if nothing is selected', async () => {
-      await wrapper.setProps({
+    it('does not copy, if nothing is selected', () => {
+      wrapper.setProps({
         value: inputValue,
       });
       getSelectionText.mockReturnValueOnce('');
       // copy
-      await input.trigger('copy', { clipboardData });
+      input.trigger('copy', { clipboardData });
       expect(clipboardData.setData)
         .toHaveBeenCalledTimes(0);
     });
 
-    it('does not cut, if nothing is selected', async () => {
-      await wrapper.setProps({
+    it('does not cut, if nothing is selected', () => {
+      wrapper.setProps({
         value: inputValue,
       });
       getSelectionText.mockReturnValueOnce('');
       // copy
-      await input.trigger('cut', { clipboardData });
+      input.trigger('cut', { clipboardData });
       expect(clipboardData.setData)
         .toHaveBeenCalledTimes(0);
       expect(wrapper.emitted('input')).toBeFalsy();
       expect(wrapper.emitted('update:selectedTags')).toBeFalsy();
     });
 
-    it('cuts selected text and tags', async () => {
-      await wrapper.setProps({
+    it('cuts selected text and tags', () => {
+      wrapper.setProps({
         value: inputValue,
         selectedTags: tags,
       });
       // select all the text
-      await input.trigger('keydown', {
+      input.trigger('keydown', {
         metaKey: true,
         key: 'a',
       });
       // copy
-      await input.trigger('cut', { clipboardData });
+      input.trigger('cut', { clipboardData });
       // assert the data is copied
       expect(clipboardData.setData).toHaveBeenCalledTimes(2);
       expect(clipboardData.setData)
@@ -369,14 +365,14 @@ describe('FilterInput', () => {
       expect(wrapper.emitted('input')[0][0]).toEqual('');
     });
 
-    it('selects all tags, and focuses the first one, input is empty', async () => {
-      const spy = vi.spyOn(keyboardNavigation.methods, 'focusIndex');
-      await wrapper.setProps({
+    it('selects all tags, and focuses the first one, input is empty', () => {
+      const spy = jest.spyOn(keyboardNavigation.methods, 'focusIndex');
+      wrapper.setProps({
         selectedTags: tags,
         value: '',
       });
       const selectedTags = wrapper.find({ ref: 'selectedTags' });
-      await input.trigger('keydown', {
+      input.trigger('keydown', {
         key: 'a',
         metaKey: true,
       });
@@ -385,9 +381,9 @@ describe('FilterInput', () => {
       expect(spy).toHaveBeenCalledWith(0);
     });
 
-    it('on paste, handles clipboard in HTML format, when copying and pasting from search directly', async () => {
+    it('on paste, handles clipboard in HTML format, when copying and pasting from search directly', () => {
       clipboardData.types = ['text/html'];
-      await input.trigger('paste', { clipboardData });
+      input.trigger('paste', { clipboardData });
       // assert getData is called properly
       expect(clipboardData.getData).toHaveBeenCalledTimes(2);
       expect(clipboardData.getData).toHaveBeenCalledWith('text/plain');
@@ -398,8 +394,8 @@ describe('FilterInput', () => {
       expect(wrapper.emitted('update:selectedTags')).toEqual([[['tag', 'tag2']]]);
     });
 
-    it('on paste, handles clipboard when copying and pasting from any HTML outside the search', async () => {
-      clipboardData.getData = vi.fn((param) => {
+    it('on paste, handles clipboard when copying and pasting from any HTML outside the search', () => {
+      clipboardData.getData = jest.fn((param) => {
         if (param === 'text/plain') return 'Title';
         return `
           <meta charset='utf-8'>
@@ -410,7 +406,7 @@ describe('FilterInput', () => {
       });
       clipboardData.types.push('text/html');
 
-      await input.trigger('paste', { clipboardData });
+      input.trigger('paste', { clipboardData });
       // assert getData is called properly
       expect(clipboardData.getData).toHaveBeenCalledTimes(2);
       expect(clipboardData.getData).toHaveBeenCalledWith('text/plain');
@@ -420,8 +416,8 @@ describe('FilterInput', () => {
       expect(wrapper.emitted('input')[0]).toEqual(['Title']);
     });
 
-    it('on paste, do not emit selectedTags if there are no tags to paste', async () => {
-      clipboardData.getData = vi.fn((param) => {
+    it('on paste, do not emit selectedTags if there are no tags to paste', () => {
+      clipboardData.getData = jest.fn((param) => {
         if (param === 'text/plain') return 'Title';
         return prepareDataForHTMLClipboard({
           input: 'baz',
@@ -430,13 +426,13 @@ describe('FilterInput', () => {
       });
       clipboardData.types.push('text/html');
 
-      await input.trigger('paste', { clipboardData });
+      input.trigger('paste', { clipboardData });
       expect(wrapper.emitted('update:selectedTags')).toBeFalsy();
     });
 
-    it('on paste, reads directly from plain text, if json is not available', async () => {
+    it('on paste, reads directly from plain text, if json is not available', () => {
       clipboardData.getData.mockReturnValueOnce('[tag1][tag2] string');
-      await input.trigger('paste', { clipboardData });
+      input.trigger('paste', { clipboardData });
       // assert getData is called properly
       expect(clipboardData.getData).toHaveBeenCalledTimes(1);
       expect(clipboardData.getData).toHaveBeenCalledWith('text/plain');
@@ -446,10 +442,10 @@ describe('FilterInput', () => {
       expect(wrapper.emitted('input')[0]).toEqual(['[tag1][tag2] string']);
     });
 
-    it('on paste, overwrites all the tags if they are selected', async () => {
+    it('on paste, overwrites all the tags if they are selected', () => {
       clipboardData.types.push('text/html');
       // add pre-selected tags
-      await wrapper.setProps({
+      wrapper.setProps({
         selectedTags: tags,
         input: 'Foo',
       });
@@ -457,47 +453,47 @@ describe('FilterInput', () => {
       const selectedTags = wrapper.find({ ref: 'selectedTags' });
       selectedTags.vm.$emit('select-all');
 
-      await input.trigger('paste', { clipboardData });
+      input.trigger('paste', { clipboardData });
       // assert that tags are overwritten
       expect(wrapper.emitted('update:selectedTags')).toHaveLength(1);
       expect(wrapper.emitted('update:selectedTags')[0][0])
         .toEqual(['tag', 'tag2']);
     });
 
-    it('on paste, adds tags to the already selected, removing duplicates', async () => {
+    it('on paste, adds tags to the already selected, removing duplicates', () => {
       clipboardData.types.push('text/html');
       // add pre-selected tags
-      await wrapper.setProps({
+      wrapper.setProps({
         selectedTags: ['tag'],
       });
 
-      await input.trigger('paste', { clipboardData });
+      input.trigger('paste', { clipboardData });
       // assert that tags are overwritten
       expect(wrapper.emitted('update:selectedTags')).toHaveLength(1);
       expect(wrapper.emitted('update:selectedTags')[0][0])
         .toEqual(['tag', 'tag2']);
     });
 
-    it('on paste, overwrites just the selected part of the input text', async () => {
+    it('on paste, overwrites just the selected part of the input text', () => {
       getSelectionText.mockImplementationOnce(() => 'part');
-      await wrapper.setProps({
+      wrapper.setProps({
         value: 'partial input',
       });
-      await input.trigger('paste', { clipboardData });
+      input.trigger('paste', { clipboardData });
       expect(wrapper.emitted('input')[0][0]).toBe('bazial input');
     });
 
-    it('on paste, inserts the text, at the position, where the caret is, if no text is selected', async () => {
+    it('on paste, inserts the text, at the position, where the caret is, if no text is selected', () => {
       // overwrite the currently selected element position
       Object.defineProperty(document.activeElement, 'selectionStart', {
         value: 2,
       });
       clipboardData.getData.mockReturnValueOnce('fact');
       getSelectionText.mockImplementationOnce(() => '');
-      await wrapper.setProps({
+      wrapper.setProps({
         value: 'input',
       });
-      await input.trigger('paste', { clipboardData });
+      input.trigger('paste', { clipboardData });
       expect(wrapper.emitted('input')[0][0]).toBe('infactput');
     });
   });
@@ -505,24 +501,24 @@ describe('FilterInput', () => {
   describe('once `suggestedTags` is rendered', () => {
     let suggestedTags;
     let deleteButton;
-    const relatedTargetCard = document.h('a');
+    const relatedTargetCard = document.createElement('a');
     document.body.appendChild(relatedTargetCard);
 
-    beforeEach(async () => {
+    beforeEach(() => {
       // show the suggested tags
-      await wrapper.find('.filter').trigger('focus');
+      wrapper.find('.filter').trigger('focus');
 
       suggestedTags = wrapper.find({ ref: 'suggestedTags' });
       deleteButton = wrapper.find('.filter__delete-button');
     });
 
-    it('limits the amount of rendered, if `shouldTruncateTags` is `true`', async () => {
+    it('limits the amount of rendered, if `shouldTruncateTags` is `true`', () => {
       const newTags = ['a', 'b', 'c', 'd', 'e', 'f'];
-      await wrapper.setProps({
+      wrapper.setProps({
         tags: newTags,
       });
       expect(suggestedTags.props('tags')).toEqual(newTags);
-      await wrapper.setProps({
+      wrapper.setProps({
         shouldTruncateTags: true,
       });
       expect(suggestedTags.props('tags')).toEqual(newTags.slice(0, TagLimit));
@@ -537,31 +533,31 @@ describe('FilterInput', () => {
       expect(suggestedTags.props('tags')).toEqual(propsData.tags);
     });
 
-    it('adds the correct aria label to `suggestedTags` component', async () => {
+    it('adds the correct aria label to `suggestedTags` component', () => {
       expect(suggestedTags.props()).toHaveProperty('id', SuggestedTagsId);
       expect(suggestedTags.props()).toHaveProperty('ariaLabel', 'filter.suggested-tags');
-      await wrapper.setProps({ tags: ['1'] });
+      wrapper.setProps({ tags: ['1'] });
       expect(suggestedTags.props()).toHaveProperty('ariaLabel', 'filter.suggested-tags');
     });
 
-    it('keeps `suggestedTags` component when `suggestedTags` gets focus instead of `input`', async () => {
-      await suggestedTags.trigger('focus');
+    it('keeps `suggestedTags` component when `suggestedTags` gets focus instead of `input`', () => {
+      suggestedTags.trigger('focus');
       expect(wrapper.emitted('show-suggested-tags')).toBeTruthy();
       expect(suggestedTags.exists()).toBe(true);
     });
 
-    it('keeps `suggestedTags` component when `deleteButton` gets focus instead of `input`', async () => {
-      await deleteButton.trigger('focus');
+    it('keeps `suggestedTags` component when `deleteButton` gets focus instead of `input`', () => {
+      deleteButton.trigger('focus');
       expect(wrapper.emitted('show-suggested-tags')).toBeTruthy();
       expect(suggestedTags.exists()).toBe(true);
     });
 
     it('removes `suggestedTags` component when `suggestedTags` looses its focus on an external component', async () => {
-      await suggestedTags.trigger('focus');
+      suggestedTags.trigger('focus');
       expect(wrapper.emitted('show-suggested-tags')).toEqual([[true]]);
       expect(wrapper.find({ ref: 'suggestedTags' }).exists()).toBe(true);
 
-      await suggestedTags.trigger('blur', {
+      suggestedTags.trigger('blur', {
         relatedTarget: relatedTargetCard,
       });
       await wrapper.vm.$nextTick();
@@ -571,11 +567,11 @@ describe('FilterInput', () => {
     });
 
     it('deletes `suggestedTags` component when `deleteButton` looses its focus on an external component', async () => {
-      await deleteButton.trigger('focus');
+      deleteButton.trigger('focus');
       expect(deleteButton.exists()).toBe(true);
       expect(wrapper.emitted('show-suggested-tags')).toEqual([[true]]);
 
-      await deleteButton.trigger('blur', {
+      deleteButton.trigger('blur', {
         relatedTarget: relatedTargetCard,
       });
       await wrapper.vm.$nextTick();
@@ -585,7 +581,7 @@ describe('FilterInput', () => {
 
     it('does not hide the tags, if the new focus target matches `input, button`, inside the main component', async () => {
       const buttonTarget = wrapper.find('button'); // find a button component
-      await input.trigger('blur', {
+      input.trigger('blur', {
         relatedTarget: buttonTarget.element,
       });
       await flushPromises();
@@ -594,9 +590,9 @@ describe('FilterInput', () => {
     });
 
     it('hides the tags, if new focus outside component', async () => {
-      const inputTarget = document.h('input');
+      const inputTarget = document.createElement('input');
 
-      await input.trigger('blur', {
+      input.trigger('blur', {
         relatedTarget: inputTarget.element,
       });
 
@@ -607,12 +603,12 @@ describe('FilterInput', () => {
     });
 
     it('hides the tags, if the new focus target is a link, outside the FilterInput', async () => {
-      const relatedTargetOther = document.h('p');
+      const relatedTargetOther = document.createElement('p');
 
-      await input.trigger('blur', {
+      input.trigger('blur', {
         relatedTarget: relatedTargetCard,
       });
-      await input.trigger('blur', {
+      input.trigger('blur', {
         relatedTarget: relatedTargetOther,
       });
 
@@ -623,9 +619,9 @@ describe('FilterInput', () => {
     });
 
     it('does not hide the tags, if `:preventedBlur=true`', async () => {
-      await wrapper.setProps({ preventedBlur: true });
+      wrapper.setProps({ preventedBlur: true });
 
-      await input.trigger('blur', {
+      input.trigger('blur', {
         relatedTarget: relatedTargetCard,
       });
 
@@ -635,8 +631,8 @@ describe('FilterInput', () => {
     });
 
     describe('when there is no tags shown', () => {
-      beforeEach(async () => {
-        await wrapper.setProps({ tags: [] });
+      beforeEach(() => {
+        wrapper.setProps({ tags: [] });
         deleteButton = wrapper.find('.filter__delete-button');
       });
 
@@ -648,9 +644,9 @@ describe('FilterInput', () => {
         expect(deleteButton.exists()).toBe(false);
       });
 
-      it('renders `deleteButton` when there are no tags or they are not shown but there is text on `input`', async () => {
+      it('renders `deleteButton` when there are no tags or they are not shown but there is text on `input`', () => {
         expect(deleteButton.exists()).toBe(false);
-        await wrapper.setProps({ value: 'foo' });
+        wrapper.setProps({ value: 'foo' });
 
         deleteButton = wrapper.find('.filter__delete-button');
         expect(deleteButton.exists()).toBe(true);
@@ -673,7 +669,7 @@ describe('FilterInput', () => {
         wrapper.find('button').element.focus();
         await wrapper.vm.$nextTick();
 
-        await wrapper.setProps({ selectedTags: [selectedTag] });
+        wrapper.setProps({ selectedTags: [selectedTag] });
         await wrapper.vm.$nextTick();
         selectedTagsComponent = wrapper.find({ ref: 'selectedTags' });
       });
@@ -704,7 +700,7 @@ describe('FilterInput', () => {
         input.element.blur();
         expect(document.activeElement).not.toBe(input.element);
         wrapper.find('button').element.focus();
-        await wrapper.setProps({ selectedTags: [] });
+        wrapper.setProps({ selectedTags: [] });
         await flushPromises();
         expect(document.activeElement).toBe(input.element);
       });
@@ -712,7 +708,7 @@ describe('FilterInput', () => {
       it('does not focus the input, if the initial focus is NOT inside', async () => {
         document.activeElement.blur();
         await wrapper.vm.$nextTick();
-        await wrapper.setProps({ selectedTags: [] });
+        wrapper.setProps({ selectedTags: [] });
         await wrapper.vm.$nextTick();
         expect(document.activeElement).not.toEqual(input.element);
       });
@@ -722,8 +718,8 @@ describe('FilterInput', () => {
       });
 
       it('resets scroll on `suggestedTags` when selectedTags changes if there is suggested tags', async () => {
-        const spy = vi.spyOn(wrapper.find({ ref: 'suggestedTags' }).vm, 'resetScroll');
-        await wrapper.setProps({
+        const spy = jest.spyOn(wrapper.find({ ref: 'suggestedTags' }).vm, 'resetScroll');
+        wrapper.setProps({
           selectedTags: [selectedTag],
         });
         // once for the watcher to kick in
@@ -734,8 +730,8 @@ describe('FilterInput', () => {
         spy.mockRestore();
       });
 
-      it('select latest selected tag, if delete key is pressed on keyboard, and there is no input text', async () => {
-        const spy = vi.spyOn(keyboardNavigation.methods, 'focusLast').mockReturnValueOnce();
+      it('select latest selected tag, if delete key is pressed on keyboard, and there is no input text', () => {
+        const spy = jest.spyOn(keyboardNavigation.methods, 'focusLast').mockReturnValueOnce();
 
         wrapper = shallowMount(FilterInput, {
           propsData: { selectedTags: [selectedTag] },
@@ -743,15 +739,15 @@ describe('FilterInput', () => {
         });
 
         input = wrapper.find({ ref: 'input' });
-        await input.trigger('keydown.delete');
+        input.trigger('keydown.delete');
 
         expect(spy).toHaveBeenCalledTimes(1);
       });
 
       it('does not move the cursor to the beginning of the input when selected tags have all been deleted', async () => {
-        await wrapper.setProps({ value: 'Foo' });
+        wrapper.setProps({ value: 'Foo' });
         wrapper.find({ ref: 'selectedTags' }).vm.$emit('delete-tag', selectedTag);
-        await wrapper.setProps({ selectedTags: [] });
+        wrapper.setProps({ selectedTags: [] });
         await flushPromises();
         expect(document.activeElement).toEqual(input.element);
         expect(moveCursorToStart).toHaveBeenCalledTimes(0);
@@ -760,7 +756,7 @@ describe('FilterInput', () => {
       it('moves cursor to the start of the input if selected tags have changed and there are still available', async () => {
         const updatedSelectedTag = 'AppKit';
         // prepare
-        await wrapper.setProps({ selectedTags: [selectedTag, updatedSelectedTag], input: 'Foo' });
+        wrapper.setProps({ selectedTags: [selectedTag, updatedSelectedTag], input: 'Foo' });
         // delete a tag
         selectedTagsComponent.vm.$emit('delete-tag', {
           tagName: selectedTag,
@@ -777,7 +773,7 @@ describe('FilterInput', () => {
       it('moves cursor to the end of the input if user types on top of a tag', async () => {
         const updatedSelectedTag = 'AppKit';
         // prepare
-        await wrapper.setProps({ selectedTags: [selectedTag, updatedSelectedTag], input: 'Foo' });
+        wrapper.setProps({ selectedTags: [selectedTag, updatedSelectedTag], input: 'Foo' });
         // delete a tag
         wrapper.find({ ref: 'selectedTags' }).vm.$emit('delete-tag', {
           tagName: selectedTag,
@@ -793,13 +789,13 @@ describe('FilterInput', () => {
       });
 
       it('reset filters if delete key is pressed on input when input and tags are selected', async () => {
-        await wrapper.setProps({ value: 'foo', selectedTags: [selectedTag] });
+        wrapper.setProps({ value: 'foo', selectedTags: [selectedTag] });
 
-        await input.trigger('keydown', {
+        input.trigger('keydown', {
           key: 'a',
           metaKey: true,
         });
-        await input.trigger('keydown.delete');
+        input.trigger('keydown.delete');
 
         expect(wrapper.emitted('update:selectedTags')[0][0]).toEqual([]);
         await flushPromises();
@@ -817,13 +813,13 @@ describe('FilterInput', () => {
       });
 
       it('keeps the focus on input after resetting filters', async () => {
-        const spy = vi.spyOn(selectedTagsComponent.vm, 'focusTag').mockReturnValueOnce();
+        const spy = jest.spyOn(selectedTagsComponent.vm, 'focusTag').mockReturnValueOnce();
 
         // add tags
-        await wrapper.setProps({ value: '', selectedTags: tags });
+        wrapper.setProps({ value: '', selectedTags: tags });
         expect(spy).toHaveBeenCalledTimes(0);
         // select all
-        await wrapper.find({ ref: 'input' }).trigger('keydown', {
+        wrapper.find({ ref: 'input' }).trigger('keydown', {
           key: 'a',
           metaKey: true,
         });
@@ -863,17 +859,17 @@ describe('FilterInput', () => {
         expect(wrapper.vm.keyboardIsVirtual).toBe(false);
       });
 
-      it('deletes the last tag, if delete button is pressed on a virtual keyboard, when no input', async () => {
-        await wrapper.setData({ keyboardIsVirtual: true });
+      it('deletes the last tag, if delete button is pressed on a virtual keyboard, when no input', () => {
+        wrapper.setData({ keyboardIsVirtual: true });
 
-        await wrapper.find({ ref: 'input' }).trigger('keydown.delete');
+        wrapper.find({ ref: 'input' }).trigger('keydown.delete');
 
         expect(wrapper.emitted('update:selectedTags')).toEqual([[[]]]);
       });
 
       it('deletes selected tag when tag is clicked on a virtual keyboard', async () => {
-        await wrapper.setData({ keyboardIsVirtual: true });
-        await wrapper.setProps({ selectedTags: [selectedTag, 'Tag2'] });
+        wrapper.setData({ keyboardIsVirtual: true });
+        wrapper.setProps({ selectedTags: [selectedTag, 'Tag2'] });
         await wrapper.vm.$nextTick();
 
         selectedTagsComponent.vm.$emit('click-tags', { tagName: 'Tag2' });
@@ -883,7 +879,7 @@ describe('FilterInput', () => {
       });
 
       it('deletes selected tag debounced', async () => {
-        await wrapper.setData({ keyboardIsVirtual: true });
+        wrapper.setData({ keyboardIsVirtual: true });
 
         const selectedTags = wrapper.find({ ref: 'selectedTags' });
         selectedTags.vm.$emit('click-tags', { tagName: selectedTag });
@@ -901,8 +897,8 @@ describe('FilterInput', () => {
     });
 
     it('resets filters when `deleteButton` is clicked', async () => {
-      await wrapper.setProps({ value: '', selectedTags: [] });
-      await deleteButton.trigger('click');
+      wrapper.setProps({ value: '', selectedTags: [] });
+      deleteButton.trigger('click');
 
       // last emitted item is false. We have one true, because we focused.
       expect(wrapper.emitted('show-suggested-tags')).toEqual([[true], [false]]);
@@ -911,8 +907,8 @@ describe('FilterInput', () => {
       expect(document.activeElement).not.toBe(input.element);
       expect(wrapper.vm.resetedTagsViaDeleteButton).toEqual(true);
 
-      await wrapper.setProps({ value: 'foo', selectedTags: tags });
-      await wrapper.find('.filter__delete-button').trigger('click');
+      wrapper.setProps({ value: 'foo', selectedTags: tags });
+      wrapper.find('.filter__delete-button').trigger('click');
 
       expect(wrapper.emitted('show-suggested-tags')).toEqual([[true], [false]]);
       expect(wrapper.emitted('input')).toEqual([[''], ['']]);
@@ -921,53 +917,53 @@ describe('FilterInput', () => {
       expect(wrapper.vm.resetedTagsViaDeleteButton).toEqual(true);
     });
 
-    it('emits `focus-next` if the down key is pressed on input and there is no suggestedTags', async () => {
-      await wrapper.setProps({ tags: [] });
+    it('emits `focus-next` if the down key is pressed on input and there is no suggestedTags', () => {
+      wrapper.setProps({ tags: [] });
       input = wrapper.find('input');
 
-      await input.trigger('keydown.down');
+      input.trigger('keydown.down');
 
       expect(wrapper.emitted('focus-next')).toBeTruthy();
     });
 
-    it('focuses the first tag, if the down key is pressed on input', async () => {
-      const spy = vi.spyOn(suggestedTags.vm, 'focusFirst');
-      await input.trigger('keydown.down');
+    it('focuses the first tag, if the down key is pressed on input', () => {
+      const spy = jest.spyOn(suggestedTags.vm, 'focusFirst');
+      input.trigger('keydown.down');
 
       expect(wrapper.emitted('keydown:down')).toBeFalsy();
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('emits `focus-next` if the down key is pressed on input, and with `positionReversed`', async () => {
-      await wrapper.setProps({ positionReversed: true });
+    it('emits `focus-next` if the down key is pressed on input, and with `positionReversed`', () => {
+      wrapper.setProps({ positionReversed: true });
       input = wrapper.find('input');
 
-      await input.trigger('keydown.down');
+      input.trigger('keydown.down');
 
       expect(wrapper.emitted('focus-next')).toBeTruthy();
     });
 
-    it('emits `focus-prev` if the up key is pressed on input and there is no suggestedTags', async () => {
-      await wrapper.setProps({ tags: [] });
+    it('emits `focus-prev` if the up key is pressed on input and there is no suggestedTags', () => {
+      wrapper.setProps({ tags: [] });
       input = wrapper.find('input');
 
-      await input.trigger('keydown.up');
+      input.trigger('keydown.up');
 
       expect(wrapper.emitted('focus-prev')).toBeTruthy();
     });
 
-    it('emits `focus-prev` if the up key is pressed on input, with tags and no `positionReversed`', async () => {
+    it('emits `focus-prev` if the up key is pressed on input, with tags and no `positionReversed`', () => {
       input = wrapper.find('input');
 
-      await input.trigger('keydown.up');
+      input.trigger('keydown.up');
 
       expect(wrapper.emitted('focus-prev')).toBeTruthy();
     });
 
-    it('focuses the first tag, if the up key is pressed on input, and `positionReversed` is true', async () => {
-      await wrapper.setProps({ positionReversed: true });
-      const spy = vi.spyOn(suggestedTags.vm, 'focusFirst');
-      await input.trigger('keydown.up');
+    it('focuses the first tag, if the up key is pressed on input, and `positionReversed` is true', () => {
+      wrapper.setProps({ positionReversed: true });
+      const spy = jest.spyOn(suggestedTags.vm, 'focusFirst');
+      input.trigger('keydown.up');
 
       expect(wrapper.emitted('keydown:up')).toBeFalsy();
       expect(spy).toHaveBeenCalledTimes(1);
@@ -975,12 +971,12 @@ describe('FilterInput', () => {
 
     it('resets all the filters after the user selects all the content and writes over it, if key is a single character', async () => {
       isSingleCharacter.mockImplementation(() => true);
-      await wrapper.setProps({ value: 'foo', selectedTags: tags });
+      wrapper.setProps({ value: 'foo', selectedTags: tags });
 
       const singleCharacter = 'a';
 
       wrapper.find({ ref: 'selectedTags' }).vm.$emit('select-all');
-      await input.trigger('keydown', { key: singleCharacter });
+      input.trigger('keydown', { key: singleCharacter });
       input.setValue(singleCharacter);
 
       expect(wrapper.emitted('input')).toEqual([[''], [singleCharacter]]);
@@ -991,13 +987,13 @@ describe('FilterInput', () => {
 
     it('resets all the filters, if user selects all text and enters a character with pressing shift', async () => {
       isSingleCharacter.mockImplementation(() => true);
-      await wrapper.setProps({ value: 'foo', selectedTags: tags });
+      wrapper.setProps({ value: 'foo', selectedTags: tags });
 
       const singleCharacter = 'A';
 
       wrapper.find({ ref: 'selectedTags' }).vm.$emit('select-all');
 
-      await input.trigger('keydown', {
+      input.trigger('keydown', {
         key: singleCharacter,
         shiftKey: true,
       });
@@ -1009,16 +1005,16 @@ describe('FilterInput', () => {
       expect(document.activeElement).toBe(input.element);
     });
 
-    it('does not reset all the filters after the user selects all the content and types something on top if key is not a single character', async () => {
+    it('does not reset all the filters after the user selects all the content and types something on top if key is not a single character', () => {
       isSingleCharacter.mockImplementation(() => false);
-      await wrapper.setProps({ value: 'foo', selectedTags: tags });
+      wrapper.setProps({ value: 'foo', selectedTags: tags });
 
       const nonSingleCharacter = '>';
 
       wrapper.find({ ref: 'selectedTags' }).vm.$emit('select-all');
-      await input.trigger('keydown', { key: nonSingleCharacter });
+      input.trigger('keydown', { key: nonSingleCharacter });
 
-      await input.trigger('keydown', {
+      input.trigger('keydown', {
         key: nonSingleCharacter,
         shiftKey: true,
       });
@@ -1027,9 +1023,9 @@ describe('FilterInput', () => {
       expect(wrapper.emitted('update:selectedTags')).toBeFalsy();
     });
 
-    it('does not reset tags if only text is fully selected when typing', async () => {
-      await wrapper.setProps({ value: 'foo', selectedTags: tags });
-      await input.trigger('keydown', {
+    it('does not reset tags if only text is fully selected when typing', () => {
+      wrapper.setProps({ value: 'foo', selectedTags: tags });
+      input.trigger('keydown', {
         key: 'c', // single char
       });
       expect(wrapper.emitted('show-suggested-tags')).toEqual([[true]]);
@@ -1037,17 +1033,17 @@ describe('FilterInput', () => {
       expect(wrapper.emitted('update:selectedTags')).toBeFalsy();
     });
 
-    it('focuses selected tags if `select-all` is emitted from selectedTags and input has value', async () => {
-      await wrapper.setProps({ value: 'foo', selectedTags: tags });
+    it('focuses selected tags if `select-all` is emitted from selectedTags and input has value', () => {
+      wrapper.setProps({ value: 'foo', selectedTags: tags });
       const selectedTags = wrapper.find({ ref: 'selectedTags' });
       selectedTags.vm.$emit('select-all');
 
       expect(wrapper.vm.selectedTag).toEqual(wrapper.vm.activeTag);
     });
 
-    it('focuses selected tags if `cmd + a` is triggered on input that has a value', async () => {
-      await wrapper.setProps({ value: 'foo', selectedTags: tags });
-      await input.trigger('keydown', {
+    it('focuses selected tags if `cmd + a` is triggered on input that has a value', () => {
+      wrapper.setProps({ value: 'foo', selectedTags: tags });
+      input.trigger('keydown', {
         key: 'a',
         metaKey: true,
       });
@@ -1055,21 +1051,21 @@ describe('FilterInput', () => {
       expect(wrapper.vm.selectedTag).toEqual(wrapper.vm.activeTag);
     });
 
-    it('does not focus selected tags if `cmd + a` is triggered on input that has a value and then user clicks on input', async () => {
-      await wrapper.setProps({ value: 'foo', selectedTags: tags });
-      await input.trigger('keydown', {
+    it('does not focus selected tags if `cmd + a` is triggered on input that has a value and then user clicks on input', () => {
+      wrapper.setProps({ value: 'foo', selectedTags: tags });
+      input.trigger('keydown', {
         key: 'a',
         metaKey: true,
       });
 
-      await input.trigger('click');
+      input.trigger('click');
 
       expect(wrapper.vm.activeTags).toEqual([]);
     });
 
-    it('focuses selected tags if `ctrl + a` is triggered on input that has a value', async () => {
-      await wrapper.setProps({ value: 'foo', selectedTags: tags });
-      await input.trigger('keydown', {
+    it('focuses selected tags if `ctrl + a` is triggered on input that has a value', () => {
+      wrapper.setProps({ value: 'foo', selectedTags: tags });
+      input.trigger('keydown', {
         key: 'a',
         ctrlKey: true,
       });
@@ -1077,25 +1073,25 @@ describe('FilterInput', () => {
       expect(wrapper.vm.selectedTag).toEqual(wrapper.vm.activeTag);
     });
 
-    it('focus on the first tag of selectedTags if cmd + a is triggered on an empty input, there is not a shift init tag and there are selected tags', async () => {
-      const spy = vi.spyOn(TagList.methods, 'focusTag').mockReturnValueOnce();
+    it('focus on the first tag of selectedTags if cmd + a is triggered on an empty input, there is not a shift init tag and there are selected tags', () => {
+      const spy = jest.spyOn(TagList.methods, 'focusTag').mockReturnValueOnce();
       wrapper = shallowMount(FilterInput, {
         propsData,
         stubs: { TagList },
       });
 
-      await wrapper.setProps({ value: '', selectedTags: tags });
-      await wrapper.find({ ref: 'input' }).trigger('keydown', {
+      wrapper.setProps({ value: '', selectedTags: tags });
+      wrapper.find({ ref: 'input' }).trigger('keydown', {
         key: 'a',
         metaKey: true,
       });
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('assigns selected tags to active tags when cmd + a is triggered on input', async () => {
-      await wrapper.setProps({ value: 'Foo', selectedTags: tags });
+    it('assigns selected tags to active tags when cmd + a is triggered on input', () => {
+      wrapper.setProps({ value: 'Foo', selectedTags: tags });
       const selectedTagsComponent = wrapper.find({ ref: 'selectedTags' });
-      await wrapper.find({ ref: 'input' }).trigger('keydown', {
+      wrapper.find({ ref: 'input' }).trigger('keydown', {
         key: 'a',
         metaKey: true,
       });
@@ -1103,36 +1099,36 @@ describe('FilterInput', () => {
     });
 
     it('focus on the first tag when the left key is triggered on a selected input and tags are selected as well', async () => {
-      await wrapper.setProps({ selectedTags: tags });
+      wrapper.setProps({ selectedTags: tags });
       const selectedTagsComponent = wrapper.find({ ref: 'selectedTags' });
 
-      const spy = vi.spyOn(selectedTagsComponent.vm, 'focusTag').mockReturnValueOnce();
+      const spy = jest.spyOn(selectedTagsComponent.vm, 'focusTag').mockReturnValueOnce();
       await flushPromises();
-      await input.trigger('keydown', {
+      input.trigger('keydown', {
         key: 'a',
         metaKey: true,
       });
       expect(spy).toHaveBeenCalledTimes(1);
-      await input.trigger('keydown.left');
+      input.trigger('keydown.left');
       await flushPromises();
       expect(spy).toHaveBeenCalledTimes(2);
     });
 
     it('focus on the first tag, when `@focus-prev` is emitted, from selectedTags and position reversed', async () => {
-      await wrapper.setProps({ selectedTags: tags.slice(1), positionReversed: true });
+      wrapper.setProps({ selectedTags: tags.slice(1), positionReversed: true });
       await flushPromises();
       const selectedTagsComponent = wrapper.find({ ref: 'selectedTags' });
-      const spy = vi.spyOn(suggestedTags.vm, 'focusFirst').mockReturnValueOnce();
+      const spy = jest.spyOn(suggestedTags.vm, 'focusFirst').mockReturnValueOnce();
       selectedTagsComponent.vm.$emit('focus-prev');
       await flushPromises();
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
     it('emits `focus-prev`, when `@focus-prev` is emitted, from selectedTags and no positionReversed', async () => {
-      await wrapper.setProps({ selectedTags: tags.slice(1) });
+      wrapper.setProps({ selectedTags: tags.slice(1) });
       await flushPromises();
       const selectedTagsComponent = wrapper.find({ ref: 'selectedTags' });
-      const spy = vi.spyOn(suggestedTags.vm, 'focusFirst').mockReturnValueOnce();
+      const spy = jest.spyOn(suggestedTags.vm, 'focusFirst').mockReturnValueOnce();
       selectedTagsComponent.vm.$emit('focus-prev');
       await flushPromises();
       expect(spy).toHaveBeenCalledTimes(0);
@@ -1145,14 +1141,14 @@ describe('FilterInput', () => {
     });
 
     it('focuses the input, when @focus-next is called from SuggestedTags, with positionReversed', async () => {
-      await wrapper.setProps({ positionReversed: true });
+      wrapper.setProps({ positionReversed: true });
       wrapper.find({ ref: 'suggestedTags' }).vm.$emit('focus-next');
       await flushPromises();
       expect(document.activeElement).toEqual(input.element);
     });
 
-    it('emits `focus-prev`, when @focus-prev is called from SuggestedTags, with positionReversed', async () => {
-      await wrapper.setProps({ positionReversed: true });
+    it('emits `focus-prev`, when @focus-prev is called from SuggestedTags, with positionReversed', () => {
+      wrapper.setProps({ positionReversed: true });
 
       wrapper.find({ ref: 'suggestedTags' }).vm.$emit('focus-prev');
       expect(wrapper.emitted('focus-prev')).toHaveLength(1);
@@ -1164,26 +1160,26 @@ describe('FilterInput', () => {
       expect(document.activeElement).toEqual(input.element);
     });
 
-    it('focus on the last tag when the left key is triggered, on a selected input, and but tags are not highlighted', async () => {
-      await wrapper.setProps({ selectedTags: tags });
+    it('focus on the last tag when the left key is triggered, on a selected input, and but tags are not highlighted', () => {
+      wrapper.setProps({ selectedTags: tags });
 
-      const spy = vi.spyOn(wrapper.find({ ref: 'selectedTags' }).vm, 'focusLast')
+      const spy = jest.spyOn(wrapper.find({ ref: 'selectedTags' }).vm, 'focusLast')
         .mockReturnValueOnce();
 
       input.element.select();
-      await input.trigger('keydown.left');
+      input.trigger('keydown.left');
 
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('focus on the last tag when the left key is triggered on input, with no highlighted tags', async () => {
-      await wrapper.setProps({ selectedTags: tags });
+    it('focus on the last tag when the left key is triggered on input, with no highlighted tags', () => {
+      wrapper.setProps({ selectedTags: tags });
 
-      const spy = vi.spyOn(wrapper.find({ ref: 'selectedTags' }).vm, 'focusLast')
+      const spy = jest.spyOn(wrapper.find({ ref: 'selectedTags' }).vm, 'focusLast')
         .mockReturnValueOnce();
 
       // input is is not selected, but the cursor is at the first item
-      await input.trigger('keydown.left');
+      input.trigger('keydown.left');
 
       expect(spy).toHaveBeenCalledTimes(1);
     });
@@ -1197,30 +1193,30 @@ describe('FilterInput', () => {
 
     describe('starting from input', () => {
       beforeEach(async () => {
-        vi.resetAllMocks();
-        await wrapper.setProps({
+        jest.resetAllMocks();
+        wrapper.setProps({
           selectedTags,
           value: inputValue,
         });
 
         await wrapper.vm.$nextTick();
         selectedTagsComponent = wrapper.find({ ref: 'selectedTags' });
-        spyFocusTag = vi.spyOn(selectedTagsComponent.vm, 'focusTag').mockReturnValueOnce();
-        spySetSelectionRange = vi.spyOn(input.element, 'setSelectionRange');
+        spyFocusTag = jest.spyOn(selectedTagsComponent.vm, 'focusTag').mockReturnValueOnce();
+        spySetSelectionRange = jest.spyOn(input.element, 'setSelectionRange');
       });
 
-      it('selects the whole range between the text input and tag that has been focused afterwards', async () => {
+      it('selects the whole range between the text input and tag that has been focused afterwards', () => {
         // Put cursor on the second position of the input
         // eslint-disable-next-line
         input.element.selectionStart = input.element.selectionEnd = 2;
 
         // Set shift key on the input
-        await input.trigger('keydown', { shiftKey: true });
+        input.trigger('keydown', { shiftKey: true });
 
         // Focus on the first tag
         selectedTagsComponent.vm.$emit('focus', {
           tagName: selectedTags[0],
-          event: { relatedTarget: document.h('input') },
+          event: { relatedTarget: document.createElement('input') },
         });
 
         // All tags should be active
@@ -1229,18 +1225,18 @@ describe('FilterInput', () => {
         expect(spySetSelectionRange).toHaveBeenCalledWith(0, 2);
       });
 
-      it('selects selected text and all tags until the last one, when user has selected a text and focused on a tag, while holding the shift key', async () => {
+      it('selects selected text and all tags until the last one, when user has selected a text and focused on a tag, while holding the shift key', () => {
         // Select text from character 1 to 2
         input.element.selectionStart = 1;
         input.element.selectionEnd = 2;
 
         // Set shift key on the input
-        await input.trigger('keydown', { shiftKey: true });
+        input.trigger('keydown', { shiftKey: true });
 
         // Focus on the middle tag
         selectedTagsComponent.vm.$emit('focus', {
           tagName: selectedTags[1],
-          event: { relatedTarget: document.h('input') },
+          event: { relatedTarget: document.createElement('input') },
         });
 
         // Tags from middle to the last one should get active
@@ -1250,13 +1246,13 @@ describe('FilterInput', () => {
       });
 
       describe('when the left arrow is pressed while holding the shift key on input', () => {
-        beforeEach(async () => {
+        beforeEach(() => {
           // Put cursor on the beginning of the input
           // eslint-disable-next-line
           input.element.selectionStart = input.element.selectionEnd = 0;
 
           // Press left key + shift on input
-          await input.trigger('keydown.left', { shiftKey: true });
+          input.trigger('keydown.left', { shiftKey: true });
         });
 
         it('selects tags from right to left', () => {
@@ -1341,8 +1337,8 @@ describe('FilterInput', () => {
           expect(spyFocusTag).toHaveBeenCalledTimes(1);
         });
 
-        it('does not select tags if user tabs while holding the shift key from input', async () => {
-          await input.trigger('keydown', { key: 'Tab', shiftKey: true });
+        it('does not select tags if user tabs while holding the shift key from input', () => {
+          input.trigger('keydown', { key: 'Tab', shiftKey: true });
           expect(wrapper.vm.activeTags).toEqual([]);
 
           selectedTagsComponent.vm.$emit('focus', { tagName: selectedTags[2] });
@@ -1353,11 +1349,11 @@ describe('FilterInput', () => {
 
     describe('starting from tags', () => {
       beforeEach(async () => {
-        vi.resetAllMocks();
-        await wrapper.setProps({ selectedTags });
+        jest.resetAllMocks();
+        wrapper.setProps({ selectedTags });
         await wrapper.vm.$nextTick();
         selectedTagsComponent = wrapper.find({ ref: 'selectedTags' });
-        spyFocusTag = vi.spyOn(selectedTagsComponent.vm, 'focusTag').mockReturnValueOnce();
+        spyFocusTag = jest.spyOn(selectedTagsComponent.vm, 'focusTag').mockReturnValueOnce();
       });
 
       it('selects the whole range between the init tag index and the focused tag index from right to left', () => {
@@ -1385,7 +1381,7 @@ describe('FilterInput', () => {
       });
 
       it('selects the whole range between the init tag index and the end of the active tags from left to right', async () => {
-        const relatedTargetCard = document.h('a');
+        const relatedTargetCard = document.createElement('a');
         // Select init tag
         selectedTagsComponent.vm.$emit('click-tags', {
           tagName: selectedTags[0],
@@ -1408,7 +1404,7 @@ describe('FilterInput', () => {
           event: new MouseEvent('click'),
         });
 
-        await selectedTagsComponent.trigger('blur', {
+        selectedTagsComponent.trigger('blur', {
           relatedTarget: relatedTargetCard,
         });
 
@@ -1496,9 +1492,9 @@ describe('FilterInput', () => {
         expect(wrapper.vm.activeTags).toEqual([selectedTags[1], selectedTags[0]]);
       });
 
-      it('selects the init tag as the length of selected tags when the selection starts on the input value', async () => {
+      it('selects the init tag as the length of selected tags when the selection starts on the input value', () => {
         input = wrapper.find({ ref: 'input' });
-        await input.trigger('keydown.left', {
+        input.trigger('keydown.left', {
           shiftKey: true,
         });
 
@@ -1524,9 +1520,9 @@ describe('FilterInput', () => {
         });
 
         it('resets all the active tags when selected tags get blur', async () => {
-          const relatedTargetCard = document.h('a');
+          const relatedTargetCard = document.createElement('a');
 
-          await selectedTagsComponent.trigger('blur', {
+          selectedTagsComponent.trigger('blur', {
             relatedTarget: relatedTargetCard,
           });
           await wrapper.vm.$nextTick();

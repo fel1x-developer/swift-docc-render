@@ -7,6 +7,8 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
+import { beforeEach, describe, expect, it } from "vitest";
+
 import DeclarationGroup from 'docc-render/components/DocumentationTopic/PrimaryContent/DeclarationGroup.vue';
 import { shallowMount } from '@vue/test-utils';
 import DeclarationSource

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Hero from 'docc-render/components/Tutorial/Hero.vue';
 import Headline from 'docc-render/components/Headline.vue';
@@ -125,11 +127,11 @@ describe('Hero', () => {
     });
   });
 
-  it('displays the call-to-action modal when the link is clicked', async () => {
+  it('displays the call-to-action modal when the link is clicked', () => {
     const wrapper = mountWithProps();
     const link = wrapper.find('a.call-to-action');
     expect(wrapper.find(Asset).isVisible()).toBe(false);
-    await link.trigger('click');
+    link.trigger('click');
     expect(wrapper.find(Asset).isVisible()).toBe(true);
     const modal = wrapper.find(GenericModal);
     expect(modal.props()).toHaveProperty('visible', true);
@@ -172,10 +174,10 @@ describe('Hero', () => {
       global.Element.prototype.querySelector = querySelector;
     };
 
-    it('does not pause if play returned undefined', () => new Promise((done) => {
+    it('does not pause if play returned undefined', (done) => {
       withPlayReturning(undefined, async () => {
         const link = wrapper.find('a.call-to-action');
-        await link.trigger('click');
+        link.trigger('click');
         expect(wrapper.find(Asset).isVisible()).toBe(true);
 
         const asset = wrapper.find(Asset);
@@ -188,6 +190,6 @@ describe('Hero', () => {
 
         done();
       });
-    }));
+    });
   });
 });

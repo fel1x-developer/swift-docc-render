@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { mount } from '@vue/test-utils';
 import PropertyTable
   from 'docc-render/components/DocumentationTopic/PrimaryContent/PropertyTable.vue';

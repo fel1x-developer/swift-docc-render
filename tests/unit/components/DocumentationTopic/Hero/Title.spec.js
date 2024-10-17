@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import Title from 'docc-render/components/DocumentationTopic/Hero/Title.vue';
 
@@ -26,10 +28,10 @@ describe('Title', () => {
     expect(wrapper.is('div.topictitle')).toBe(true);
   });
 
-  it('renders an eyebrow if provided', async () => {
+  it('renders an eyebrow if provided', () => {
     expect(wrapper.contains('.eyebrow')).toBe(false);
 
-    await wrapper.setProps({ eyebrow: 'Thing' });
+    wrapper.setProps({ eyebrow: 'Thing' });
 
     const eyebrow = wrapper.find('.eyebrow');
     expect(eyebrow.exists()).toBe(true);

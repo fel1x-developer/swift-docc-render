@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import NavMenuLink from 'docc-render/components/NavMenuLink.vue';
 import { shallowMount } from '@vue/test-utils';
 import Reference from '@/components/ContentNode/Reference.vue';

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import TutorialsNavigationMenu from 'docc-render/components/TutorialsOverview/TutorialsNavigationMenu.vue';
 
@@ -23,9 +25,9 @@ describe('TutorialsNavigationMenu', () => {
     wrapper = shallowMount(TutorialsNavigationMenu, { propsData, slots });
   });
 
-  it('renders renders a collapsed class', async () => {
+  it('renders renders a collapsed class', () => {
     expect(wrapper.classes('collapsed')).toBe(true);
-    await wrapper.setProps({ collapsed: false });
+    wrapper.setProps({ collapsed: false });
     expect(wrapper.classes('collapsed')).toBeFalsy();
   });
 
@@ -43,8 +45,8 @@ describe('TutorialsNavigationMenu', () => {
     expect(icon.is(InlineCloseIcon)).toBe(true);
   });
 
-  it('renders a `TutorialsNavigationList` with slot content', async () => {
-    await wrapper.setProps({ collapsed: false });
+  it('renders a `TutorialsNavigationList` with slot content', () => {
+    wrapper.setProps({ collapsed: false });
     const navigation = wrapper.find(TutorialsNavigationList);
     expect(navigation.exists()).toBe(true);
     expect(navigation.contains('li')).toBe(true);
@@ -57,18 +59,18 @@ describe('TutorialsNavigationMenu', () => {
     expect(navigation.exists()).toBe(false);
   });
 
-  it('emits a "select-menu" event with the title when the toggle is clicked', async () => {
-    await wrapper.find('.toggle').trigger('click');
+  it('emits a "select-menu" event with the title when the toggle is clicked', () => {
+    wrapper.find('.toggle').trigger('click');
     expect(wrapper.emitted()['select-menu'][0]).toEqual([propsData.title]);
   });
 
-  it('emits a "deselect-menu" event when not collapsed and the toggle is clicked', async () => {
-    await wrapper.setProps({ collapsed: false });
+  it('emits a "deselect-menu" event when not collapsed and the toggle is clicked', () => {
+    wrapper.setProps({ collapsed: false });
     const link = wrapper.find('.toggle');
 
     // assert the correct AX tag is being applied
     expect(link.attributes('aria-expanded')).toBe('true');
-    await link.trigger('click');
+    link.trigger('click');
     expect(wrapper.emitted()['deselect-menu'].length).toBe(1);
   });
 });

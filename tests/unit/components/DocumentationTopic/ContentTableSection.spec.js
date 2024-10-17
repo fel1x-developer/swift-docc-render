@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import ContentTableSection, {
   TITLE_CLASS_NAME,
@@ -39,8 +41,8 @@ describe('ContentTableSection', () => {
     expect(title.text()).toContain(propsData.title);
   });
 
-  it('does not require a title', async () => {
-    await wrapper.setProps({
+  it('does not require a title', () => {
+    wrapper.setProps({
       title: undefined,
     });
 
@@ -48,10 +50,10 @@ describe('ContentTableSection', () => {
     expect(title.exists()).toBe(false);
   });
 
-  it('renders an `id` if `anchor` is provided', async () => {
+  it('renders an `id` if `anchor` is provided', () => {
     const title = wrapper.find(`.${TITLE_CLASS_NAME}`);
     expect(title.attributes('id')).toBe(undefined);
-    await wrapper.setProps({
+    wrapper.setProps({
       anchor: 'foo-bar',
     });
     expect(title.props('anchor')).toBe('foo-bar');

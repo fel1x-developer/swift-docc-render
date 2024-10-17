@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import CodeListingFilename from 'docc-render/components/ContentNode/CodeListingFilename.vue';
 import CodeListingFileIcon from 'docc-render/components/ContentNode/CodeListingFileIcon.vue';
@@ -33,14 +35,14 @@ describe('CodeListingFilename', () => {
     expect(span.text()).toBe(fileName);
   });
 
-  it('renders an anchor when `isFileNameActionable=true` and emits an event when clicked', async () => {
+  it('renders an anchor when `isFileNameActionable=true` and emits an event when clicked', () => {
     const wrapper = mount(fileName, true);
 
     const link = wrapper.find('a');
     expect(link.exists()).toBe(true);
     expect(link.text()).toBe(fileName);
 
-    await link.trigger('click');
+    link.trigger('click');
     expect(wrapper.emitted().click).toBeTruthy();
   });
 

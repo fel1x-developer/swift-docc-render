@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import DefaultImplementations from 'docc-render/components/DocumentationTopic/DefaultImplementations.vue';
 import { TopicSectionsStyle } from '@/constants/TopicSectionsStyle';

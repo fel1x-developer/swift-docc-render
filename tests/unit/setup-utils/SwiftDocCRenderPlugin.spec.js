@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import SwiftDocCRenderPlugin from 'docc-render/setup-utils/SwiftDocCRenderPlugin';
 // eslint-disable-next-line import/no-named-default
 import { default as CommunicationBridge } from 'docc-render/plugins/CommunicationBridge';
@@ -53,7 +55,7 @@ describe('SwiftDocCRenderPlugin', () => {
   it('attaches the communication bridge and passes the configs to it', () => {
     SwiftDocCRenderPlugin(mockVue, { performanceMetrics: true });
     expect(mockVue.use).toHaveBeenCalledWith(CommunicationBridge, {
-      appTarget: import.meta.env.VITE_APP_TARGET,
+      appTarget: process.env.VUE_APP_TARGET,
       performanceMetricsEnabled: true,
     });
   });

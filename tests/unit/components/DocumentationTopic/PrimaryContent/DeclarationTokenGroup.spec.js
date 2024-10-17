@@ -8,8 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import DeclarationTokenGroup
-  from 'docc-render/components/DocumentationTopic/PrimaryContent/DeclarationTokenGroup.vue';
+import { describe, expect, it } from "vitest";
+
+import DeclarationTokenGroup from 'docc-render/components/DocumentationTopic/PrimaryContent/DeclarationTokenGroup.vue';
 import { shallowMount } from '@vue/test-utils';
 
 const { DeclarationToken } = DeclarationTokenGroup.components;

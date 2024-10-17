@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import CodeListing from 'docc-render/components/ContentNode/CodeListing.vue';
 import { flushPromises } from '../../../../test-utils';
@@ -179,7 +181,7 @@ describe('CodeListing', () => {
     await flushPromises();
 
     expect(wrapper.find('.syntax-keyword').text()).toBe('let');
-    await wrapper.setProps({
+    wrapper.setProps({
       content: ['print("Some Text")'],
     });
     await flushPromises();
@@ -197,7 +199,7 @@ describe('CodeListing', () => {
     await flushPromises();
 
     expect(wrapper.classes()).not.toContain('single-line');
-    await wrapper.setProps({
+    wrapper.setProps({
       content: content.slice(0, 1),
     });
 

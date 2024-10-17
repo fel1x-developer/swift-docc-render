@@ -8,12 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-  shallowMount,
-  RouterLinkStub,
-} from '@vue/test-utils';
+import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import RelationshipsList from 'docc-render/components/DocumentationTopic/RelationshipsList.vue';
 import { multipleLinesClass } from 'docc-render/constants/multipleLines';
 
@@ -123,8 +120,8 @@ describe('RelationshipsList', () => {
   });
 
   describe('with 3 or fewer symbols', () => {
-    beforeEach(async () => {
-      await wrapper.setProps({
+    beforeEach(() => {
+      wrapper.setProps({
         symbols: [
           propsData.symbols[0],
           propsData.symbols[1],
@@ -149,8 +146,8 @@ describe('RelationshipsList', () => {
         ],
       };
 
-      beforeEach(async () => {
-        await wrapper.setProps({
+      beforeEach(() => {
+        wrapper.setProps({
           symbols: [
             propsData.symbols[0],
             {
@@ -178,10 +175,8 @@ describe('RelationshipsList', () => {
   });
 
   describe('when a symbol has API Changes', () => {
-    const assertChange = async (
-      change, expectedChange, type = propsData.type, relationship = {},
-    ) => {
-      await wrapper.setProps({ type });
+    const assertChange = (change, expectedChange, type = propsData.type, relationship = {}) => {
+      wrapper.setProps({ type });
 
       store.state.apiChanges = {
         [provide.identifier]: {

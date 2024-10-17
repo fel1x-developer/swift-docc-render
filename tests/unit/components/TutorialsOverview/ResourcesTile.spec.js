@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import ResourcesTile from 'docc-render/components/TutorialsOverview/ResourcesTile.vue';
 
@@ -89,8 +91,8 @@ describe('ResourcesTile', () => {
     expect(ref.text()).toBe(propsData.action.title);
   });
 
-  it('renders a `Reference`, from a destination type:reference', async () => {
-    await wrapper.setProps({
+  it('renders a `Reference`, from a destination type:reference', () => {
+    wrapper.setProps({
       action: {
         identifier: 'doc://foo.baz',
         type: 'reference',
@@ -102,15 +104,15 @@ describe('ResourcesTile', () => {
     expect(ref.text()).toBe(fooReference.title);
   });
 
-  it('does not render an icon without a known `identifier`', async () => {
+  it('does not render an icon without a known `identifier`', () => {
     expect(wrapper.findAll('.icon').length).toBe(0);
-    await wrapper.setProps({ identifier: 'fakeidentifier' });
+    wrapper.setProps({ identifier: 'fakeidentifier' });
     expect(wrapper.findAll('.icon').length).toBe(1);
   });
 
   it('renders preset icons for known `identifier` values', () => {
-    const assertIconForIdentifier = async (Icon, identifier) => {
-      await wrapper.setProps({ identifier });
+    const assertIconForIdentifier = (Icon, identifier) => {
+      wrapper.setProps({ identifier });
       expect(wrapper.findAll('.icon').length).toBe(1);
       expect(wrapper.contains(Icon)).toBe(true);
     };

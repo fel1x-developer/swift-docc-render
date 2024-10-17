@@ -8,10 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import {
-  RouterLinkStub,
-  shallowMount,
-} from '@vue/test-utils';
+import { describe, expect, it } from "vitest";
+
+import { RouterLinkStub, shallowMount } from '@vue/test-utils';
 import ReferenceInternal from 'docc-render/components/ContentNode/ReferenceInternal.vue';
 
 describe('ReferenceInternal', () => {

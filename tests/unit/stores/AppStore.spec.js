@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import AppStore from 'docc-render/stores/AppStore';
 import ColorScheme from 'docc-render/constants/ColorScheme';
 import ImageLoadingStrategy from 'docc-render/constants/ImageLoadingStrategy';
@@ -27,8 +29,8 @@ describe('AppStore', () => {
   });
 
   it('has correct state in IDE mode', () => {
-    const originalTarget = import.meta.env.VITE_APP_TARGET;
-    import.meta.env.VITE_APP_TARGET = 'ide';
+    const originalTarget = process.env.VUE_APP_TARGET;
+    process.env.VUE_APP_TARGET = 'ide';
     AppStore.reset();
 
     expect(AppStore.state).toEqual({
@@ -42,7 +44,7 @@ describe('AppStore', () => {
     });
 
     // restore target
-    import.meta.env.VITE_APP_TARGET = originalTarget;
+    process.env.VUE_APP_TARGET = originalTarget;
   });
 
   describe('setImageLoadingStrategy', () => {

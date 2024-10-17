@@ -8,8 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import ChangedToken
-  from 'docc-render/components/DocumentationTopic/PrimaryContent/DeclarationToken/ChangedToken.vue';
+import { describe, expect, it } from "vitest";
+
+import ChangedToken from 'docc-render/components/DocumentationTopic/PrimaryContent/DeclarationToken/ChangedToken.vue';
 import { shallowMount } from '@vue/test-utils';
 import DeclarationToken from 'docc-render/components/DocumentationTopic/PrimaryContent/DeclarationToken.vue';
 

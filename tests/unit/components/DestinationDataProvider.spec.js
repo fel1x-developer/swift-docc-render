@@ -8,8 +8,9 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import DestinationDataProvider
-  from 'docc-render/components/DestinationDataProvider.vue';
+import { describe, expect, it } from "vitest";
+
+import DestinationDataProvider from 'docc-render/components/DestinationDataProvider.vue';
 import { shallowMount } from '@vue/test-utils';
 
 const Destinations = {
@@ -67,7 +68,7 @@ const createWrapper = (overrides) => {
     scopedSlots: {
       default(params) {
         Object.assign(scopedSlotAssertions, params);
-        return this.$h('div');
+        return this.$createElement('div');
       },
     },
     ...overrides,

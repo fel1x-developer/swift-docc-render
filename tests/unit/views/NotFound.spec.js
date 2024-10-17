@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import NotFound from 'docc-render/views/NotFound.vue';
 import { shallowMount } from '@vue/test-utils';
 

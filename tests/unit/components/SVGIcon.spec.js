@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { describe, expect, it, vi } from "vitest";
 
 import SVGIcon from '@/components/SVGIcon.vue';
 import { shallowMount } from '@vue/test-utils';

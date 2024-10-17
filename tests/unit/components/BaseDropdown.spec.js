@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import BaseDropdown from 'docc-render/components/BaseDropdown.vue';
 import { shallowMount } from '@vue/test-utils';
 
@@ -31,13 +33,13 @@ describe('BaseDropdown', () => {
     expect(wrapper.classes()).toEqual(['form-element']);
   });
 
-  it('renders a `select` component', async () => {
+  it('renders a `select` component', () => {
     const wrapper = createWrapper();
     // assert select is rendered with correct classes
     const select = wrapper.find('select');
     expect(select.exists()).toBe(true);
     expect(select.classes()).toContain('form-dropdown');
-    await wrapper.setProps({ value: '' });
+    wrapper.setProps({ value: '' });
     expect(select.classes()).toContain('form-dropdown-selectnone');
   });
 
@@ -90,7 +92,7 @@ describe('BaseDropdown', () => {
       scopedSlots: {
         dropdown(props) {
           scopedSlotProps = props;
-          return this.$h('div', { class: 'foo' }, 'Foo');
+          return this.$createElement('div', { class: 'foo' }, 'Foo');
         },
       },
     });
@@ -136,7 +138,7 @@ describe('BaseDropdown', () => {
     expect(icon.attributes()).toHaveProperty('aria-hidden', 'true');
   });
 
-  it('passes `form-dropdown-selectnone` if value is empty', async () => {
+  it('passes `form-dropdown-selectnone` if value is empty', () => {
     let scopedSlotProps = {};
     const wrapper = createWrapper({
       scopedSlots: {
@@ -148,7 +150,7 @@ describe('BaseDropdown', () => {
     });
     expect(scopedSlotProps.dropdownClasses)
       .toContainEqual({ [EmptyClass]: false, 'no-eyebrow': true });
-    await wrapper.setProps({
+    wrapper.setProps({
       value: '',
     });
     expect(scopedSlotProps.dropdownClasses)

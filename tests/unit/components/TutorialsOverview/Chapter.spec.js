@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { shallowMount } from '@vue/test-utils';
 import Chapter from 'docc-render/components/TutorialsOverview/Chapter.vue';
@@ -90,8 +90,8 @@ describe('Chapter', () => {
     expect(eyebrow.attributes('aria-hidden')).toBe('true');
   });
 
-  it('renders the `.name` with H2 if volume has no name', async () => {
-    await wrapper.setProps({ volumeHasName: false });
+  it('renders the `.name` with H2 if volume has no name', () => {
+    wrapper.setProps({ volumeHasName: false });
     const name = wrapper.find('.name');
     expect(name.is('H2')).toBe(true);
   });
@@ -114,8 +114,8 @@ describe('Chapter', () => {
     expect(provide.store.setActiveVolume).toBeCalledTimes(0);
   });
 
-  it('unsets the volume, if it has no name, when intersecting the viewport center', async () => {
-    await wrapper.setProps({
+  it('unsets the volume, if it has no name, when intersecting the viewport center', () => {
+    wrapper.setProps({
       volumeHasName: false,
     });
     wrapper.vm.onIntersectViewport();

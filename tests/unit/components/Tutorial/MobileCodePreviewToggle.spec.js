@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import MobileCodePreviewToggle from 'docc-render/components/Tutorial/MobileCodePreviewToggle.vue';
 
@@ -28,14 +30,14 @@ describe('MobileCodePreviewToggle', () => {
     expect(span.text()).toBe('tutorials.preview.title');
   });
 
-  it('renders an anchor when `isActionable=true` and emits an event when clicked', async () => {
+  it('renders an anchor when `isActionable=true` and emits an event when clicked', () => {
     const wrapper = mount(true);
 
     const link = wrapper.find('a');
     expect(link.exists()).toBe(true);
     expect(link.text()).toBe('tutorials.preview.title');
 
-    await link.trigger('click');
+    link.trigger('click');
     expect(wrapper.emitted().click).toBeTruthy();
   });
 });

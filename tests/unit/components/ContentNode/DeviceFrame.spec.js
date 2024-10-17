@@ -8,15 +8,13 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 import DeviceFrame from '@/components/ContentNode/DeviceFrame.vue';
 import { shallowMount } from '@vue/test-utils';
 import DeviceFrames from '@/constants/DeviceFrames';
 import { getSetting } from '@/utils/theme-settings';
 
-vi.mock('@/utils/theme-settings');
-vi.mock('@/constants/DeviceFrames', () => ({
+jest.mock('@/utils/theme-settings');
+jest.mock('@/constants/DeviceFrames', () => ({
   phone: {
     screenTop: 15,
     screenWidth: 210,

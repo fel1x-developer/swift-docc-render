@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import PropertyListKeyDetails from 'docc-render/components/DocumentationTopic/PrimaryContent/PropertyListKeyDetails.vue';
 
@@ -54,12 +56,12 @@ describe('PropertyKeyListDetails', () => {
     expect(dl.exists()).toBe(true);
   });
 
-  it('renders a <dt> with the name or key ', async () => {
+  it('renders a <dt> with the name or key ', () => {
     let detailType = wrapper.find('dl dt.detail-type');
     expect(detailType.exists()).toBe(true);
     expect(detailType.text()).toBe('metadata.details.key');
 
-    await wrapper.setProps({
+    wrapper.setProps({
       details: {
         ...propsData.details,
         titleStyle: 'symbol',
@@ -70,14 +72,14 @@ describe('PropertyKeyListDetails', () => {
     expect(detailType.text()).toBe('metadata.details.name');
   });
 
-  it('only renders a single <dt> for type when there is no xcode title', async () => {
+  it('only renders a single <dt> for type when there is no xcode title', () => {
     expect(wrapper.findAll('dl dt.detail-type').length).toBe(2);
 
     const {
       ideTitle,
       ...otherDetails
     } = propsData.details;
-    await wrapper.setProps({ details: otherDetails });
+    wrapper.setProps({ details: otherDetails });
 
     const detailTypes = wrapper.findAll('dl dt.detail-type');
     expect(detailTypes.length).toBe(1);

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import GenericError from 'docc-render/components/GenericError.vue';
 
@@ -40,9 +42,9 @@ describe('GenericError', () => {
     expect(content.text()).toBe(slotText);
   });
 
-  it('renders a custom message', async () => {
+  it('renders a custom message', () => {
     const message = 'Whoops!';
-    await wrapper.setProps({ message });
+    wrapper.setProps({ message });
 
     const title = wrapper.find('.title');
     expect(title.exists()).toBe(true);

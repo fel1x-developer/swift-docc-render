@@ -10,13 +10,9 @@
 
 /* eslint-disable */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-  LanguageAliasEntries,
-  SupportedLanguagesSet,
-  sanitizeMultilineNodes,
-} from "docc-render/utils/syntax-highlight";
+import { LanguageAliasEntries, SupportedLanguagesSet, sanitizeMultilineNodes } from "docc-render/utils/syntax-highlight";
 
 let hljs;
 let highlightContent;
@@ -35,7 +31,7 @@ async function prepare(content, language) {
   await registerHighlightLanguage(language);
   // use this for a reference
   const highlightedCode = highlight(content.join("\n"), language);
-  const tempElement = document.h("code");
+  const tempElement = document.createElement("code");
   tempElement.innerHTML = highlightedCode;
 
   // transform the content
@@ -162,7 +158,7 @@ describe("syntax-highlight", () => {
   });
 
   it("wraps multiline nested html elements", () => {
-    const code = document.h("CODE");
+    const code = document.createElement("CODE");
     code.innerHTML = `<span class="syntax-function">function <span class="syntax-title function_">someName</span>(<span class="syntax-params">foo,
           bar,
           baz</span>)</span> <span class="syntax-function-body">{

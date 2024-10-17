@@ -8,8 +8,6 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 import Navigator from '@/components/Navigator.vue';
 import { shallowMount } from '@vue/test-utils';
 import NavigatorCard from '@/components/Navigator/NavigatorCard.vue';
@@ -17,7 +15,7 @@ import { baseNavStickyAnchorId } from 'docc-render/constants/nav';
 import { TopicTypes } from '@/constants/TopicTypes';
 import { INDEX_ROOT_KEY } from '@/constants/sidebar';
 
-vi.mock('docc-render/utils/throttle', () => vi.fn(v => v));
+jest.mock('docc-render/utils/throttle', () => jest.fn(v => v));
 
 const { LoadingNavigatorCard } = Navigator.components;
 
@@ -110,7 +108,7 @@ const defaultProps = {
   flatChildren: [],
 };
 
-const fauxAnchor = document.h('DIV');
+const fauxAnchor = document.createElement('DIV');
 Object.defineProperty(fauxAnchor, 'offsetTop', { value: 0, writable: true });
 fauxAnchor.id = baseNavStickyAnchorId;
 document.body.appendChild(fauxAnchor);
@@ -124,11 +122,11 @@ const createWrapper = ({ propsData, ...others } = {}) => shallowMount(Navigator,
   ...others,
 });
 
-const errorSpy = vi.spyOn(console, 'error').mockReturnValue('');
+const errorSpy = jest.spyOn(console, 'error').mockReturnValue('');
 
 describe('Navigator', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('renders the Navigator', () => {

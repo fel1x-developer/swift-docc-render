@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import FocusTrap from 'docc-render/utils/FocusTrap';
 import { parseHTMLString } from '../../../test-utils';
 

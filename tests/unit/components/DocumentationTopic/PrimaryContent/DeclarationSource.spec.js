@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { shallowMount } from '@vue/test-utils';
 import DeclarationSource
@@ -197,13 +197,13 @@ describe('DeclarationSource', () => {
     expect(callStack).toEqual(['indentDeclaration', 'displaysMultipleLines']);
   });
 
-  it('adds a "highlighted" class for tokens with `highlight="changed"`', async () => {
+  it('adds a "highlighted" class for tokens with `highlight="changed"`', () => {
     expect(wrapper.findAll('.highlighted').length).toBe(0);
 
     const tokensWithHighlights = [...propsData.tokens];
     tokensWithHighlights[0].highlight = HighlightKind.changed;
     tokensWithHighlights[2].highlight = HighlightKind.changed;
-    await wrapper.setProps({ tokens: tokensWithHighlights });
+    wrapper.setProps({ tokens: tokensWithHighlights });
 
     const highlightedTokens = wrapper.findAll('.highlighted');
     expect(highlightedTokens.length).toBe(2);
@@ -476,8 +476,7 @@ describe('Swift function/initializer formatting', () => {
   it('breaks apart parameters in functions with generic where clauses', () => {
     /* eslint-disable max-len */
     // Before:
-    // public func f(t: T, u: U)
-    //   where U : Sequence, T : Sequence, T.Element : Equatable, U.Element == T.Element
+    // public func f(t: T, u: U) where U : Sequence, T : Sequence, T.Element : Equatable, U.Element == T.Element
     //
     // After:
     // public func f(

@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import scrollLock, { SCROLL_LOCK_DISABLE_ATTR } from 'docc-render/utils/scroll-lock';
 import { createEvent, parseHTMLString } from '../../../test-utils';

@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import NavigatorCardItem from '@/components/Navigator/NavigatorCardItem.vue';
 import { RouterLinkStub, shallowMount } from '@vue/test-utils';
@@ -218,31 +218,31 @@ describe('NavigatorCardItem', () => {
     expect(wrapper.find('.extended-content').exists()).toBe(false);
   });
 
-  it('emits a `toggle` event, when clicking the tree-toggle button', async () => {
+  it('emits a `toggle` event, when clicking the tree-toggle button', () => {
     const wrapper = createWrapper();
-    await wrapper.find('.tree-toggle').trigger('click');
+    wrapper.find('.tree-toggle').trigger('click');
     expect(wrapper.emitted()).toEqual({ toggle: [[defaultProps.item]] });
   });
 
-  it('emits a `toggle-full` event, when alt + clicking the tree-toggle button', async () => {
+  it('emits a `toggle-full` event, when alt + clicking the tree-toggle button', () => {
     const wrapper = createWrapper();
-    await wrapper.find('.tree-toggle').trigger('click', {
+    wrapper.find('.tree-toggle').trigger('click', {
       altKey: true,
     });
     expect(wrapper.emitted()).toEqual({ 'toggle-full': [[defaultProps.item]] });
   });
 
-  it('emits a `toggle-full` event, when @keydown.right + alt/option the tree-toggle button', async () => {
+  it('emits a `toggle-full` event, when @keydown.right + alt/option the tree-toggle button', () => {
     const wrapper = createWrapper();
-    await wrapper.find('.tree-toggle').trigger('keydown.right', {
+    wrapper.find('.tree-toggle').trigger('keydown.right', {
       altKey: true,
     });
     expect(wrapper.emitted()).toEqual({ 'toggle-full': [[defaultProps.item]] });
   });
 
-  it('emits a `toggle-siblings` event, when cmd + clicking the tree-toggle button', async () => {
+  it('emits a `toggle-siblings` event, when cmd + clicking the tree-toggle button', () => {
     const wrapper = createWrapper();
-    await wrapper.find('.tree-toggle').trigger('click', {
+    wrapper.find('.tree-toggle').trigger('click', {
       metaKey: true,
     });
     expect(wrapper.emitted()).toEqual({ 'toggle-siblings': [[defaultProps.item]] });
@@ -250,11 +250,11 @@ describe('NavigatorCardItem', () => {
 
   it('adds a temporary `animating` class, on `@toggle`', async () => {
     const wrapper = createWrapper();
-    await wrapper.find('.tree-toggle').trigger('click');
+    wrapper.find('.tree-toggle').trigger('click');
     expect(wrapper.emitted('toggle')).toEqual([[defaultProps.item]]);
     // assert it adds the animating class
     expect(wrapper.find('.icon-inline').classes()).toContain('animating');
-    await wrapper.setProps({
+    wrapper.setProps({
       expanded: true,
     });
     expect(wrapper.find('.icon-inline').classes()).toContain('animating');
@@ -267,11 +267,11 @@ describe('NavigatorCardItem', () => {
 
   it('adds a temporary `animating` class, on `@toggle-full` when @keydown.right + alt/option the tree-toggle button', async () => {
     const wrapper = createWrapper();
-    await wrapper.find('.tree-toggle').trigger('keydown.right', { altKey: true });
+    wrapper.find('.tree-toggle').trigger('keydown.right', { altKey: true });
     expect(wrapper.emitted('toggle-full')).toEqual([[defaultProps.item]]);
     // assert it adds the animating class
     expect(wrapper.find('.icon-inline').classes()).toContain('animating');
-    await wrapper.setProps({
+    wrapper.setProps({
       expanded: true,
     });
     expect(wrapper.find('.icon-inline').classes()).toContain('animating');
@@ -284,11 +284,11 @@ describe('NavigatorCardItem', () => {
 
   it('adds a temporary `animating` class, on `@toggle-full` with alt + rightkey', async () => {
     const wrapper = createWrapper();
-    await wrapper.find('.tree-toggle').trigger('click', { altKey: true });
+    wrapper.find('.tree-toggle').trigger('click', { altKey: true });
     expect(wrapper.emitted('toggle-full')).toEqual([[defaultProps.item]]);
     // assert it adds the animating class
     expect(wrapper.find('.icon-inline').classes()).toContain('animating');
-    await wrapper.setProps({
+    wrapper.setProps({
       expanded: true,
     });
     expect(wrapper.find('.icon-inline').classes()).toContain('animating');
@@ -301,11 +301,11 @@ describe('NavigatorCardItem', () => {
 
   it('adds a temporary `animating` class, on `@toggle-siblings`', async () => {
     const wrapper = createWrapper();
-    await wrapper.find('.tree-toggle').trigger('click', { metaKey: true });
+    wrapper.find('.tree-toggle').trigger('click', { metaKey: true });
     expect(wrapper.emitted('toggle-siblings')).toEqual([[defaultProps.item]]);
     // assert it adds the animating class
     expect(wrapper.find('.icon-inline').classes()).toContain('animating');
-    await wrapper.setProps({ expanded: true });
+    wrapper.setProps({ expanded: true });
     expect(wrapper.find('.icon-inline').classes()).toContain('animating');
     await flushPromises();
     // assert we have waited a few frames
@@ -324,45 +324,45 @@ describe('NavigatorCardItem', () => {
       .toEqual(expect.arrayContaining(['changed', 'changed-modified']));
   });
 
-  it('emits an event, when clicking on the leaf-link', async () => {
+  it('emits an event, when clicking on the leaf-link', () => {
     const wrapper = createWrapper();
-    await wrapper.find('.leaf-link').trigger('click');
+    wrapper.find('.leaf-link').trigger('click');
     expect(wrapper.emitted('navigate')).toEqual([[defaultProps.item.uid]]);
   });
 
-  it('emits a `toggle-full` event, when alt + clicking on the leaf-link', async () => {
+  it('emits a `toggle-full` event, when alt + clicking on the leaf-link', () => {
     const wrapper = createWrapper();
-    await wrapper.find('.leaf-link').trigger('click', {
+    wrapper.find('.leaf-link').trigger('click', {
       altKey: true,
     });
     expect(wrapper.emitted('toggle-full')).toEqual([[defaultProps.item]]);
   });
 
   describe('keyboard navigation', () => {
-    it('clicks the reference link on `@keydown.enter`', async () => {
+    it('clicks the reference link on `@keydown.enter`', () => {
       const wrapper = createWrapper();
       const spy = vi.spyOn(wrapper.find(Reference).vm.$el, 'click');
-      await wrapper.trigger('keydown.enter');
+      wrapper.trigger('keydown.enter');
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('opens children on `@keydown.right`', async () => {
+    it('opens children on `@keydown.right`', () => {
       const wrapper = createWrapper();
-      await wrapper.trigger('keydown.right');
+      wrapper.trigger('keydown.right');
       expect(wrapper.emitted('toggle')).toEqual([[defaultProps.item]]);
     });
 
-    it('does nothing if already open on `@keydown.right`', async () => {
+    it('does nothing if already open on `@keydown.right`', () => {
       const wrapper = createWrapper({
         propsData: {
           expanded: true,
         },
       });
-      await wrapper.trigger('keydown.right');
+      wrapper.trigger('keydown.right');
       expect(wrapper.emitted('toggle')).toBeFalsy();
     });
 
-    it('does nothing if has no children, on `@keydown.right`', async () => {
+    it('does nothing if has no children, on `@keydown.right`', () => {
       const wrapper = createWrapper({
         propsData: {
           item: {
@@ -371,23 +371,23 @@ describe('NavigatorCardItem', () => {
           },
         },
       });
-      await wrapper.trigger('keydown.right');
+      wrapper.trigger('keydown.right');
       expect(wrapper.emitted('toggle')).toBeFalsy();
     });
 
-    it('closes, on `@keydown.left`, if open', async () => {
+    it('closes, on `@keydown.left`, if open', () => {
       const wrapper = createWrapper({
         propsData: {
           expanded: true,
         },
       });
-      await wrapper.trigger('keydown.left');
+      wrapper.trigger('keydown.left');
       expect(wrapper.emitted('toggle')).toEqual([[defaultProps.item]]);
     });
 
-    it('focuses its parent, on `@keydown.left` if not open', async () => {
+    it('focuses its parent, on `@keydown.left` if not open', () => {
       const wrapper = createWrapper();
-      await wrapper.trigger('keydown.left');
+      wrapper.trigger('keydown.left');
       expect(wrapper.emitted('toggle')).toBeFalsy();
       expect(wrapper.emitted('focus-parent')).toEqual([[defaultProps.item]]);
     });
@@ -403,7 +403,7 @@ describe('NavigatorCardItem', () => {
       expect(wrapper.attributes('aria-hidden')).toBe('true');
     });
 
-    it('does not emit a `navigate` event, if is a groupMarker', async () => {
+    it('does not emit a `navigate` event, if is a groupMarker', () => {
       const wrapper = createWrapper({
         propsData: {
           item: {
@@ -412,7 +412,7 @@ describe('NavigatorCardItem', () => {
           },
         },
       });
-      await wrapper.find('.leaf-link').trigger('click');
+      wrapper.find('.leaf-link').trigger('click');
       expect(wrapper.emitted('navigate')).toBeFalsy();
     });
 
@@ -513,7 +513,7 @@ describe('NavigatorCardItem', () => {
       });
       await flushPromises();
       expect(document.activeElement).not.toEqual(wrapper.element);
-      await wrapper.setProps({
+      wrapper.setProps({
         isFocused: true,
         enableFocus: true,
       });
@@ -534,7 +534,7 @@ describe('NavigatorCardItem', () => {
       });
       await flushPromises();
       expect(document.activeElement).not.toEqual(wrapper.element);
-      await wrapper.setProps({ isFocused: true });
+      wrapper.setProps({ isFocused: true });
       await flushPromises();
       expect(waitFrames).toHaveBeenCalledTimes(1);
       expect(waitFrames).toHaveBeenCalledWith(8);

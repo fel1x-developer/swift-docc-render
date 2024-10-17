@@ -8,7 +8,7 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { RouterLinkStub, shallowMount } from '@vue/test-utils';
 import Language from 'docc-render/constants/Language';
@@ -140,16 +140,16 @@ describe('LanguageToggle', () => {
     expect(toggle.attributes()).toHaveProperty('style', 'width: 28px;');
   });
 
-  it('does not render the chevron if it has no languages', async () => {
-    await wrapper.setProps({
+  it('does not render the chevron if it has no languages', () => {
+    wrapper.setProps({
       objcPath: '',
       swiftPath: '',
     });
     expect(wrapper.find('.language-toggle-container > .toggle-icon').exists()).toBe(false);
   });
 
-  it('renders a span.nav-menu-toggle-none.current-language with only one variant', async () => {
-    await wrapper.setProps({ objcPath: undefined });
+  it('renders a span.nav-menu-toggle-none.current-language with only one variant', () => {
+    wrapper.setProps({ objcPath: undefined });
     expect(wrapper.find('#language-toggle').exists()).toBe(false);
 
     const current = wrapper.find('span.nav-menu-toggle-none.current-language');
@@ -173,7 +173,7 @@ describe('LanguageToggle', () => {
     expect(wrapper.find('.current-language').text()).toBe(Language.swift.name);
 
     wrapper.findAll('#language-toggle option').at(1).element.selected = true;
-    await wrapper.find('#language-toggle').trigger('change');
+    wrapper.find('#language-toggle').trigger('change');
 
     expect(wrapper.find('.current-language').text()).toBe(Language.objectiveC.name);
     expect(closeNav).toHaveBeenCalledTimes(1);
@@ -187,8 +187,8 @@ describe('LanguageToggle', () => {
     expect(listContainer.exists()).toBe(true);
   });
 
-  it('does not render `language-list-container` if page has only one language', async () => {
-    await wrapper.setProps({ objcPath: undefined });
+  it('does not render `language-list-container` if page has only one language', () => {
+    wrapper.setProps({ objcPath: undefined });
 
     const listContainer = wrapper.find('.language-list-container');
     expect(listContainer.exists()).toBe(false);
@@ -219,7 +219,7 @@ describe('LanguageToggle', () => {
     const link = wrapper.find('.language-list-container').find('a.nav-menu-link');
     expect(link.exists()).toBe(true);
     expect(link.text()).toBe(Language.objectiveC.name);
-    await link.trigger('click');
+    link.trigger('click');
     expect(closeNav).toHaveBeenCalledTimes(1);
     await flushPromises();
     expect(mocks.$router.push)
@@ -230,10 +230,10 @@ describe('LanguageToggle', () => {
   });
 
   it('clears out the language query if language is Swift', async () => {
-    await wrapper.setData({ languageModel: Language.objectiveC.key.api });
+    wrapper.setData({ languageModel: Language.objectiveC.key.api });
 
     const link = wrapper.find('.language-list-container').find('a.nav-menu-link');
-    await link.trigger('click');
+    link.trigger('click');
     expect(closeNav).toHaveBeenCalledTimes(1);
     await flushPromises();
     expect(mocks.$router.push)
@@ -260,7 +260,7 @@ describe('LanguageToggle', () => {
     wrapper = createWrapper(undefined, mocksWithQuery);
 
     const link = wrapper.find('.language-list-container').find('a.nav-menu-link');
-    await link.trigger('click');
+    link.trigger('click');
     expect(closeNav).toHaveBeenCalledTimes(1);
     await flushPromises();
     expect(mocks.$router.push)
@@ -275,7 +275,7 @@ describe('LanguageToggle', () => {
     wrapper = createWrapper({ ...propsData, objcPath: 'documentation/bar' });
 
     const link = wrapper.find('.language-list-container').find('a.nav-menu-link');
-    await link.trigger('click');
+    link.trigger('click');
     expect(closeNav).toHaveBeenCalledTimes(1);
     await flushPromises();
     expect(mocks.$router.push)
@@ -289,7 +289,7 @@ describe('LanguageToggle', () => {
     // assert proper language name is shown
     expect(wrapper.find('.current-language').text()).toBe(Language.swift.name);
     // change the language from outside
-    await wrapper.setProps({
+    wrapper.setProps({
       interfaceLanguage: Language.objectiveC.key.api,
     });
     await wrapper.vm.$nextTick();

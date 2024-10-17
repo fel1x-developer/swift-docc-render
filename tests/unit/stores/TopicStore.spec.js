@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import TopicStore from 'docc-render/stores/TopicStore';
 import BreakpointEmitter from 'docc-render/components/BreakpointEmitter.vue';
 
@@ -123,7 +125,7 @@ describe('TopicStore', () => {
   describe('setReferences', () => {
     it('sets the `references` state', () => {
       TopicStore.setReferences(references);
-      expect(TopicStore.state.references).toBe(references);
+      expect(TopicStore.state.references).toEqual(references);
     });
   });
 });

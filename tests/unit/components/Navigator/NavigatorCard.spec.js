@@ -8,8 +8,6 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 import NavigatorCard from '@/components/Navigator/NavigatorCard.vue';
 import BaseNavigatorCard from '@/components/Navigator/BaseNavigatorCard.vue';
 import { shallowMount } from '@vue/test-utils';
@@ -28,12 +26,10 @@ import {
 } from 'docc-render/constants/Tags';
 import { flushPromises } from '../../../../test-utils';
 
-vi.mock('docc-render/utils/debounce', () => ({
-  default: vi.fn(fn => fn),
-}));
-vi.mock('docc-render/utils/storage');
-vi.mock('docc-render/utils/loading');
-vi.mock('docc-render/utils/theme-settings');
+jest.mock('docc-render/utils/debounce', () => jest.fn(fn => fn));
+jest.mock('docc-render/utils/storage');
+jest.mock('docc-render/utils/loading');
+jest.mock('docc-render/utils/theme-settings');
 
 getSetting.mockReturnValue(false);
 
@@ -53,7 +49,7 @@ const DynamicScrollerStub = {
   props: DynamicScroller.props,
   template: '<div class="vue-recycle-scroller-stub"><template v-for="(item, index) in items"><slot v-bind="{ item, index, active: false }" /></template></div>',
   methods: {
-    scrollToItem: vi.fn(),
+    scrollToItem: jest.fn(),
   },
 };
 
@@ -62,7 +58,7 @@ const DynamicScrollerItemStub = {
   props: DynamicScrollerItem.props,
   template: '<div class="dynamic-scroller-item-stub"><slot/></div>',
   methods: {
-    updateSize: vi.fn(),
+    updateSize: jest.fn(),
   },
 };
 
@@ -198,7 +194,7 @@ const createWrapper = ({ propsData, ...others } = {}) => shallowMount(NavigatorC
   ...others,
 });
 
-const clearPersistedStateSpy = vi.spyOn(NavigatorCard.methods, 'clearPersistedState');
+const clearPersistedStateSpy = jest.spyOn(NavigatorCard.methods, 'clearPersistedState');
 let getChildPositionInScroller;
 
 const DEFAULT_STORED_STATE = {
@@ -232,7 +228,7 @@ function setOffsetParent(element, value) {
 
 function attachDivWithID(id) {
   if (document.getElementById(id)) return;
-  const div = document.h('DIV');
+  const div = document.createElement('DIV');
   div.id = id;
   document.body.appendChild(div);
 }
@@ -246,9 +242,9 @@ function detachDivWithID(id) {
 describe('NavigatorCard', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
-    vi.clearAllMocks();
+    jest.clearAllMocks();
     // mock the position helper function, as its too difficult to mock the boundingClientRects
-    getChildPositionInScroller = vi.spyOn(NavigatorCard.methods, 'getChildPositionInScroller')
+    getChildPositionInScroller = jest.spyOn(NavigatorCard.methods, 'getChildPositionInScroller')
       .mockReturnValue(0);
   });
 
@@ -366,7 +362,7 @@ describe('NavigatorCard', () => {
 
   it('renders a Beta badge in the technology title', async () => {
     const wrapper = createWrapper();
-    await wrapper.setProps({
+    wrapper.setProps({
       isTechnologyBeta: true,
     });
     await flushPromises();
@@ -377,7 +373,7 @@ describe('NavigatorCard', () => {
 
   it('adds the "router-link-exact-active" class for case insensitive version of technologyPath', async () => {
     const wrapper = createWrapper();
-    await wrapper.setProps({
+    wrapper.setProps({
       technologyPath: '/documentation/Testkit',
     });
     expect(wrapper.find('.technology-title').classes()).toContain('router-link-exact-active');
@@ -388,7 +384,7 @@ describe('NavigatorCard', () => {
     await flushPromises();
     expect(wrapper.vm.focusedIndex).toBe(1);
 
-    await wrapper.setProps({
+    wrapper.setProps({
       activePath: [],
     });
     await flushPromises();
@@ -401,12 +397,12 @@ describe('NavigatorCard', () => {
     expect(wrapper.vm.focusedIndex).toBe(1);
     const items = wrapper.findAll(NavigatorCardItem);
     expect(items.at(0).props('enableFocus')).toBe(false);
-    await items.at(0).trigger('keydown.down');
+    items.at(0).trigger('keydown.down');
     await flushPromises();
     expect(wrapper.vm.focusedIndex).toBe(2);
     expect(items.at(0).props('enableFocus')).toBe(true);
 
-    await items.at(1).trigger('keydown.up');
+    items.at(1).trigger('keydown.up');
     await flushPromises();
     expect(wrapper.vm.focusedIndex).toBe(1);
     expect(items.at(0).props('enableFocus')).toBe(true);
@@ -421,7 +417,7 @@ describe('NavigatorCard', () => {
       enableFocus: false,
       isFocused: true,
     });
-    await items.at(1).trigger('keydown.down');
+    items.at(1).trigger('keydown.down');
     await flushPromises();
     expect(wrapper.vm.focusedIndex).toBe(2);
     expect(items.at(2).props()).toMatchObject({
@@ -451,7 +447,7 @@ describe('NavigatorCard', () => {
   it('allows the user to navigate to the last item on the list when pressing alt + down key', async () => {
     const wrapper = createWrapper();
     await flushPromises();
-    await wrapper.findAll(NavigatorCardItem).at(0).trigger('keydown', {
+    wrapper.findAll(NavigatorCardItem).at(0).trigger('keydown', {
       key: 'ArrowDown',
       altKey: true,
     });
@@ -470,17 +466,17 @@ describe('NavigatorCard', () => {
     const navHead = wrapper.find('.technology-title');
 
     // open all children symbols
-    await navHead.trigger('click', { altKey: true });
+    navHead.trigger('click', { altKey: true });
     await wrapper.vm.$nextTick();
     expect(wrapper.findAll(NavigatorCardItem)).toHaveLength(children.length);
 
     // close all children symbols
-    await navHead.trigger('click', { altKey: true });
+    navHead.trigger('click', { altKey: true });
     await wrapper.vm.$nextTick();
     expect(wrapper.findAll(NavigatorCardItem)).toHaveLength(2);
 
     // open all children symbols
-    await navHead.trigger('click', { altKey: true });
+    navHead.trigger('click', { altKey: true });
     await wrapper.vm.$nextTick();
     expect(wrapper.findAll(NavigatorCardItem)).toHaveLength(children.length);
   });
@@ -488,7 +484,7 @@ describe('NavigatorCard', () => {
   it('allows the user to navigate to the first item on the list when pressing alt + up key', async () => {
     const wrapper = createWrapper();
     await flushPromises();
-    await wrapper.findAll(NavigatorCardItem).at(3).trigger('keydown', {
+    wrapper.findAll(NavigatorCardItem).at(3).trigger('keydown', {
       key: 'ArrowUp',
       altKey: true,
     });
@@ -504,7 +500,7 @@ describe('NavigatorCard', () => {
     });
     expect(wrapper.classes()).toContain('filter-on-top');
     expect(wrapper.find(FilterInput).props('positionReversed')).toBe(false);
-    await wrapper.setProps({
+    wrapper.setProps({
       renderFilterOnTop: false,
     });
     await flushPromises();
@@ -1109,7 +1105,7 @@ describe('NavigatorCard', () => {
     // assert only 3 items are now visible
     expect(all).toHaveLength(3);
     // simulate we go to the root
-    await wrapper.setProps({
+    wrapper.setProps({
       activePath: [root0.path],
     });
     await flushPromises();
@@ -1123,7 +1119,7 @@ describe('NavigatorCard', () => {
       isBold: true,
     });
     // simulate we go to a visible sibling
-    await wrapper.setProps({
+    wrapper.setProps({
       activePath: [root0.path, root0Child0.path],
     });
     await flushPromises();
@@ -1136,7 +1132,7 @@ describe('NavigatorCard', () => {
       isBold: true,
     });
     // now navigate to the grandChild, and assert it's parent auto opens
-    await wrapper.setProps({
+    wrapper.setProps({
       activePath: [root0.path, root0Child1.path, root0Child1GrandChild0.path],
     });
     await flushPromises();
@@ -1246,7 +1242,7 @@ describe('NavigatorCard', () => {
     await flushPromises();
     const filter = wrapper.find(FilterInput);
     expect(filter.props('tags')).toHaveLength(2);
-    await wrapper.setProps({
+    wrapper.setProps({
       hideAvailableTags: true,
     });
     await flushPromises();
@@ -1446,7 +1442,7 @@ describe('NavigatorCard', () => {
     await flushPromises();
     all = wrapper.findAll(NavigatorCardItem);
     expect(all).toHaveLength(2);
-    await wrapper.setProps({ apiChanges: null });
+    wrapper.setProps({ apiChanges: null });
     await flushPromises();
 
     // assert all items are again visible
@@ -1757,7 +1753,7 @@ describe('NavigatorCard', () => {
     filter.vm.$emit('input', sampleCode.title);
     await flushPromises();
     expect(filter.props('tags')).toEqual([FILTER_TAGS.sampleCode]);
-    await wrapper.setProps({ apiChanges });
+    wrapper.setProps({ apiChanges });
     await flushPromises();
     expect(filter.props('tags')).toEqual([FILTER_TAGS.sampleCode, FILTER_TAGS.modified]);
   });
@@ -1973,7 +1969,7 @@ describe('NavigatorCard', () => {
       // simulate the new item is below the fold
       getChildPositionInScroller.mockReturnValueOnce(1);
       attachDivWithID(root0Child1GrandChild0.uid);
-      await wrapper.setProps({
+      wrapper.setProps({
         activePath: [
           root0.path,
           root0Child1.path,
@@ -2015,7 +2011,7 @@ describe('NavigatorCard', () => {
       getChildPositionInScroller.mockReturnValueOnce(-1);
       // navigate to the top level sibling
       attachDivWithID(root1.uid);
-      await wrapper.setProps({
+      wrapper.setProps({
         activePath: [
           root1.path,
         ],
@@ -2104,7 +2100,7 @@ describe('NavigatorCard', () => {
       expect(DynamicScrollerStub.methods.scrollToItem).toHaveBeenCalledTimes(1);
       expect(DynamicScrollerStub.methods.scrollToItem).toHaveBeenLastCalledWith(2); // 3-rd item
       // now simulate the router change
-      await wrapper.setProps({ activePath: [root0.path, root0Child1.path] });
+      wrapper.setProps({ activePath: [root0.path, root0Child1.path] });
       await flushPromises();
       // assert its not called again
       expect(getChildPositionInScroller).toHaveBeenCalledTimes(2);
@@ -2167,7 +2163,7 @@ describe('NavigatorCard', () => {
       expect(allItems.at(1).props('item')).toEqual(root0Child0);
       expect(allItems.at(1).props('isActive')).toEqual(true);
       // navigate to the second child
-      await wrapper.setProps({
+      wrapper.setProps({
         activePath: [
           root0.path,
           root0Child1.path,
@@ -2183,7 +2179,7 @@ describe('NavigatorCard', () => {
       expect(allItems.at(2).props('item')).toEqual(root0Child1);
       expect(allItems.at(2).props('isActive')).toEqual(true);
       // navigate to the grand child
-      await wrapper.setProps({
+      wrapper.setProps({
         activePath: [
           root0.path,
           root0Child1.path,
@@ -2199,7 +2195,7 @@ describe('NavigatorCard', () => {
       expect(allItems.at(3).props('item')).toEqual(root0Child1GrandChild0);
       expect(allItems.at(3).props('isActive')).toEqual(true);
       // navigate to the second child
-      await wrapper.setProps({
+      wrapper.setProps({
         activePath: [
           root0.path,
           root0Child1.path,
@@ -2252,7 +2248,7 @@ describe('NavigatorCard', () => {
         isBold: true,
       });
       // change children
-      await wrapper.setProps({
+      wrapper.setProps({
         children: [
           root0Dupe,
           root0Child0Dupe,
@@ -2263,7 +2259,7 @@ describe('NavigatorCard', () => {
       // simulate its taking time to fetch the items
       await flushPromises();
       // change the activePath later
-      await wrapper.setProps({
+      wrapper.setProps({
         activePath: [
           root0Dupe.path,
           root0Child0Dupe.path,
@@ -2358,7 +2354,7 @@ describe('NavigatorCard', () => {
 
     it('scrolls to the focused item, if not visible, as with the size of its closes parent', async () => {
       const wrapper = createWrapper();
-      const scrollBySpy = vi.fn();
+      const scrollBySpy = jest.fn();
       wrapper.find({ ref: 'scroller' }).element.scrollBy = scrollBySpy;
       await flushPromises();
       expect(scrollBySpy).toHaveBeenCalledTimes(0);
@@ -2368,7 +2364,7 @@ describe('NavigatorCard', () => {
 
       const fourthItem = items.at(3);
       setOffsetParent(fourthItem.element, { offsetHeight: SIDEBAR_ITEM_SIZE });
-      await fourthItem.trigger('focusin', {
+      fourthItem.trigger('focusin', {
         relatedTarget: document.body,
       });
       await flushPromises();
@@ -2381,7 +2377,7 @@ describe('NavigatorCard', () => {
       getChildPositionInScroller.mockReturnValueOnce(-1);
       const firstItem = items.at(0);
       setOffsetParent(firstItem.element, { offsetHeight: SIDEBAR_ITEM_SIZE + 50 });
-      await firstItem.trigger('focusin', {
+      firstItem.trigger('focusin', {
         relatedTarget: document.body,
       });
       await flushPromises();
@@ -2399,7 +2395,7 @@ describe('NavigatorCard', () => {
       await flushPromises();
       const button = wrapper.find(NavigatorCardItem).find('button');
       // should be focus, but jsdom does not propagate that
-      await button.trigger('focusin', {
+      button.trigger('focusin', {
         relatedTarget: document.body,
       });
       await wrapper.vm.$nextTick();
@@ -2411,11 +2407,11 @@ describe('NavigatorCard', () => {
       await flushPromises();
       const button = wrapper.find(NavigatorCardItem).find('button');
       // should be focus, but jsdom does not propagate that
-      await button.trigger('focusin', {
+      button.trigger('focusin', {
         relatedTarget: document.body,
       });
       await wrapper.vm.$nextTick();
-      await button.trigger('focusout', {
+      button.trigger('focusout', {
         relatedTarget: document.body,
       });
       expect(wrapper.vm.lastFocusTarget).toEqual(null);
@@ -2426,11 +2422,11 @@ describe('NavigatorCard', () => {
       await flushPromises();
       const button = wrapper.find(NavigatorCardItem).find('button');
       // should be focus, but jsdom does not propagate that
-      await button.trigger('focusin', {
+      button.trigger('focusin', {
         relatedTarget: null,
       });
       await wrapper.vm.$nextTick();
-      await button.trigger('focusout', {
+      button.trigger('focusout', {
         relatedTarget: null,
       });
       // assert we are still focusing the button
@@ -2453,13 +2449,13 @@ describe('NavigatorCard', () => {
       // This might happen if it deletes an item, that was in focus
       const button = wrapper.find(NavigatorCardItem).find('button');
       // should be focus, but jsdom does not propagate that
-      await button.trigger('focusin', {
+      button.trigger('focusin', {
         relatedTarget: document.body,
       });
-      const focusSpy = vi.spyOn(button.element, 'focus');
+      const focusSpy = jest.spyOn(button.element, 'focus');
       await flushPromises();
       // now make the component go away
-      await wrapper.setData({
+      wrapper.setData({
         nodesToRender: [],
       });
       await flushPromises();
@@ -2480,12 +2476,12 @@ describe('NavigatorCard', () => {
       // This might happen if it deletes an item, that was in focus
       const button = wrapper.find(NavigatorCardItem).find('button');
       // should be focus, but jsdom does not propagate that
-      await button.trigger('focusin', {
+      button.trigger('focusin', {
         relatedTarget: document.body,
       });
       button.element.focus();
       // move the spy below the manual focus, so we dont count it
-      const focusSpy = vi.spyOn(button.element, 'focus');
+      const focusSpy = jest.spyOn(button.element, 'focus');
       await flushPromises();
       expect(document.activeElement).toEqual(button.element);
       // trigger an update
@@ -2501,8 +2497,8 @@ describe('NavigatorCard', () => {
       // Set the focus item to be something outside the scroller.
       // This might happen if it deletes an item, that was in focus
       const button = wrapper.find(NavigatorCardItem).find('button');
-      const focusSpy = vi.spyOn(button.element, 'focus');
-      await button.trigger('focusin', {
+      const focusSpy = jest.spyOn(button.element, 'focus');
+      button.trigger('focusin', {
         relatedTarget: document.body,
       });
       await flushPromises();
@@ -2520,10 +2516,10 @@ describe('NavigatorCard', () => {
       // This might happen if it deletes an item, that was in focus
       const button = wrapper.find(NavigatorCardItem).find('button');
       // should be focus, but jsdom does not propagate that
-      await button.trigger('focusin', {
+      button.trigger('focusin', {
         relatedTarget: document.body,
       });
-      const focusSpy = vi.spyOn(button.element, 'focus');
+      const focusSpy = jest.spyOn(button.element, 'focus');
       await flushPromises();
       // initiate a filter
       wrapper.find(FilterInput).vm.$emit('input', 'Child');
@@ -2540,7 +2536,7 @@ describe('NavigatorCard', () => {
     it('returns -1 if item is above the scrollarea', () => {
       getChildPositionInScroller.mockRestore();
       const wrapper = createWrapper();
-      vi.spyOn(wrapper.find({ ref: 'scroller' }).element, 'getBoundingClientRect')
+      jest.spyOn(wrapper.find({ ref: 'scroller' }).element, 'getBoundingClientRect')
         .mockReturnValueOnce({
           y: 50,
           height: 1000,
@@ -2559,7 +2555,7 @@ describe('NavigatorCard', () => {
     it('returns 1 if items is below the scrollarea', () => {
       getChildPositionInScroller.mockRestore();
       const wrapper = createWrapper();
-      vi.spyOn(wrapper.find({ ref: 'scroller' }).element, 'getBoundingClientRect')
+      jest.spyOn(wrapper.find({ ref: 'scroller' }).element, 'getBoundingClientRect')
         .mockReturnValueOnce({
           y: 50,
           height: 1000,
@@ -2578,11 +2574,11 @@ describe('NavigatorCard', () => {
     it('takes into consideration the padding offsets', () => {
       getChildPositionInScroller.mockRestore();
       const wrapper = createWrapper();
-      vi.spyOn(window, 'getComputedStyle').mockReturnValue({
+      jest.spyOn(window, 'getComputedStyle').mockReturnValue({
         paddingTop: '10px',
         paddingBottom: '20px',
       });
-      vi.spyOn(wrapper.find({ ref: 'scroller' }).element, 'getBoundingClientRect')
+      jest.spyOn(wrapper.find({ ref: 'scroller' }).element, 'getBoundingClientRect')
         .mockReturnValue({
           y: 50,
           height: 1000,
@@ -2608,7 +2604,7 @@ describe('NavigatorCard', () => {
     it('returns 0 if the item is in the scrollarea', () => {
       getChildPositionInScroller.mockRestore();
       const wrapper = createWrapper();
-      vi.spyOn(wrapper.find({ ref: 'scroller' }).element, 'getBoundingClientRect')
+      jest.spyOn(wrapper.find({ ref: 'scroller' }).element, 'getBoundingClientRect')
         .mockReturnValueOnce({
           y: 50,
           height: 1000,

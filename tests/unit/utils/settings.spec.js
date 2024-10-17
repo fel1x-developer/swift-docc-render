@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it, vi } from "vitest";
 /**
  * This source file is part of the Swift.org open source project
  *
@@ -7,8 +8,6 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
-
-import { vi } from 'vitest';
 
 let Settings;
 

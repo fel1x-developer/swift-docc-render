@@ -7,6 +7,8 @@
  * See https://swift.org/LICENSE.txt for license information
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
+import { describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import ThematicBreak from 'docc-render/components/ContentNode/ThematicBreak.vue';
 

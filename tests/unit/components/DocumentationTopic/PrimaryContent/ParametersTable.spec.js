@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import ParametersTable from 'docc-render/components/DocumentationTopic/PrimaryContent/ParametersTable.vue';
 import { shallowMount } from '@vue/test-utils';
 

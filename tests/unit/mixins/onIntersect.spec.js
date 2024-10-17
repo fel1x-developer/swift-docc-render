@@ -8,17 +8,15 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
-
 import { shallowMount } from '@vue/test-utils';
-import onIntersect from 'docc-render/composables/onIntersect';
+import onIntersect from 'docc-render/mixins/onIntersect';
 
-vi.mock('intersection-observer', () => ({}));
+jest.mock('intersection-observer', () => ({}));
 
-window.IntersectionObserver = vi.fn((cb, props) => ({
+window.IntersectionObserver = jest.fn((cb, props) => ({
   // return mocks
-  disconnect: vi.fn(),
-  observe: vi.fn(),
+  disconnect: jest.fn(),
+  observe: jest.fn(),
   // mimic config
   ...props,
   thresholds: props.threshold,
@@ -39,12 +37,12 @@ const createWrapper = async (options) => {
   await wrapper.vm.$nextTick();
   return wrapper;
 };
-const spyScrollTo = vi.fn();
+const spyScrollTo = jest.fn();
 
 describe('onIntersect', () => {
   let wrapper;
   beforeEach(async () => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
     Object.defineProperty(window, 'scrollY', { get: spyScrollTo });
   });
 
@@ -116,7 +114,7 @@ describe('onIntersect', () => {
   });
 
   it('calls `onIntersect` method', async () => {
-    const onIntersectMock = vi.fn();
+    const onIntersectMock = jest.fn();
     const entries = ['foo', 'bar', 'baz'];
     wrapper = await createWrapper({
       methods: {
@@ -132,7 +130,7 @@ describe('onIntersect', () => {
   });
 
   it('figures out the scroll direction', async () => {
-    const onIntersectMock = vi.fn();
+    const onIntersectMock = jest.fn();
     const entries = ['foo', 'bar', 'baz'];
     spyScrollTo.mockReturnValue(10);
     wrapper = await createWrapper({

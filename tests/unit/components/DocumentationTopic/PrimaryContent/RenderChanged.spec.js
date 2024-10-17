@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import RenderChanged from 'docc-render/components/DocumentationTopic/PrimaryContent/RenderChanged.vue';
 import { shallowMount } from '@vue/test-utils';
 
@@ -41,7 +43,7 @@ const createWrapper = ({ propsData, scopedSlots, ...others } = {}) => (
     scopedSlots: {
       default(props) {
         scopedProps.push(props);
-        return this.$h('div', {}, `Default ${props.value.foo}`);
+        return this.$createElement('div', {}, `Default ${props.value.foo}`);
       },
       ...scopedSlots,
     },

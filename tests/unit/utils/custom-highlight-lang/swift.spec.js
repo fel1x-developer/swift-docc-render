@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import hljs from 'highlight.js';
 import swift from 'docc-render/utils/custom-highlight-lang/swift';
 

@@ -8,10 +8,10 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-import { vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { shallowMount, createLocalVue } from '@vue/test-utils';
-import apiChangesObserving from 'docc-render/composables/apiChangesObserving';
+import apiChangesObserving from 'docc-render/mixins/apiChangesObserving';
 import VueRouter from 'vue-router';
 import { fetchAPIChangesForRoute } from 'docc-render/utils/data';
 import { flushPromises } from '../../../test-utils';

@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { mount } from '@vue/test-utils';
 import DecoratedTopicTitle from 'docc-render/components/DocumentationTopic/DecoratedTopicTitle.vue';
 
@@ -91,9 +93,9 @@ describe('DecoratedTopicTitle', () => {
     expect(wrapper.findAll('.label').length).toBe(1);
   });
 
-  it('renders an .identifier for externalParam tokens', async () => {
+  it('renders an .identifier for externalParam tokens', () => {
     const token = { kind: TokenKind.externalParam, text: 'blah' };
-    await wrapper.setProps({ tokens: [token] });
+    wrapper.setProps({ tokens: [token] });
 
     const identifier = wrapper.find('.identifier');
     expect(identifier.exists()).toBe(true);

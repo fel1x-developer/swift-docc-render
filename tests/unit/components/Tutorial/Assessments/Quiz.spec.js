@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import ContentNode from 'docc-render/components/ContentNode.vue';
 import Quiz from 'docc-render/components/Tutorial/Assessments/Quiz.vue';
@@ -185,14 +187,14 @@ describe('Quiz', () => {
       const choice = choices.at(0);
 
       expect(choice.classes('active')).toBe(false);
-      await choice.trigger('click');
+      choice.trigger('click');
       expect(choice.classes('active')).toBe(true);
     });
 
-    it('renders a success icon, only for the chosen choice', async () => {
+    it('renders a success icon, only for the chosen choice', () => {
       const choice = choices.at(0);
-      await choice.trigger('click');
-      await submit.trigger('click');
+      choice.trigger('click');
+      submit.trigger('click');
 
       expect(choice.classes()).toContain('correct');
       expect(wrapper.findAll('.choice-icon')).toHaveLength(1);
@@ -200,31 +202,31 @@ describe('Quiz', () => {
       expect(choice.find('.choice-icon').html()).toContain('<checkcircleicon');
     });
 
-    it('renders an error icon only for the chosen choice', async () => {
+    it('renders an error icon only for the chosen choice', () => {
       const choice = choices.at(1);
-      await choice.trigger('click');
-      await submit.trigger('click');
+      choice.trigger('click');
+      submit.trigger('click');
 
       expect(wrapper.findAll('.choice-icon')).toHaveLength(1);
       // cant match directly with element, VTU is buggy
       expect(choice.find('.choice-icon').html()).toContain('<resetcircleicon');
     });
 
-    it('updates the aria live text telling the user if the answer chosen is correct or incorrect', async () => {
+    it('updates the aria live text telling the user if the answer chosen is correct or incorrect', () => {
       let ariaLive = wrapper.find('[aria-live="assertive"].visuallyhidden');
       expect(ariaLive.exists()).toBe(true);
       expect(ariaLive.text()).toBe('');
 
       let choice = choices.at(1);
-      await choice.trigger('click');
-      await submit.trigger('click');
+      choice.trigger('click');
+      submit.trigger('click');
 
       ariaLive = wrapper.find('[aria-live="assertive"].visuallyhidden > span');
       expect(ariaLive.text()).toBe('Answer is tutorials.assessment.incorrect');
 
       choice = choices.at(0);
-      await choice.trigger('click');
-      await submit.trigger('click');
+      choice.trigger('click');
+      submit.trigger('click');
 
       ariaLive = wrapper.find('[aria-live="assertive"].visuallyhidden > span');
       expect(ariaLive.text()).toBe('Answer is tutorials.assessment.correct');

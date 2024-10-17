@@ -8,6 +8,8 @@
  * See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { shallowMount } from '@vue/test-utils';
 import BodyContent from 'docc-render/components/Article/BodyContent.vue';
 import Columns from 'docc-render/components/Article/Layouts/Columns.vue';

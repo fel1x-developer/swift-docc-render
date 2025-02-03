@@ -1,7 +1,18 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/icon',
+    '@nuxt/test-utils/module',
+    '@nuxtjs/i18n',
+    '@nuxtjs/tailwindcss',
+  ],
+  ssr: false,
   devtools: { enabled: true },
+  compatibilityDate: '2024-11-01',
+  typescript: {
+    typeCheck: true,
+  },
   eslint: {
     config: {
       stylistic: true,
@@ -15,16 +26,5 @@ export default defineNuxtConfig({
       { code: 'zh', language: 'zh-CN' },
     ],
     defaultLocale: 'en',
-  },
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/icon',
-    '@nuxt/test-utils/module',
-    '@nuxtjs/i18n',
-    '@nuxtjs/tailwindcss',
-  ],
-  ssr: false,
-  typescript: {
-    typeCheck: true,
   },
 })

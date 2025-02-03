@@ -10,6 +10,15 @@ export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
   compatibilityDate: '2024-11-01',
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        },
+      },
+    },
+  },
   typescript: {
     typeCheck: true,
   },

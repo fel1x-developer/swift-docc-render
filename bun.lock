@@ -22,6 +22,10 @@
         "prettier": "^3.4.2",
         "prettier-plugin-tailwindcss": "^0.6.11",
         "sass-embedded": "^1.83.4",
+        "tree-sitter": "^0.21.1",
+        "tree-sitter-javascript": "^0.23.1",
+        "tree-sitter-jsdoc": "^0.23.2",
+        "tree-sitter-typescript": "^0.23.2",
         "typescript": "^5.7.3",
         "vitest": "^3.0.4",
         "vue-tsc": "^2.2.0",
@@ -1219,7 +1223,7 @@
 
     "nitropack": ["nitropack@2.10.4", "", { "dependencies": { "@cloudflare/kv-asset-handler": "^0.3.4", "@netlify/functions": "^2.8.2", "@rollup/plugin-alias": "^5.1.1", "@rollup/plugin-commonjs": "^28.0.1", "@rollup/plugin-inject": "^5.0.5", "@rollup/plugin-json": "^6.1.0", "@rollup/plugin-node-resolve": "^15.3.0", "@rollup/plugin-replace": "^6.0.1", "@rollup/plugin-terser": "^0.4.4", "@rollup/pluginutils": "^5.1.3", "@types/http-proxy": "^1.17.15", "@vercel/nft": "^0.27.5", "archiver": "^7.0.1", "c12": "2.0.1", "chokidar": "^3.6.0", "citty": "^0.1.6", "compatx": "^0.1.8", "confbox": "^0.1.8", "consola": "^3.2.3", "cookie-es": "^1.2.2", "croner": "^9.0.0", "crossws": "^0.3.1", "db0": "^0.2.1", "defu": "^6.1.4", "destr": "^2.0.3", "dot-prop": "^9.0.0", "esbuild": "^0.24.0", "escape-string-regexp": "^5.0.0", "etag": "^1.8.1", "fs-extra": "^11.2.0", "globby": "^14.0.2", "gzip-size": "^7.0.0", "h3": "^1.13.0", "hookable": "^5.5.3", "httpxy": "^0.1.5", "ioredis": "^5.4.1", "jiti": "^2.4.0", "klona": "^2.0.6", "knitwork": "^1.1.0", "listhen": "^1.9.0", "magic-string": "^0.30.12", "magicast": "^0.3.5", "mime": "^4.0.4", "mlly": "^1.7.2", "node-fetch-native": "^1.6.4", "ofetch": "^1.4.1", "ohash": "^1.1.4", "openapi-typescript": "^7.4.2", "pathe": "^1.1.2", "perfect-debounce": "^1.0.0", "pkg-types": "^1.2.1", "pretty-bytes": "^6.1.1", "radix3": "^1.1.2", "rollup": "^4.24.3", "rollup-plugin-visualizer": "^5.12.0", "scule": "^1.3.0", "semver": "^7.6.3", "serve-placeholder": "^2.0.2", "serve-static": "^1.16.2", "std-env": "^3.7.0", "ufo": "^1.5.4", "uncrypto": "^0.1.3", "unctx": "^2.3.1", "unenv": "^1.10.0", "unimport": "^3.13.1", "unstorage": "^1.13.1", "untyped": "^1.5.1", "unwasm": "^0.3.9" }, "peerDependencies": { "xml2js": "^0.6.2" }, "optionalPeers": ["xml2js"], "bin": { "nitro": "dist/cli/index.mjs", "nitropack": "dist/cli/index.mjs" } }, "sha512-sJiG/MIQlZCVSw2cQrFG1H6mLeSqHlYfFerRjLKz69vUfdu0EL2l0WdOxlQbzJr3mMv/l4cOlCCLzVRzjzzF/g=="],
 
-    "node-addon-api": ["node-addon-api@7.1.1", "", {}, "sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ=="],
+    "node-addon-api": ["node-addon-api@8.3.0", "", {}, "sha512-8VOpLHFrOQlAH+qA0ZzuGRlALRA6/LVh8QJldbrC4DY0hXoMP0l4Acq8TzFC018HztWiRqyCEj2aTWY2UvnJUg=="],
 
     "node-fetch": ["node-fetch@2.7.0", "", { "dependencies": { "whatwg-url": "^5.0.0" }, "peerDependencies": { "encoding": "^0.1.0" }, "optionalPeers": ["encoding"] }, "sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A=="],
 
@@ -1491,8 +1495,6 @@
 
     "safe-regex-test": ["safe-regex-test@1.1.0", "", { "dependencies": { "call-bound": "^1.0.2", "es-errors": "^1.3.0", "is-regex": "^1.2.1" } }, "sha512-x/+Cz4YrimQxQccJf5mKEbIa1NzeCRNI5Ecl/ekmlYaampdNLPalVyIcCZNNH3MvmqBugV5TMYZXv0ljslUlaw=="],
 
-    "sass": ["sass@1.83.4", "", { "dependencies": { "chokidar": "^4.0.0", "immutable": "^5.0.2", "source-map-js": ">=0.6.2 <2.0.0" }, "optionalDependencies": { "@parcel/watcher": "^2.4.1" }, "bin": { "sass": "sass.js" } }, "sha512-B1bozCeNQiOgDcLd33e2Cs2U60wZwjUUXzh900ZyQF5qUasvMdDZYbQ566LJu7cqR+sAHlAfO6RMkaID5s6qpA=="],
-
     "sass-embedded": ["sass-embedded@1.83.4", "", { "dependencies": { "@bufbuild/protobuf": "^2.0.0", "buffer-builder": "^0.2.0", "colorjs.io": "^0.5.0", "immutable": "^5.0.2", "rxjs": "^7.4.0", "supports-color": "^8.1.1", "sync-child-process": "^1.0.2", "varint": "^6.0.0" }, "optionalDependencies": { "sass-embedded-android-arm": "1.83.4", "sass-embedded-android-arm64": "1.83.4", "sass-embedded-android-ia32": "1.83.4", "sass-embedded-android-riscv64": "1.83.4", "sass-embedded-android-x64": "1.83.4", "sass-embedded-darwin-arm64": "1.83.4", "sass-embedded-darwin-x64": "1.83.4", "sass-embedded-linux-arm": "1.83.4", "sass-embedded-linux-arm64": "1.83.4", "sass-embedded-linux-ia32": "1.83.4", "sass-embedded-linux-musl-arm": "1.83.4", "sass-embedded-linux-musl-arm64": "1.83.4", "sass-embedded-linux-musl-ia32": "1.83.4", "sass-embedded-linux-musl-riscv64": "1.83.4", "sass-embedded-linux-musl-x64": "1.83.4", "sass-embedded-linux-riscv64": "1.83.4", "sass-embedded-linux-x64": "1.83.4", "sass-embedded-win32-arm64": "1.83.4", "sass-embedded-win32-ia32": "1.83.4", "sass-embedded-win32-x64": "1.83.4" }, "bin": { "sass": "dist/bin/sass.js" } }, "sha512-Hf2burRA/y5PGxsg6jB9UpoK/xZ6g/pgrkOcdl6j+rRg1Zj8XhGKZ1MTysZGtTPUUmiiErqzkP5+Kzp95yv9GQ=="],
 
     "sass-embedded-android-arm": ["sass-embedded-android-arm@1.83.4", "", { "os": "android", "cpu": "arm" }, "sha512-9Z4pJAOgEkXa3VDY/o+U6l5XvV0mZTJcSl0l/mSPHihjAHSpLYnOW6+KOWeM8dxqrsqTYcd6COzhanI/a++5Gw=="],
@@ -1682,6 +1684,14 @@
     "totalist": ["totalist@3.0.1", "", {}, "sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ=="],
 
     "tr46": ["tr46@0.0.3", "", {}, "sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw=="],
+
+    "tree-sitter": ["tree-sitter@0.21.1", "", { "dependencies": { "node-addon-api": "^8.0.0", "node-gyp-build": "^4.8.0" } }, "sha512-7dxoA6kYvtgWw80265MyqJlkRl4yawIjO7S5MigytjELkX43fV2WsAXzsNfO7sBpPPCF5Gp0+XzHk0DwLCq3xQ=="],
+
+    "tree-sitter-javascript": ["tree-sitter-javascript@0.23.1", "", { "dependencies": { "node-addon-api": "^8.2.2", "node-gyp-build": "^4.8.2" }, "peerDependencies": { "tree-sitter": "^0.21.1" }, "optionalPeers": ["tree-sitter"] }, "sha512-/bnhbrTD9frUYHQTiYnPcxyHORIw157ERBa6dqzaKxvR/x3PC4Yzd+D1pZIMS6zNg2v3a8BZ0oK7jHqsQo9fWA=="],
+
+    "tree-sitter-jsdoc": ["tree-sitter-jsdoc@0.23.2", "", { "dependencies": { "node-addon-api": "^8.2.2", "node-gyp-build": "^4.8.2" }, "peerDependencies": { "tree-sitter": "^0.21.1" }, "optionalPeers": ["tree-sitter"] }, "sha512-ea60Xc69SkEWLAe1y02G8bXTyYn/N6KtDnkkdj+sy9/1eH4mvgH62VdoUAl0rx0NDPpCsPaZWvS1AChfEMIJgw=="],
+
+    "tree-sitter-typescript": ["tree-sitter-typescript@0.23.2", "", { "dependencies": { "node-addon-api": "^8.2.2", "node-gyp-build": "^4.8.2", "tree-sitter-javascript": "^0.23.1" }, "peerDependencies": { "tree-sitter": "^0.21.0" }, "optionalPeers": ["tree-sitter"] }, "sha512-e04JUUKxTT53/x3Uq1zIL45DoYKVfHH4CZqwgZhPg5qYROl5nQjV+85ruFzFGZxu+QeFVbRTPDRnqL9UbU4VeA=="],
 
     "ts-api-utils": ["ts-api-utils@2.0.1", "", { "peerDependencies": { "typescript": ">=4.8.4" } }, "sha512-dnlgjFSVetynI8nzgJ+qF62efpglpWRk8isUEWZGWlJYySCTD6aKvbUDu+zbPeDakk3bg5H4XpitHukgfL1m9w=="],
 
@@ -1912,6 +1922,8 @@
     "@nuxtjs/i18n/pathe": ["pathe@1.1.2", "", {}, "sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ=="],
 
     "@nuxtjs/i18n/unplugin": ["unplugin@1.16.1", "", { "dependencies": { "acorn": "^8.14.0", "webpack-virtual-modules": "^0.6.2" } }, "sha512-4/u/j4FrCKdi17jaxuJA0jClGxB1AvU2hw/IuayPc4ay1XGaJs/rbb4v5WKwAjNifjmXK9PIFyuPiaK8azyR9w=="],
+
+    "@parcel/watcher/node-addon-api": ["node-addon-api@7.1.1", "", {}, "sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ=="],
 
     "@parcel/watcher-wasm/napi-wasm": ["napi-wasm@1.1.3", "", { "bundled": true }, "sha512-h/4nMGsHjZDCYmQVNODIrYACVJ+I9KItbG+0si6W/jSjdA9JbWDoU4LLeMXVcEQGHjttI2tuXqDrbGF7qkUHHg=="],
 
